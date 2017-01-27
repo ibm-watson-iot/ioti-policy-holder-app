@@ -27,7 +27,7 @@ function AuthenticationService() {
     },
     getUser: function() {
       var user = JSON.parse(localStorage.getItem('user'));
-      console.info("User is fetched from localStorage.");
+      //console.info("User is fetched from localStorage.");
       return user;
     },
     setUser: function(user) {

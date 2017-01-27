@@ -74,7 +74,9 @@ exports.config =
                     'app/assets/pages/ui/progressBars/progressBars.module.js',
                     'app/assets/pages/ui/slider/slider.module.js',
                     'app/assets/pages/ui/tabs/tabs.module.js',
-                    'app/assets/pages/ui/typography/typography.module.js'
+                    'app/assets/pages/ui/typography/typography.module.js',
+
+                    'app/assets/pages/shields/shields.module.js',
 
                 ]
                 after: [

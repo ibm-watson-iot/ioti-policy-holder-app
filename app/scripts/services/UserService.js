@@ -7,28 +7,26 @@ angular.module('BlurAdmin.services').factory('userService', function($http, apiP
     me: function() {
       return $http.get(apiUrl);
     },
-    find: function(profileId) {
-      return $http.get(apiUrl + profileId);
+    find: function(userId) {
+      return $http.get(apiUrl + userId);
     },
-    findAll: function(pageNumber, pageSize) {
-      var url = apiUrl;
-      if (!pageNumber) {
-        pageNumber = 0;
-      }
-      url = url + '?pageNumber=' + pageNumber;
-      if (pageSize) {
-        url = url + '&pageSize=' + pageSize;
+    findAll: function(username) {
+      var url;
+      if (username) {
+        url = apiUrl + '/name/' + username;
+      } else {
+        url = apiUrl + '/all';
       }
       return $http.get(url);
     },
-    remove: function(profileId) {
-      return $http['delete'](apiUrl + profileId);
+    remove: function(userId) {
+      return $http['delete'](apiUrl + userId);
     },
-    save: function(profile) {
-      if(profile.id) {
-        return $http.put(apiUrl + profile.id, profile);
+    save: function(user) {
+      if(user.id) {
+        return $http.put(apiUrl + user.id, user);
       } else {
-        return $http.post(apiUrl, profile);
+        return $http.post(apiUrl, user);
       }
     }
   };

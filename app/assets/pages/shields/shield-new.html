@@ -1,0 +1,54 @@
+<div class="widgets" ng-controller="ShieldEditCtrl as shieldEditCtrlVm">
+  <div class="row">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-title="Yeni Rapor" ba-panel-class="with-scroll">
+        <div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="dieselCost">Mazot Gideri</label>
+                <input type="number" class="form-control" id="dieselCost"
+                    ng-model="shieldEditCtrlVm.newShield.dieselCost">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="year">Yil</label>
+                <input type="number" class="form-control" id="year"
+                    ng-model="shieldEditCtrlVm.newShield.year">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="yearMonth">Ay</label>
+                <input type="text" class="form-control" id="yearMonth"
+                    ng-model="shieldEditCtrlVm.newShield.yearMonth">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="driverInsuranceCost">Giderin Adı</label>
+                <input type="text" class="form-control" id="driverInsuranceCost"
+                    ng-model="shieldEditCtrlVm.newShield.costs[0].name">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="kdv">Giderin Miktarı</label>
+                <input type="number" class="form-control" id="kdv"
+                    ng-model="shieldEditCtrlVm.newShield.costs[0].value">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="shieldEditCtrlVm.saveShield()">Kaydet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
