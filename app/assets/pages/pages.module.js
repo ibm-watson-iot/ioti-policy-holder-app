@@ -18,10 +18,9 @@
     'BlurAdmin.pages.profile',
 
     'BlurAdmin.pages.shields',
-    'BlurAdmin.pages.devices',
     'BlurAdmin.pages.hazards',
-  ])
-      .config(routeConfig);
+    'BlurAdmin.pages.devices'
+  ]).config(routeConfig);
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
@@ -45,20 +44,6 @@
         title: '404 Page',
         fixedHref: '404.html',
         blank: true
-      }]
-    });
-    baSidebarServiceProvider.addStaticItem({
-      title: 'Menu Level 1',
-      icon: 'ion-ios-more',
-      subMenu: [{
-        title: 'Menu Level 1.1',
-        disabled: true
-      }, {
-        title: 'Menu Level 1.2',
-        subMenu: [{
-          title: 'Menu Level 1.2.1',
-          disabled: true
-        }]
       }]
     });
   }

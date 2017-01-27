@@ -1,0 +1,35 @@
+<div class="widgets">
+  <div class="row" ng-controller="HazardListCtrl as hazardListCtrlVm">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-class="with-scroll">
+        <div class="horizontal-scroll">
+          <table class="table table-hover" st-table="hazardListCtrlVm.hazards">
+                  <tr class="sortable header-row">
+                    <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+                    <th st-sort="name">Name</th>
+                    <th st-sort="action">Action</th>
+                  </tr>
+                  <tr ng-repeat="hazard in hazardListCtrlVm.hazards" class="editable-tr-wrap">
+                    <td class="table-id">{{$index + 1}}</td>
+                    <td>
+                      <span editable-text="hazard.name" blur="cancel"
+                          onaftersave="hazardListCtrlVm.saveHazard(hazard)">{{hazard.name}}
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary editable-table-button btn-xs"
+                          ng-click="hazardListCtrlVm.delete(hazard)">Delete</button>
+                    </td>
+                  </tr>
+                  <tfoot>
+                    <tr>
+                      <td colspan="6" class="text-center">
+                        <div st-pagination="" st-items-by-page="12" st-displayed-pages="5"></div>
+                      </td>
+                    </tr>
+                  </tfoot>
+              </table>
+        </div>
+      </div>
+  </div>
+</div>

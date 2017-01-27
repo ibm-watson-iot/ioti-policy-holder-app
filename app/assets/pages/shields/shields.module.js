@@ -11,11 +11,7 @@ function routeConfig($stateProvider) {
   $stateProvider.state('main.shield-new', {
     url: 'new-shield',
     templateUrl: 'pages/shields/shield-new.html',
-    title: 'New Shield',
-    sidebarMeta: {
-      icon: 'fa fa-shield',
-      order: 2,
-    }
+    title: 'New Shield'
   }).state('main.shields', {
     url: 'shields',
     templateUrl: 'pages/shields/shield-list.html',

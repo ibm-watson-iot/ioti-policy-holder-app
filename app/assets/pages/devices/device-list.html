@@ -1,0 +1,38 @@
+<div class="widgets">
+  <div class="row" ng-controller="DeviceListCtrl as deviceListCtrlVm">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-class="with-scroll">
+        <div class="horizontal-scroll">
+            <div class="add-row-editable-table">
+              <button class="btn btn-primary" ui-sref="main.device-new">Add Device</button>
+            </div>
+            <table class="table table-hover" st-table="deviceListCtrlVm.devices">
+              <tr class="sortable header-row">
+                <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+                <th st-sort="name">Name</th>
+                <th st-sort="action">Action</th>
+              </tr>
+              <tr ng-repeat="device in deviceListCtrlVm.devices" class="editable-tr-wrap">
+                <td class="table-id">{{$index + 1}}</td>
+                <td>
+                  <span editable-text="device.name" blur="cancel"
+                      onaftersave="deviceListCtrlVm.saveDevice(device)">{{device.name}}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-primary editable-table-button btn-xs"
+                    ng-click="deviceListCtrlVm.activate(device)">Activate</button>
+                </td>
+              </tr>
+              <tfoot>
+                <tr>
+                  <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="12" st-displayed-pages="5"></div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+      </div>
+  </div>
+</div>

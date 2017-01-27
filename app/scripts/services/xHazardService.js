@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('hazardEventService', function($http, apiProtocol, apiHost, apiPath) {
+angular.module('BlurAdmin.services').factory('hazardService', function($http, apiProtocol, apiHost, apiPath) {
   var apiUrl = apiProtocol + "://" + apiHost + apiPath + 'hazardEvent';
 
   return {

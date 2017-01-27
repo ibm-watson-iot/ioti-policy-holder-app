@@ -36,6 +36,7 @@ exports.config =
                     'app/app.js',
                     'app/scripts/utils/',
                     'app/scripts/services/services.module.js',
+                    'app/scripts/services/',
 
                     'app/assets/theme/components/components.module.js',
                     'app/assets/theme/inputs/inputs.module.js',
@@ -77,6 +78,8 @@ exports.config =
                     'app/assets/pages/ui/typography/typography.module.js',
 
                     'app/assets/pages/shields/shields.module.js',
+                    'app/assets/pages/hazards/hazards.module.js',
+                    'app/assets/pages/devices/devices.module.js'
 
                 ]
                 after: [

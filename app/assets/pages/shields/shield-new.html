@@ -1,31 +1,56 @@
 <div class="widgets" ng-controller="ShieldEditCtrl as shieldEditCtrlVm">
   <div class="row">
     <div class="col-md-12">
-      <div ba-panel ba-panel-title="Yeni Rapor" ba-panel-class="with-scroll">
+      <div ba-panel ba-panel-class="with-scroll">
         <div>
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="dieselCost">Mazot Gideri</label>
-                <input type="number" class="form-control" id="dieselCost"
-                    ng-model="shieldEditCtrlVm.newShield.dieselCost">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name"
+                    ng-model="shieldEditCtrlVm.newShield.name">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="type">Type</label>
+                <input type="text" class="form-control" id="type"
+                    ng-model="shieldEditCtrlVm.newShield.type">
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="year">Yil</label>
-                <input type="number" class="form-control" id="year"
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description"
                     ng-model="shieldEditCtrlVm.newShield.year">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="yearMonth">Ay</label>
-                <input type="text" class="form-control" id="yearMonth"
-                    ng-model="shieldEditCtrlVm.newShield.yearMonth">
+                <label for="jsCodeMethod">Js Code Method</label>
+                <input type="text" class="form-control" id="jsCodeMethod"
+                    ng-model="shieldEditCtrlVm.newShield.jsCodeMethod">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <select class="form-control" title="Shield Actions" multiple selectpicker
+                      ng-model="shieldEditCtrlVm.shieldActions"
+                      ng-options="item as item.label for item in shieldEditCtrlVm.actions">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="potentialClaimAmount">Potential Claim Amount</label>
+                <input type="number" class="form-control" id="potentialClaimAmount"
+                    ng-model="shieldEditCtrlVm.newShield.potentialClaimAmount">
               </div>
             </div>
           </div>
@@ -33,20 +58,18 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="driverInsuranceCost">Giderin Adı</label>
-                <input type="text" class="form-control" id="driverInsuranceCost"
-                    ng-model="shieldEditCtrlVm.newShield.costs[0].name">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="kdv">Giderin Miktarı</label>
-                <input type="number" class="form-control" id="kdv"
-                    ng-model="shieldEditCtrlVm.newShield.costs[0].value">
+                <label class="checkbox-inline custom-checkbox nowrap">
+                  <input type="checkbox" id="canBeDisabled" value="shieldEditCtrlVm.newShield.canBeDisabled">
+                  <span>Allow disabling</span>
+                </label>
+                <label class="checkbox-inline custom-checkbox nowrap">
+                  <input type="checkbox" id="hazardDetectionOnCloud" value="shieldEditCtrlVm.newShield.hazardDetectionOnCloud">
+                  <span>Hazard Detection on Cloud</span>
+                </label>
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary" ng-click="shieldEditCtrlVm.saveShield()">Kaydet</button>
+          <button type="submit" class="btn btn-primary" ng-click="shieldEditCtrlVm.saveShield()">Save</button>
         </div>
       </div>
     </div>

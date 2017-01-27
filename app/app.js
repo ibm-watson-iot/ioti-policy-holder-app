@@ -5,6 +5,7 @@
 'use strict';
 
 angular.module('BlurAdmin', [
+  'uuid',
   'toastr',
   'ngTouch',
   'ngJsTree',
@@ -25,9 +26,8 @@ angular.module('BlurAdmin', [
   'BlurAdmin.signin',
 
   'BlurAdmin.theme',
-  'BlurAdmin.pages',
-  'BlurAdmin.services'
-
+  'BlurAdmin.services',
+  'BlurAdmin.pages'
 ])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 

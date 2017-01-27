@@ -1,46 +1,68 @@
 <div class="widgets">
-    <div class="row" ng-controller="ShieldListCtrl as shieldListCtrlVm">
-        <div class="col-md-12">
-            <div ba-panel ba-panel-title="Shields" ba-panel-class="with-scroll">
-                <div class="horizontal-scroll">
-                    <div class="add-row-editable-table">
-                        <button class="btn btn-primary" ui-sref="main.shield-new">Add Shield</button>
-                    </div>
-                    <table class="table table-hover" st-table="shieldListCtrlVm.shields">
-                        <tr class="sortable header-row">
-                            <th class="table-id" st-sort="id" st-sort-default="true">#</th>
-                            <th st-sort="year">Year</th>
-                            <th st-sort="yearMonth">Ay</th>
-                            <th st-sort="dieselCost">Mazot Gideri</th>
-                        </tr>
-                        <tr ng-repeat="shield in shieldListCtrlVm.shields" class="editable-tr-wrap">
-                            <td class="table-id">{{$index + 1}}</td>
-                            <td>
-                                <span editable-text="shield.year" blur="cancel"
-                                    onaftersave="shieldListCtrlVm.saveShield(shield)">{{shield.year}}
-                                </span>
-                            </td>
-                            <td>
-                                <span editable-text="shield.yearMonth" blur="cancel"
-                                    onaftersave="shieldListCtrlVm.saveShield(shield)">{{shield.yearMonth}}
-                                </span>
-                            </td>
-                            <td>
-                                <span editable-text="shield.dieselCost" blur="cancel"
-                                    onaftersave="shieldListCtrlVm.saveShield(shield)">{{shield.dieselCost}}
-                                </span>
-                            </td>
-                        </tr>
-                        <tfoot>
-                            <tr>
-                                <td colspan="6" class="text-center">
-                                    <div st-pagination="" st-items-by-page="12" st-displayed-pages="5"></div>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+  <div class="row" ng-controller="ShieldListCtrl as shieldListCtrlVm">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-class="with-scroll horizontal-tabs tabs-panel medium-panel">
+        <uib-tabset active="$tabSetStatus.activeTab">
+          <uib-tab heading="Active Shields">
+            <table class="table table-hover" st-table="shieldListCtrlVm.shields">
+              <tr class="sortable header-row">
+                <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+                <th st-sort="name">Name</th>
+                <th st-sort="action">Action</th>
+              </tr>
+              <tr ng-repeat="shield in shieldListCtrlVm.shields" class="editable-tr-wrap">
+                <td class="table-id">{{$index + 1}}</td>
+                <td>
+                  <span editable-text="shield.name" blur="cancel"
+                      onaftersave="shieldListCtrlVm.saveShield(shield)">{{shield.name}}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-primary editable-table-button btn-xs"
+                    ng-click="shieldListCtrlVm.deactivate(shield)">Deactivate</button>
+                </td>
+              </tr>
+              <tfoot>
+                <tr>
+                  <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="12" st-displayed-pages="5"></div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </uib-tab>
+          <uib-tab heading="Non-Active Shields">
+            <div class="add-row-editable-table">
+              <button class="btn btn-primary" ui-sref="main.shield-new">Add Shield</button>
             </div>
-        </div>
-    </div>
+            <table class="table table-hover" st-table="shieldListCtrlVm.shields">
+              <tr class="sortable header-row">
+                <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+                <th st-sort="name">Name</th>
+                <th st-sort="action">Action</th>
+              </tr>
+              <tr ng-repeat="shield in shieldListCtrlVm.shields" class="editable-tr-wrap">
+                <td class="table-id">{{$index + 1}}</td>
+                <td>
+                  <span editable-text="shield.name" blur="cancel"
+                      onaftersave="shieldListCtrlVm.saveShield(shield)">{{shield.name}}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-primary editable-table-button btn-xs"
+                      ng-click="shieldListCtrlVm.activate(shield)">Activate</button>
+                </td>
+              </tr>
+              <tfoot>
+                <tr>
+                  <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="12" st-displayed-pages="5"></div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </uib-tab>
+        </uib-tabset>
+      </div>
+  </div>
 </div>

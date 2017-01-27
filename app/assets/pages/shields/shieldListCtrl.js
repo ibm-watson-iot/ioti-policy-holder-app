@@ -7,14 +7,18 @@
 
 angular.module('BlurAdmin.pages.shields').controller('ShieldListCtrl', ShieldListCtrl);
 
-function ShieldListCtrl(editableThemes, toastr, shieldService) {
+function ShieldListCtrl($rootScope, editableThemes, toastr, shieldService, shieldAssociationService) {
   var vm = this;
   vm.shields = [];
 
-  shieldService.findAll().success(function(shields) {
-    if (shields) {
-      vm.shields = shields;
-    }
+  shieldAssociationService.findAll($rootScope.loggedInUser.username).success(function(shieldAssociations) {
+    vm.shieldAssociations = shieldAssociations;
+  }).error(function(err) {
+    console.error("Fetching all shields is failed!");
+  });
+
+  shieldService.findAll($rootScope.loggedInUser.username).success(function(shields) {
+    vm.shields = shields;
   }).error(function(err) {
     console.error("Fetching all shields is failed!");
   });

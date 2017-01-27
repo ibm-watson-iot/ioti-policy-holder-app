@@ -8,21 +8,13 @@
 angular.module('BlurAdmin.pages.hazards', []).config(routeConfig);
 
 function routeConfig($stateProvider) {
-  $stateProvider.state('main.hazard-new', {
-    url: 'new-hazard',
-    templateUrl: 'pages/hazards/hazard-new.html',
-    title: 'New Hazard',
-    sidebarMeta: {
-      icon: 'fa fa-bolt',
-      order: 4,
-    }
-  }).state('main.hazards', {
+  $stateProvider.state('main.hazards', {
     url: 'hazards',
     templateUrl: 'pages/hazards/hazard-list.html',
     title: 'Hazards',
     sidebarMeta: {
       icon: 'fa fa-bolt',
-      order: 5,
+      order: 4,
     }
   });
 }
