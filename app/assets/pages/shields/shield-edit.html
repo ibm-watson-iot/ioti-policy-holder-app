@@ -8,14 +8,14 @@
               <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name"
-                    ng-model="shieldEditCtrlVm.newShield.name">
+                    ng-model="shieldEditCtrlVm.shield.name">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="type">Type</label>
                 <input type="text" class="form-control" id="type"
-                    ng-model="shieldEditCtrlVm.newShield.type">
+                    ng-model="shieldEditCtrlVm.shield.type">
               </div>
             </div>
           </div>
@@ -24,33 +24,33 @@
               <div class="form-group">
                 <label for="description">Description</label>
                 <input type="text" class="form-control" id="description"
-                    ng-model="shieldEditCtrlVm.newShield.year">
+                    ng-model="shieldEditCtrlVm.shield.description">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="jsCodeMethod">Js Code Method</label>
                 <input type="text" class="form-control" id="jsCodeMethod"
-                    ng-model="shieldEditCtrlVm.newShield.jsCodeMethod">
+                    ng-model="shieldEditCtrlVm.shield.jsCodeMethod">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-sm-6">
-              <select class="form-control" title="Shield Actions" multiple selectpicker
-                      ng-model="shieldEditCtrlVm.shieldActions"
-                      ng-options="item as item.label for item in shieldEditCtrlVm.actions">
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                  <option>Option 3</option>
-              </select>
+              <div class="form-group">
+                <label for="type">Shield Actions</label>
+                <select class="form-control" title="Select an action" multiple selectpicker
+                        ng-model="shieldEditCtrlVm.shield.shieldActions"
+                        ng-options="action as action.name for action in shieldEditCtrlVm.actions">
+                </select>
+              </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="potentialClaimAmount">Potential Claim Amount</label>
                 <input type="number" class="form-control" id="potentialClaimAmount"
-                    ng-model="shieldEditCtrlVm.newShield.potentialClaimAmount">
+                    ng-model="shieldEditCtrlVm.shield.potentialClaimAmount">
               </div>
             </div>
           </div>
@@ -59,11 +59,11 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="checkbox-inline custom-checkbox nowrap">
-                  <input type="checkbox" id="canBeDisabled" value="shieldEditCtrlVm.newShield.canBeDisabled">
+                  <input type="checkbox" id="canBeDisabled" ng-model="shieldEditCtrlVm.shield.canBeDisabled">
                   <span>Allow disabling</span>
                 </label>
                 <label class="checkbox-inline custom-checkbox nowrap">
-                  <input type="checkbox" id="hazardDetectionOnCloud" value="shieldEditCtrlVm.newShield.hazardDetectionOnCloud">
+                  <input type="checkbox" id="hazardDetectionOnCloud" ng-model="shieldEditCtrlVm.shield.hazardDetectionOnCloud">
                   <span>Hazard Detection on Cloud</span>
                 </label>
               </div>

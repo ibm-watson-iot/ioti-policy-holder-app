@@ -33,7 +33,7 @@
           </uib-tab>
           <uib-tab heading="Non-Active Shields">
             <div class="add-row-editable-table">
-              <button class="btn btn-primary" ui-sref="main.shield-new">Add Shield</button>
+              <button class="btn btn-primary" ui-sref="main.shield-edit({shieldId: 'new'})">Add Shield</button>
             </div>
             <table class="table table-hover" st-table="shieldListCtrlVm.shields">
               <tr class="sortable header-row">
@@ -51,6 +51,12 @@
                 <td>
                   <button class="btn btn-primary editable-table-button btn-xs"
                       ng-click="shieldListCtrlVm.activate(shield)">Activate</button>
+                  <button type="button" class="btn btn-xs btn-primary" ui-sref="main.shield-edit({shieldId: shield.id})">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-xs btn-primary" ng-click="shieldListCtrlVm.deleteShield(shield)">
+                    <i class="fa fa-trash"></i>
+                  </button>
                 </td>
               </tr>
               <tfoot>

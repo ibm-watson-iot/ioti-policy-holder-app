@@ -7,7 +7,7 @@
 
 angular.module('BlurAdmin.pages.shields').controller('ShieldListCtrl', ShieldListCtrl);
 
-function ShieldListCtrl($rootScope, editableThemes, toastr, shieldService, shieldAssociationService) {
+function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldService, shieldAssociationService) {
   var vm = this;
   vm.shields = [];
 
@@ -22,6 +22,19 @@ function ShieldListCtrl($rootScope, editableThemes, toastr, shieldService, shiel
   }).error(function(err) {
     console.error("Fetching all shields is failed!");
   });
+
+  vm.deleteShield = function(shield) {
+    $uibModal.open({
+      animation: true,
+      templateUrl: 'pages/shields/shield-delete.html',
+      size: 'sm',
+      resolve: {
+        shield: function () {
+          return shield;
+        }
+      }
+    });
+  };
 
   vm.saveShield = function(shield) {
     shieldService.save(shield).success(function(savedShield) {
