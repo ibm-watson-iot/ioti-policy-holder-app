@@ -31,7 +31,7 @@ angular.module('BlurAdmin', [
 ])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    $httpProvider.interceptors.push('blurAdminHttpInterceptor');
+  $httpProvider.interceptors.push('blurAdminHttpInterceptor');
 
 })
 .run(function($rootScope, $state, $location, editableOptions, editableThemes, PermRoleStore, authenticationService, userService) {

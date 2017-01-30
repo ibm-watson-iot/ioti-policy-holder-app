@@ -18,8 +18,8 @@
       icon: 'person',
     }, {
       color: pieColor,
-      description: 'Purchases',
-      stats: '$ 89,745',
+      description: 'Previous Hazards',
+      stats: '10',
       icon: 'money',
     }, {
       color: pieColor,
