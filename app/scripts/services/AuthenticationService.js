@@ -19,7 +19,7 @@ function AuthenticationService() {
     isAdmin: function() {
       if (localStorage.getItem('authToken')) {
         var user = JSON.parse(localStorage.getItem('user'));
-        if (user && user.isAdmin) {
+        if (user && user.accessLevel === '1') {
           return true;
         }
       }

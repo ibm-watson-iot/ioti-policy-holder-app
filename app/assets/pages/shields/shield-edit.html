@@ -42,14 +42,14 @@
                 <label for="type">Shield Actions</label>
                 <select class="form-control" title="Select an action" multiple selectpicker
                         ng-model="shieldEditCtrlVm.shield.shieldActions"
-                        ng-options="action as action.name for action in shieldEditCtrlVm.actions">
+                        ng-options="action as action for action in shieldEditCtrlVm.actions">
                 </select>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="potentialClaimAmount">Potential Claim Amount</label>
-                <input type="number" class="form-control" id="potentialClaimAmount"
+                <input type="text" class="form-control" id="potentialClaimAmount"
                     ng-model="shieldEditCtrlVm.shield.potentialClaimAmount">
               </div>
             </div>

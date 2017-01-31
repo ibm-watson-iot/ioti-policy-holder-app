@@ -17,6 +17,9 @@
   }
 }
 
+@include svg-icon-class('attention', 80, 80);
+@include svg-icon-class('device', 80, 80);
+@include svg-icon-class('shield', 80, 80);
 @include svg-icon-class('face', 80, 80);
 @include svg-icon-class('money', 80, 80);
 @include svg-icon-class('person', 80, 80);

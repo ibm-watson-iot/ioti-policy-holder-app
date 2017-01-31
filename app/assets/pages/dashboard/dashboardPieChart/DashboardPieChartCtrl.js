@@ -9,30 +9,50 @@
       .controller('DashboardPieChartCtrl', DashboardPieChartCtrl);
 
   /** @ngInject */
-  function DashboardPieChartCtrl($scope, $timeout, baConfig, baUtil) {
+  function DashboardPieChartCtrl($rootScope, $scope, $timeout, baConfig, baUtil,
+    shieldService, hazardService, deviceService) {
+
     var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
     $scope.charts = [{
       color: pieColor,
       description: 'Active Shields',
       stats: '5',
-      icon: 'person',
+      icon: 'shield',
+    }, {
+      color: pieColor,
+      description: 'Active Devices',
+      stats: '0',
+      icon: 'device',
     }, {
       color: pieColor,
       description: 'Previous Hazards',
-      stats: '10',
-      icon: 'money',
-    }, {
-      color: pieColor,
-      description: 'Active Users',
-      stats: '178,391',
-      icon: 'face',
+      stats: '0',
+      icon: 'attention',
     }, {
       color: pieColor,
       description: 'Returned',
-      stats: '32,592',
+      stats: '2,592',
       icon: 'refresh',
     }
     ];
+
+    shieldService.findAll($rootScope.loggedInUser.username).success(function(shields) {
+      $scope.charts[0].stats = shields.length;
+    }).error(function(err) {
+      console.error("Fetching user's shields is failed!");
+    });
+
+    deviceService.findAll($rootScope.loggedInUser.username).success(function(devices) {
+      $scope.charts[1].stats = devices.length;
+    }).error(function(err) {
+      console.error("Fetching user's devices is failed!");
+    });
+
+    hazardService.findAll($rootScope.loggedInUser.username).success(function(hazards) {
+      $scope.charts[2].stats = hazards.length;
+    }).error(function(err) {
+      console.error("Fetching user's hazards is failed!");
+    });
 
     function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;

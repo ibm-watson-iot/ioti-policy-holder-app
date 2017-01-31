@@ -11,8 +11,8 @@ function DeviceListCtrl($rootScope, editableThemes, toastr, deviceService) {
   var vm = this;
   vm.devices = [];
 
-  deviceService.findAll($rootScope.loggedInUser.username).success(function(devices) {
-    vm.devices = devices;
+  deviceService.findAll().success(function(data) {
+    vm.devices = data.devices;
   }).error(function(err) {
     console.error("Fetching all devices is failed!");
   });

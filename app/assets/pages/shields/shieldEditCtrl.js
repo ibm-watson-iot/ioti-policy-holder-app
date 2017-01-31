@@ -10,18 +10,16 @@ angular.module('BlurAdmin.pages.shields').controller('ShieldEditCtrl', ShieldEdi
 function ShieldEditCtrl($state, $stateParams, toastr, uuid4, shieldService) {
   var vm = this;
   vm.shield = { };
-  vm.actions = [{
-    name: "WaterLeakAction"
-  }];
+  vm.actions = ["WaterLeakAction"];
 
-  if($stateParams.shieldId && $stateParams.shieldId !== 'new') {
-    shieldService.find($stateParams.shieldId).success(function(shield) {
+  if($stateParams.shieldUuid && $stateParams.shieldUuid !== 'new') {
+    shieldService.find($stateParams.shieldUuid).success(function(shield) {
       vm.shield = shield;
     });
   } else {
     vm.isNewShield = true;
     vm.shield = {
-      uuid: uuid4.generate(),
+      UUID: uuid4.generate(),
       image: "shieldWater",
       canBeDisabled: false,
       hazardDetectionOnCloud: true,

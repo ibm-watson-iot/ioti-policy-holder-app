@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('BlurAdmin.pages').controller('MainCtrl', function(
-  $rootScope, $scope, $location, $window, $translate, userService) {
+  $rootScope, $scope, $location, $window, $translate, authenticationService, userService) {
 
   $scope.$on('$viewContentLoaded', function() {
     //console.log("viewContentLoaded");
@@ -20,6 +20,10 @@ angular.module('BlurAdmin.pages').controller('MainCtrl', function(
       $translate.use(newValue);
     }
   });
+
+  $scope.isAdmin = function() {
+    return authenticationService.isAdmin();
+  };
 
   userService.me().success(function(user) {
     $rootScope.loggedInUser = user;
