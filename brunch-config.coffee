@@ -45,42 +45,14 @@ exports.config =
                     'app/assets/pages/pages.module.js',
                     'app/assets/pages/main.module.js',
 
-                    'app/assets/pages/charts/charts.module.js',
-                    'app/assets/pages/charts/amCharts/amCharts.module.js',
-                    'app/assets/pages/charts/chartist/chartist.module.js',
-                    'app/assets/pages/charts/chartJs/chartJs.module.js',
-                    'app/assets/pages/charts/morris/morris.module.js',
-                    'app/assets/pages/components/components.module.js',
-                    'app/assets/pages/components/mail/mail.module.js',
-                    'app/assets/pages/components/timeline/timeline.module.js',
-                    'app/assets/pages/components/tree/tree.module.js',
                     'app/assets/pages/dashboard/dashboard.module.js',
-
-                    'app/assets/pages/form/form.module.js',
-                    'app/assets/pages/form/inputs/inputs.module.js',
-                    'app/assets/pages/form/layouts/layouts.module.js',
-                    'app/assets/pages/form/wizard/wizard.module.js',
                     'app/assets/pages/login/login.module.js',
                     'app/assets/pages/maps/maps.module.js',
                     'app/assets/pages/profile/profile.module.js',
-                    'app/assets/pages/tables/tables.module.js',
-                    'app/assets/pages/ui/ui.module.js',
-                    'app/assets/pages/ui/alerts/alerts.module.js',
-                    'app/assets/pages/ui/buttons/buttons.module.js',
-                    'app/assets/pages/ui/grid/grid.module.js',
-                    'app/assets/pages/ui/icons/icons.module.js',
-                    'app/assets/pages/ui/modals/modals.module.js',
-                    'app/assets/pages/ui/notifications/notifications.module.js',
-                    'app/assets/pages/ui/panels/panels.module.js',
-                    'app/assets/pages/ui/progressBars/progressBars.module.js',
-                    'app/assets/pages/ui/slider/slider.module.js',
-                    'app/assets/pages/ui/tabs/tabs.module.js',
-                    'app/assets/pages/ui/typography/typography.module.js',
 
                     'app/assets/pages/shields/shields.module.js',
                     'app/assets/pages/hazards/hazards.module.js',
                     'app/assets/pages/devices/devices.module.js'
-
                 ]
                 after: [
 
