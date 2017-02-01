@@ -25,7 +25,7 @@
       icon: 'device',
     }, {
       color: pieColor,
-      description: 'Previous Hazards',
+      description: 'Hazards',
       stats: '0',
       icon: 'attention',
     }, {

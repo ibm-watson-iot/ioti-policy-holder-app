@@ -17,7 +17,7 @@
               <tr ng-repeat="shield in shieldListCtrlVm.userShields" class="editable-tr-wrap">
                 <td class="table-id">{{$index + 1}}</td>
                 <td>
-                  <span editable-text="shield.name" blur="cancel"
+                  <span ditable-text="shield.name" blur="cancel"
                       onaftersave="shieldListCtrlVm.saveShield(shield)">{{shield.name}}
                   </span>
                 </td>
