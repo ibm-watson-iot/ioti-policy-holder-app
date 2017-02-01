@@ -30,7 +30,6 @@
       { text: 'Vim an eius ocurreret abhorreant, id nam aeque persius ornatus.' },
       { text: 'Simul erroribus ad usu' },
       { text: 'Ei cum solet appareat, ex est graeci mediocritatem' },
-      { text: 'Get in touch with akveo team' },
       { text: 'Write email to business cat' },
       { text: 'Have fun with blur admin' },
       { text: 'What do you think?' },

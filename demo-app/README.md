@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/akveo/blur-admin.svg?branch=master)](https://travis-ci.org/akveo/blur-admin)
-
 # IoT4Insurance Demo Application
 
 
@@ -55,7 +53,6 @@ License
 -------------
 <a href=/LICENSE.txt target="_blank">MIT</a> license.
 
-### From akveo
 
 Enjoy!
 We're always happy to hear your feedback.
