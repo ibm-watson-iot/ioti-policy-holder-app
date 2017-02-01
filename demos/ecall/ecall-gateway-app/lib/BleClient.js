@@ -16,11 +16,11 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
     var wait6Sec = false;
     var bsplit = require('buffer-split');
     var sensorID;
+    var noble = require('noble');
 
     this.start = function() {
-        var noble = require('noble');
-        console.log("start ble client");
 
+        console.log("start ble client");
         noble.on('stateChange', function(state) {
             console.log("state", state);
             if (state === 'poweredOn') {
@@ -41,11 +41,11 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
             sensorID = peripheral.uuid;
 
             peripheral.connect(function(err) {
-
                 peripheral.discoverAllServicesAndCharacteristics(function(error, services, characteristics) {
                     var indicateCharacteristic = characteristics[0];
                     var writeCharacteristic = characteristics[1];
 
+                    // change sensor mode to 4 which means PHYD and Crash
                     writeCharacteristic.write(new Buffer([0x10, 0x16, 0x04, 0x48]), false, function(error) {
                         if (error) {
                             console.log('error changing the sensor mode, err:', error);
@@ -54,6 +54,7 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
                         }
                     });
 
+                    // enable notify mode for the indicate characteristic
                     indicateCharacteristic.notify(true, function(error) {
                         if (error) {
                             console.log("enabling notification failed, error", error);
@@ -62,6 +63,7 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
                         }
                     });
 
+                    // enable notify mode for the write characteristic
                     writeCharacteristic.notify(true, function(error) {
                         if (error) {
                             console.log("enabling notification failed, error", error);
@@ -70,18 +72,20 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
                         }
                     });
 
+                    // listen for data from the write characteristic
                     writeCharacteristic.on('read', function(data, isNotification) {
                         console.log("writeCharacteristic data received", data);
                     });
 
+                    // listen for errors from the write characteristic
                     writeCharacteristic.on('error', function(err) {
                         console.log('Error received, error:', JSON.stringify(err));
                     });
 
+                    // listen for data from the indicate characteristic
                     indicateCharacteristic.on('read', function(data, isNotification) {
                         if (data) {
                             var buff = new Buffer(data);
-
                             bodylength += data.length;
                             chunks.push(buff);
 
@@ -89,10 +93,10 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
                             if ((buff[buff.length - 1] === 0 && buff[buff.length - 2] === 0)
                                 || (buff.length === 1 && buff[buff.length - 1] === 0)) {
 
+                                // wait 6 seconds (recommended in the sensor documentation) to avoid wrong events
                                 if (!wait6Sec) {
                                     wait6Sec = true;
                                     console.log('stream end');
-                                    //console.log('chunks are ', chunks);
                                     sendNotification();
                                     bodylength = 0;
                                     chunks = [];
@@ -105,43 +109,37 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
                         else {
                             console.log('no data returned on read');
                         }
-
                     });
 
+                    // listen for errors from the indicate characteristic
                     indicateCharacteristic.on('error', function(err) {
                         console.log('Error received, error:', JSON.stringify(err));
                     });
                 });
             })
         });
-
     };
 
     var sendNotification = function() {
-
+        // split the final buffer when 0x30 found
         var finalBuff = Buffer.concat(chunks);
-
         var delim = new Buffer([0x30]);
-
         var result = bsplit(finalBuff, delim);
-
+        // the event is the last data received after the end of stream data
         var event = result[result.length - 2];
-
         console.log("result", result);
-
         console.log("event", event);
 
         var payload = {};
         var eventType;
         payload.rawEvent = finalBuff;
         payload.sensorID = sensorID;
+        // event type has order 1 in the buffer array as per documentations
         if (event[1]) {
             eventType = Number(event[1].toString(16));
         }
-        else {
-            eventType = 0;
-        }
         console.log("eventType is", eventType);
+        // handle crash events, event type 43
         if (eventType === 43) {
             if (event[4] && event[5]) {
                 var crashIndex = Number(event[4]);
@@ -155,18 +153,14 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
                 payload.eventType = 'crash';
                 console.log("crashStatus is", payload.crashStatus);
                 console.log("crashIndex is", payload.crashIndex);
-
                 ioTPlatformClient.publishDeviceEvent("eCall", deviceServiceUuid, "status", "json", payload, null);
             }
-
         } else if (eventType === 50) {
             payload.eventType = 'PAYD';
             // handle drive behaviour events
             ioTPlatformClient.publishDeviceEvent("eCall", deviceServiceUuid, "status", "json", payload, null);
         }
-
     };
-
 }
 
 module.exports = BleClient;
