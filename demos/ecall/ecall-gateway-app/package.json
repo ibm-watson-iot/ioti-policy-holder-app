@@ -1,0 +1,17 @@
+{
+  "name": "ecall-sensor-gateway",
+  "version": "1.0.0",
+  "description": "a client to transformer the events from the Bosch ecall sensor and publish it to IoTP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "buffer-split": "^1.0.0",
+    "ibmiotf": "^0.2.25",
+    "noble": "^1.7.0",
+    "when": "^3.7.4"
+  }
+}
