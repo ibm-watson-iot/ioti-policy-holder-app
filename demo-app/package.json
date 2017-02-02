@@ -6,7 +6,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.ibm.com:IoT-Insurance/iot4i-demo.git"
   },
   "scripts": {
     "postinstall": "bower install",
@@ -15,15 +15,14 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "after-brunch": "0.0.5",
-    "autoprefixer": "5.1.0",
-    "auto-reload-brunch": "^2.0.0",
-    "brunch": "^2.0.0",
+    "brunch": "^2.10.5",
+    "css-brunch": "^2.6.1",
+    "sass-brunch": "^2.9.0",
     "clean-css-brunch": "^2.0.0",
-    "css-brunch": "^2.0.0",
-    "javascript-brunch": "^2.0.0",
-    "ng-annotate-uglify-js-brunch": "^2.0.0",
     "postcss-brunch": "^2.0.5",
-    "sass-brunch": "^2.9.0"
+    "autoprefixer": "^6.7.2",
+    "after-brunch": "0.0.5",
+    "auto-reload-brunch": "^2.7.1",
+    "uglify-js-brunch": "^2.0.1"
   }
 }
