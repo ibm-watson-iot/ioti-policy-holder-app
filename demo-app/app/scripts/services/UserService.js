@@ -28,6 +28,9 @@ angular.module('BlurAdmin.services').factory('userService', function($http, apiP
       } else {
         return $http.post(apiUrl, user);
       }
+    },
+    updateAttribute: function(userName, attributeName, attributeValue) {
+      return $http.post(apiUrl + '/attribute/' + userName + '/' + attributeName + '/' + attributeValue);
     }
   };
 

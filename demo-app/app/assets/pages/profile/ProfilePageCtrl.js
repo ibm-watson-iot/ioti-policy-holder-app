@@ -3,87 +3,64 @@
  * created on 16.12.2015
  */
 (function () {
-  'use strict';
+'use strict';
 
-  angular.module('BlurAdmin.pages.profile')
-    .controller('ProfilePageCtrl', ProfilePageCtrl);
+angular.module('BlurAdmin.pages.profile').controller('ProfilePageCtrl', ProfilePageCtrl);
 
-  /** @ngInject */
-  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal) {
-    $scope.picture = $filter('profilePicture')('Nasta');
+/** @ngInject */
+function ProfilePageCtrl($scope, $filter, $uibModal, fileReader, toastr, userService) {
 
-    $scope.removePicture = function () {
-      $scope.picture = $filter('appImage')('theme/no-photo.png');
-      $scope.noPicture = true;
-    };
+  var isFullnameChanged = false;
+  var isEmailChanged = false;
+  var isPhoneNumberChanged = false;
 
-    $scope.uploadPicture = function () {
-      var fileInput = document.getElementById('uploadFile');
-      fileInput.click();
+  $scope.phoneNumbers = [ "+4917672246110", "+4915207145469" ];
 
-    };
+  userService.me().success(function(user) {
+    $scope.user = user;
 
-    $scope.socialProfiles = [
-      {
-        name: 'Facebook',
-        href: 'https://www.facebook.com',
-        icon: 'socicon-facebook'
-      },
-      {
-        name: 'Twitter',
-        href: 'https://twitter.com',
-        icon: 'socicon-twitter'
-      },
-      {
-        name: 'Google',
-        icon: 'socicon-google'
-      },
-      {
-        name: 'LinkedIn',
-        href: 'https://www.linkedin.com',
-        icon: 'socicon-linkedin'
-      },
-      {
-        name: 'GitHub',
-        href: 'https://github.com',
-        icon: 'socicon-github'
-      },
-      {
-        name: 'StackOverflow',
-        icon: 'socicon-stackoverflow'
-      },
-      {
-        name: 'Dribbble',
-        icon: 'socicon-dribble'
-      },
-      {
-        name: 'Behance',
-        icon: 'socicon-behace'
+    $scope.$watch('user.fullname', function(newValue, oldValue) {
+      if (newValue && (oldValue !== newValue)) {
+        isFullnameChanged = true;
       }
-    ];
+    });
 
-    $scope.unconnect = function (item) {
-      item.href = undefined;
-    };
+    $scope.$watch('user.email', function(newValue, oldValue) {
+      if (newValue && (oldValue !== newValue)) {
+        isEmailChanged = true;
+      }
+    });
 
-    $scope.showModal = function (item) {
-      $uibModal.open({
-        animation: false,
-        controller: 'ProfileModalCtrl',
-        templateUrl: 'pages/profile/profileModal.html'
-      }).result.then(function (link) {
-          item.href = link;
-        });
-    };
+    $scope.$watch('user.phoneNumber', function(newValue, oldValue) {
+      if (newValue && (oldValue !== newValue)) {
+        isPhoneNumberChanged = true;
+      }
+    });
 
-    $scope.getFile = function () {
-      fileReader.readAsDataUrl($scope.file, $scope)
-          .then(function (result) {
-            $scope.picture = result;
-          });
-    };
+  }).error(function(err) {
+    console.error("Fetching the user is failed.");
+  });
 
-    $scope.switches = [true, true, false, true, true, false];
+  function updateAttribute(attributeName, newValue) {
+    userService.updateAttribute($scope.user.username, attributeName, newValue).success(function(data) {
+      toastr.success(null, "Updating profile is successful.");
+    }).error(function(err) {
+      toastr.error("Updating profile is failed!", "Error");
+    });
   }
+
+  $scope.saveUser = function() {
+    if (isFullnameChanged) {
+      updateAttribute('fullname', $scope.user.fullname);
+    }
+    if (isEmailChanged) {
+      updateAttribute('email', $scope.user.email);
+    }
+    if (isPhoneNumberChanged) {
+      updateAttribute('phoneNumber', $scope.user.phoneNumber);
+    }
+  };
+
+}
 
 })();
