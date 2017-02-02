@@ -63,21 +63,19 @@ exports.config =
                 'styles/auth.css': /^app\/styles\/auth.scss/
 
     plugins:
-        uglify:
-            mangle: true
-            compress:
-                global_defs:
-                    DEBUG: false
+        minify: true
 
         autoReload:
             delay: 1000
 
         sass:
             mode: 'native' # 'ruby' / 'native'
-            options:
-                includePaths: ['app/styles/**/_*.scss']
 
-        minify: true
+        uglify:
+            mangle: false
+            compress:
+                global_defs:
+                    DEBUG: false
 
         autoprefixer:
             browsers: ["last 1 version", "ie 9", "ie 10"]

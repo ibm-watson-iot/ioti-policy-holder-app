@@ -26,7 +26,6 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, auth
     }).error(function(err) {
       console.error("Signin is failed.");
       toastr.error("Signin is failed.", 'Error');
-      $state.go('main.dashboard');
     });
 
   };

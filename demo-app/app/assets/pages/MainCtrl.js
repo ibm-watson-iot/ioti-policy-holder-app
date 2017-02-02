@@ -33,11 +33,11 @@ angular.module('BlurAdmin.pages').controller('MainCtrl', function(
 
 }).config(function($translateProvider) {
 
-  $translateProvider.useStaticFilesLoader({
-    prefix: '/translations/',
-    suffix: '.json'
-  });
-
-  $translateProvider.preferredLanguage('tr');
+  // $translateProvider.useStaticFilesLoader({
+  //   prefix: '/translations/',
+  //   suffix: '.json'
+  // });
+  //
+  // $translateProvider.preferredLanguage('en');
 
 });
