@@ -16,7 +16,6 @@ angular.module('BlurAdmin', [
   'ui.sortable',
   'ui.bootstrap',
   'ui.slimscroll',
-  "pascalprecht.translate",
   'angular-progress-button-styles',
 
   'permission',
