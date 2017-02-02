@@ -1,0 +1,6 @@
+applications:
+- buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
+  host: iot4i-demo
+  name: iot4i-demo
+  memory: 256M
+  stack: cflinuxfs2
