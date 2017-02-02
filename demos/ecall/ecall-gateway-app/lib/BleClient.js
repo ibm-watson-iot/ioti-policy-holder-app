@@ -17,6 +17,7 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
     var bsplit = require('buffer-split');
     var sensorID;
     var noble = require('noble');
+    var constants = require('./constants');
 
     this.start = function() {
 
@@ -140,7 +141,7 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
         }
         console.log("eventType is", eventType);
         // handle crash events, event type 43
-        if (eventType === 43) {
+        if (eventType === constants.CRASH_EVENT_TYPE) {
             if (event[4] && event[5]) {
                 var crashIndex = Number(event[4]);
                 var crashStatus = Number(event[5]);
@@ -155,8 +156,8 @@ function BleClient(deviceServiceUuid, ioTPlatformClient, testMode) {
                 console.log("crashIndex is", payload.crashIndex);
                 ioTPlatformClient.publishDeviceEvent("eCall", deviceServiceUuid, "status", "json", payload, null);
             }
-        } else if (eventType === 50) {
-            payload.eventType = 'PAYD';
+        } else if (eventType === constants.PHYD_EVENT_TYPE) {
+            payload.eventType = 'PHYD';
             // handle drive behaviour events
             ioTPlatformClient.publishDeviceEvent("eCall", deviceServiceUuid, "status", "json", payload, null);
         }
