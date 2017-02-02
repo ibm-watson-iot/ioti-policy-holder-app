@@ -61,35 +61,6 @@ function ProfilePageCtrl($scope, $filter, $uibModal, fileReader, toastr, userSer
     }
   };
 
-
-  $scope.picture = $filter('profilePicture')('Nasta');
-
-  $scope.removePicture = function () {
-    $scope.picture = $filter('appImage')('theme/no-photo.png');
-    $scope.noPicture = true;
-  };
-
-  $scope.uploadPicture = function () {
-    var fileInput = document.getElementById('uploadFile');
-    fileInput.click();
-  };
-
-  $scope.showModal = function (item) {
-    $uibModal.open({
-      animation: false,
-      controller: 'ProfileModalCtrl',
-      templateUrl: 'pages/profile/profileModal.html'
-    }).result.then(function (link) {
-        item.href = link;
-      });
-  };
-
-  $scope.getFile = function () {
-    fileReader.readAsDataUrl($scope.file, $scope).then(function(result) {
-      $scope.picture = result;
-    });
-  };
-
 }
 
 })();
