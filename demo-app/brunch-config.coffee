@@ -31,12 +31,12 @@ exports.config =
                     'bower_components/moment/min/moment-with-locales.js',
                     'bower_components/ng-file-upload/ng-file-upload.js',
 
-                    'app/vendor/'
+                    'app/vendor/*',
 
-                    'app/app.js',
-                    'app/scripts/utils/',
+                    'app/scripts/utils/utils.module.js',
+                    'app/scripts/utils/*',
                     'app/scripts/services/services.module.js',
-                    'app/scripts/services/',
+                    'app/scripts/services/*',
 
                     'app/assets/theme/components/components.module.js',
                     'app/assets/theme/inputs/inputs.module.js',
@@ -44,15 +44,15 @@ exports.config =
 
                     'app/assets/pages/pages.module.js',
                     'app/assets/pages/main.module.js',
-
                     'app/assets/pages/dashboard/dashboard.module.js',
                     'app/assets/pages/login/login.module.js',
                     'app/assets/pages/profile/profile.module.js',
                     'app/assets/pages/shields/shields.module.js',
                     'app/assets/pages/hazards/hazards.module.js',
                     'app/assets/pages/devices/devices.module.js',
+                    'app/assets/pages/maps/maps.module.js',
 
-                    'app/assets/pages/maps/maps.module.js'
+                    'app/app.js'
                 ]
                 after: [
 
@@ -89,6 +89,9 @@ exports.config =
         afterBrunch: [
             [
                'cp manifest.yml public/',
+               'cp app/lib/bmx-push/BMSPushSDK.js public/BMSPushSDK.js',
+               'cp app/lib/bmx-push/BMSPushServiceWorker.js public/BMSPushServiceWorker.js',
+               'cp app/lib/bmx-push/manifest.json public/manifest.json',
                'cp bower_components/Ionicons/fonts/* public/fonts',
                'cp bower_components/font-awesome/fonts/* public/fonts',
                'mkdir -p public/img/theme/vendor/ionrangeslider/img',

@@ -7,14 +7,14 @@
 
   angular.module('BlurAdmin.pages', [
     'ui.router',
+    'BlurAdmin.pages.login',
     'BlurAdmin.pages.main',
     'BlurAdmin.pages.dashboard',
     'BlurAdmin.pages.profile',
-    'BlurAdmin.pages.maps',
-
     'BlurAdmin.pages.shields',
     'BlurAdmin.pages.hazards',
-    'BlurAdmin.pages.devices'
+    'BlurAdmin.pages.devices',
+    'BlurAdmin.pages.maps'
   ]).config(routeConfig);
 
   /** @ngInject */

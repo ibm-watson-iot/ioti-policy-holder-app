@@ -21,11 +21,9 @@ angular.module('BlurAdmin', [
   'permission',
   'permission.ui',
 
-  'BlurAdmin.authService',
-  'BlurAdmin.signin',
-
-  'BlurAdmin.theme',
+  'BlurAdmin.utils',
   'BlurAdmin.services',
+  'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -33,18 +31,19 @@ angular.module('BlurAdmin', [
   $httpProvider.interceptors.push('blurAdminHttpInterceptor');
 
 })
-.run(function($rootScope, $state, $location, editableOptions, editableThemes, PermRoleStore, authenticationService, userService) {
+.run(function($rootScope, $state, $location, editableOptions, editableThemes,
+  PermRoleStore, authenticationService, notificationService, userService) {
 
     // xeditable theme
     editableOptions.theme = 'bs3';
     editableThemes.bs3.inputClass = 'input-sm';
 
     PermRoleStore.defineRole('AUTHORIZED', function() {
-        return authenticationService.isLoggedIn();
+      return authenticationService.isLoggedIn();
     });
 
     PermRoleStore.defineRole('ADMIN', function() {
-        return authenticationService.isAdmin();
+      return authenticationService.isAdmin();
     });
 
     var originalPath = $location.path();
@@ -60,6 +59,7 @@ angular.module('BlurAdmin', [
         if (!$rootScope.loggedInUser) {
           userService.me().success(function(user) {
             $rootScope.loggedInUser = user;
+            notificationService.registerWithUserId(user.username);
           }).error(function(err) {
             console.error("Fetching the loggedin user is failed.");
           });
@@ -79,6 +79,7 @@ angular.module('BlurAdmin', [
           if (!$rootScope.loggedInUser) {
             userService.me().success(function(user) {
               $rootScope.loggedInUser = user;
+              notificationService.registerWithUserId(user.username);
             }).error(function(err) {
               console.error("Fetching the loggedin user is failed.");
             });
@@ -91,5 +92,5 @@ angular.module('BlurAdmin', [
     });
 })
 .constant('apiProtocol', 'https')
-.constant('apiHost', 'iot4insurance-api-a181e9ca-1bff-478f-96bd-2709b67c4078.mybluemix.net')
+.constant('apiHost', 'iot4insurance-api-393b0bf3-830a-4065-a906-50ef7fa967e4.eu-gb.mybluemix.net')
 .constant('apiPath', '/');
