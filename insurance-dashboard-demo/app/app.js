@@ -91,5 +91,5 @@ angular.module('BlurAdmin', [
     });
 })
 .constant('apiProtocol', 'https')
-.constant('apiHost', 'iot4insurance-api-a181e9ca-1bff-478f-96bd-2709b67c4078.mybluemix.net')
+.constant('apiHost', 'iot4insurance-api-3dfc2b51-82d0-443e-a006-931fa825e4c0.eu-gb.mybluemix.net')
 .constant('apiPath', '/');
