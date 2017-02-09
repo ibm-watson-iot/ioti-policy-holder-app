@@ -104,6 +104,9 @@
     },
     "highlight": {
       "main": "src/highlight.js"
+    },
+    "slimScroll": {
+      "name": "slimScroll"
     }
   }
 }
