@@ -1,9 +1,10 @@
 (function() {
 'use strict';
 
-angular.module('BlurAdmin.signin').controller('LoginCtrl', LoginCtrl);
+angular.module('BlurAdmin.pages.login').controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, authenticationService, userService) {
+function LoginCtrl($rootScope, $scope, $state, $http, toastr,
+  authenticationService, notificationService, userService) {
 
   var vm = this;
   vm.user = {
@@ -21,6 +22,9 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, auth
 
       $rootScope.authToken = authToken;
       authenticationService.setToken(authToken);
+
+      notificationService.initialize();
+      notificationService.registerWithUserId(user.username);
 
       $state.go('main.dashboard');
     }).error(function(err) {

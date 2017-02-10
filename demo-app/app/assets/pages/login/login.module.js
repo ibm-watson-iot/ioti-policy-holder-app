@@ -5,7 +5,7 @@
 (function() {
 'use strict';
 
-angular.module('BlurAdmin.signin', []).config(routeConfig);
+angular.module('BlurAdmin.pages.login', []).config(routeConfig);
 
 function routeConfig($stateProvider) {
   $stateProvider

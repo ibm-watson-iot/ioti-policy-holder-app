@@ -5,7 +5,7 @@
 (function() {
 'use strict';
 
-angular.module('BlurAdmin.services', []).factory('printService', printService);
+angular.module('BlurAdmin.services').factory('printService', printService);
 
 function printService($http, $timeout) {
   var service = {};

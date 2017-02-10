@@ -17,13 +17,14 @@ The directory structure of the application is as follows:
 │   │   ├── img/             <- Images
 │   │   ├── pages/           <- UI router pages. Templates of the pages.
 │   │   ├── theme/           <- Theme components. Contains various common widgets, panels which used across application
+│   ├── lib/                 <- JS dependencies. They are not merged into vendor.js. They are copied into the public.
 │   ├── scripts/             <-
 │   │   ├── services/        <- angular services
 │   │   ├── utils/           <- utilities
 │   ├── styles/              <- sass styles
 │   │   ├── app/             <- application styles. Used mostly for demonstration purposes. Put your app styles here.
 │   │   ├── theme/           <- theme styles. Used to customize bootstrap and other common components used in tempate.
-│   ├── vendor/              <- Non-bower dependencies
+│   ├── vendor/              <- Non-bower dependencies. They are also merged into vendor.js
 ```
 
 
