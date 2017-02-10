@@ -2,10 +2,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.hazards')
-  .controller('MapBubbleCtrl', MapBubbleCtrl);
+  .controller('HazardsMapCtrl', HazardsMapCtrl);
 
   /** @ngInject */
-  function MapBubbleCtrl(baConfig, $timeout, layoutPaths, cityLocationService, hazardService, userService) {
+  function HazardsMapCtrl(baConfig, $timeout, layoutPaths, cityLocationService, hazardService, userService) {
     var layoutColors = baConfig.colors;
     var latlong;
     cityLocationService.me().success(function(data) {
