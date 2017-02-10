@@ -21,11 +21,9 @@ angular.module('BlurAdmin', [
   'permission',
   'permission.ui',
 
-  'BlurAdmin.authService',
-  'BlurAdmin.signin',
-
-  'BlurAdmin.theme',
+  'BlurAdmin.utils',
   'BlurAdmin.services',
+  'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
