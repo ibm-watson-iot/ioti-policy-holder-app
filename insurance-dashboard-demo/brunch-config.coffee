@@ -92,6 +92,10 @@ exports.config =
                'cp bower_components/Ionicons/fonts/* public/fonts',
                'cp bower_components/font-awesome/fonts/* public/fonts',
                'mkdir -p public/img/theme/vendor/ionrangeslider/img',
-               'cp bower_components/ionrangeslider/img/* public/img/theme/vendor/ionrangeslider/img'
+               'cp bower_components/ionrangeslider/img/* public/img/theme/vendor/ionrangeslider/img',
+               'mkdir -p public/img/theme/vendor/ammap/img',
+               'cp bower_components/ammap/dist/ammap/images/* public/img/theme/vendor/ammap/img',
+               'mkdir -p public/data',
+               'cp app/assets/data/CityLocations.json public/data'
             ].join(' && ')
         ]

@@ -1,28 +1,32 @@
+<div ba-panel ba-panel-title="Hazards Map" ng-controller="HazardsMapCtrl as hazardsMapCtrlVM" class="viewport100">
+    <div id="map-bubbles"></div>
+</div>
+
+
 <div class="widgets">
-  <div class="row" ng-controller="HazardListCtrl as hazardListCtrlVm">
-    <div class="col-md-12">
-      <div ba-panel ba-panel-class="with-scroll">
-        <div class="horizontal-scroll">
-          <table class="table table-hover">
-            <tr class="header-row">
-              <th class="table-id">#</th>
-              <th>Happened At</th>
-              <th>Shield-UUID</th>
-            </tr>
-            <tr ng-repeat="hazard in hazardListCtrlVm.hazards" class="editable-tr-wrap">
-              <td class="table-id">{{$index + 1}}</td>
-              <td>
-                <span ditable-text="hazard.name" blur="cancel"
-                    onaftersave="hazardListCtrlVm.saveHazard(hazard)">{{hazard.timestamp}}
-                </span>
-              </td>
-              <td>
-                  {{hazard.shieldUUID}}
-              </td>
-            </tr>
-          </table>
+    <div class="row" ng-controller="HazardListCtrl as hazardListCtrlVm">
+        <div class="col-md-12">
+            <div ba-panel ba-panel-class="with-scroll">
+                <div class="horizontal-scroll">
+                    <table class="table table-hover">
+                        <tr class="header-row">
+                            <th class="table-id">#</th>
+                            <th>Happened At</th>
+                            <th>Shield-UUID</th>
+                        </tr>
+                        <tr ng-repeat="hazard in hazardListCtrlVm.hazards"
+                            ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})" class="editable-tr-wrap">
+                            <td class="table-id">{{$index + 1}}</td>
+                            <td>
+                                {{hazard.timestamp}}
+                            </td>
+                            <td>
+                                {{hazard.shieldUUID}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
