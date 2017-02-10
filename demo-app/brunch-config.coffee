@@ -61,6 +61,7 @@ exports.config =
             joinTo:
                 'styles/app.css': /^bower_components|^app\/styles\/theme|^app\/styles\/main.scss/
                 'styles/auth.css': /^app\/styles\/auth.scss/
+                'styles/404.css': /^app\/styles\/404.scss/
 
     plugins:
         minify: true
