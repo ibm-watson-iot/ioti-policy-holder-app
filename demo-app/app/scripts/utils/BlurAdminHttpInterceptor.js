@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('BlurAdmin.pages').factory('blurAdminHttpInterceptor', function($q, $location, $rootScope) {
+angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function($q, $location, $rootScope) {
 
   return {
     request: function($config) {

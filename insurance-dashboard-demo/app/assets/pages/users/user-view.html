@@ -58,6 +58,59 @@
               </div>
             </div>
           </uib-tab>
+          <uib-tab heading="Active Shields">
+            <div class="heading-widget section-block ng-scope" ng-if="userViewCtrlVm.userShields.length === 0">
+              <h2>No Activated Shield</h2>
+            </div>
+            <table class="table table-hover" ng-if="userViewCtrlVm.userShields.length > 0">
+              <tr class="header-row">
+                <th class="table-id">#</th>
+                <th>Name</th>
+              </tr>
+              <tr ui-sref="main.user-shield-view({shieldId: shield.shieldUUID})"  ng-repeat="shield in userViewCtrlVm.userShields" class="editable-tr-wrap">
+                <td class="table-id">{{$index + 1}}</td>
+                <td>
+                  {{shield.shieldName}}
+                </td>
+              </tr>
+            </table>
+          </uib-tab>
+          <uib-tab heading="Devices">
+            <div class="heading-widget section-block ng-scope" ng-if="userViewCtrlVm.userDevices.length === 0">
+              <h2>No Available Devices</h2>
+            </div>
+            <table class="table table-hover" ng-if="userViewCtrlVm.userDevices.length > 0">
+              <tr class="header-row">
+                <th class="table-id">#</th>
+                <th>Name</th>
+              </tr>
+              <tr ui-sref="main.user-device-view({deviceId: device._id})"  ng-repeat="device in userViewCtrlVm.userDevices" class="editable-tr-wrap">
+                <td class="table-id">{{$index + 1}}</td>
+                <td>
+                  {{device.extra.deviceDesc}}
+                </td>
+              </tr>
+            </table>
+          </uib-tab>
+          <uib-tab heading="Hazards">
+            <div class="heading-widget section-block ng-scope" ng-if="userViewCtrlVm.userHazards.length === 0">
+              <h2>No Hazards</h2>
+            </div>
+            <table class="table table-hover" ng-if="userViewCtrlVm.userHazards.length > 0">
+              <tr class="header-row">
+                <th class="table-id">#</th>
+                <th>Name</th>
+              </tr>
+              <tr ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})"  ng-repeat="hazard in userViewCtrlVm.userHazards" class="editable-tr-wrap">
+                <td class="table-id">{{$index + 1}}</td>
+                <td>
+                  {{hazard.shieldUUID}}
+                </td>
+              </tr>
+            </table>
+          </uib-tab>
+          <uib-tab heading="Claims">
+          </uib-tab>
         </uib-tabset>
       </div>
     </div>

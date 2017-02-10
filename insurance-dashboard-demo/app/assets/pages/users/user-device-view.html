@@ -1,0 +1,58 @@
+<div class="widgets" ng-controller="UserDeviceViewCtrl as userDeviceViewCtrlVm">
+    <div class="row">
+        <div class="col-md-12">
+            <div ba-panel ba-panel-class="with-scroll">
+                <div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="iot4i_device_id">iot4i_device_id</label>
+                                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="iot4i_device_id"
+                                       ng-model="userDeviceViewCtrlVm.userDevice.iot4i_device_id">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="activation">activation</label>
+                                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="activation"
+                                       ng-model="userDeviceViewCtrlVm.userDevice.activation">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="status">status</label>
+                                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="status"
+                                       ng-model="userDeviceViewCtrlVm.userDevice.status">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="connection_updated_at">connection_updated_at</label>
+                                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="connection_updated_at"
+                                       ng-model="userDeviceViewCtrlVm.userDevice.connection_updated_at">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="deviceDesc">deviceDesc</label>
+                                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="deviceDesc"
+                                       ng-model="userDeviceViewCtrlVm.userDevice.extra.deviceDesc">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="location">location</label>
+                                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="location"
+                                       ng-model="userDeviceViewCtrlVm.userDevice.location">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

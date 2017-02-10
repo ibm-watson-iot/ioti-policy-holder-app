@@ -5,9 +5,9 @@
 (function() {
 'use strict';
 
-angular.module('BlurAdmin.authService', []).factory('authenticationService', AuthenticationService);
+angular.module('BlurAdmin.services').factory('authenticationService', AuthenticationService);
 
-function AuthenticationService() {
+function AuthenticationService(notificationService) {
 
   return {
     isLoggedIn: function() {
@@ -45,6 +45,7 @@ function AuthenticationService() {
     },
     signOut: function() {
       localStorage.clear();
+      notificationService.unRegisterDevice();
     }
   };
 

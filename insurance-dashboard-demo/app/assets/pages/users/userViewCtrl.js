@@ -3,7 +3,7 @@
 
   angular.module('BlurAdmin.pages.users').controller('UserViewCtrl', UserViewCtrl);
 
-  function UserViewCtrl($stateParams, userService) {
+  function UserViewCtrl($stateParams, userService, shieldAssociationService, deviceService, hazardService) {
     var vm = this;
     vm.user = {};
 
@@ -11,6 +11,17 @@
       userService.findAll($stateParams.username).success(function(user) {
         vm.user = user;
         initializeLocationMap(user.address);
+        shieldAssociationService.findAll($stateParams.username).success(function(data) {
+          vm.userShields = data.shieldassociations;
+        });
+
+        deviceService.findAll($stateParams.username).success(function(data) {
+          vm.userDevices = data;
+        });
+
+        hazardService.findAll($stateParams.username).success(function(data) {
+          vm.userHazards = data.hazardEvents;
+        });
       });
     }
 
@@ -35,10 +46,10 @@
             if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
               map.setCenter(results[0].geometry.location);
               var infowindow = new google.maps.InfoWindow(
-                  {
-                    content: '<b>' + address + '</b>',
-                    size: new google.maps.Size(150, 50)
-                  });
+                {
+                  content: '<b>' + address + '</b>',
+                  size: new google.maps.Size(150, 50)
+                });
               var marker = new google.maps.Marker({
                 position: results[0].geometry.location,
                 map: map,
