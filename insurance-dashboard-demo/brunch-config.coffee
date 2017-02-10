@@ -50,6 +50,7 @@ exports.config =
                     'app/assets/pages/profile/profile.module.js',
                     'app/assets/pages/shields/shields.module.js',
                     'app/assets/pages/hazards/hazards.module.js',
+                    'app/assets/pages/users/users.module.js',
                     'app/assets/pages/devices/devices.module.js',
 
                     'app/assets/pages/maps/maps.module.js'
@@ -92,6 +93,10 @@ exports.config =
                'cp bower_components/Ionicons/fonts/* public/fonts',
                'cp bower_components/font-awesome/fonts/* public/fonts',
                'mkdir -p public/img/theme/vendor/ionrangeslider/img',
-               'cp bower_components/ionrangeslider/img/* public/img/theme/vendor/ionrangeslider/img'
+               'cp bower_components/ionrangeslider/img/* public/img/theme/vendor/ionrangeslider/img',
+                'mkdir -p public/img/theme/vendor/ammap/img',
+                'cp bower_components/ammap/dist/ammap/images/* public/img/theme/vendor/ammap/img',
+                'mkdir -p public/data',
+                'cp app/assets/data/CityLocations.json public/data'
             ].join(' && ')
         ]

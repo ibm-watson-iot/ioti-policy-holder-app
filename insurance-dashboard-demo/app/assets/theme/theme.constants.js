@@ -16,7 +16,7 @@
       images: {
         root: IMAGES_ROOT,
         profile: IMAGES_ROOT + 'app/profile/',
-        amMap: 'img/theme/vendor/ammap//dist/ammap/images/',
+        amMap: 'img/theme/vendor/ammap/img/',
         amChart: 'img/theme/vendor/amcharts/dist/amcharts/images/'
       }
     })

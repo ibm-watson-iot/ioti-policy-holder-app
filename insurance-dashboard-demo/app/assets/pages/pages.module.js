@@ -14,6 +14,7 @@
 
     'BlurAdmin.pages.shields',
     'BlurAdmin.pages.hazards',
+    'BlurAdmin.pages.users',
     'BlurAdmin.pages.devices'
   ]).config(routeConfig);
 

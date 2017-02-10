@@ -1,0 +1,65 @@
+<div class="widgets" ng-controller="UserViewCtrl as userViewCtrlVm">
+  <div class="row">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-class="with-scroll">
+        <uib-tabset active="$tabSetStatus.activeTab">
+          <uib-tab heading="User Info">
+            <div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="username">username</label>
+                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="username"
+                           ng-model="userViewCtrlVm.user.username">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="fullname">fullname</label>
+                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="fullname"
+                           ng-model="userViewCtrlVm.user.fullname">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="firstname">firstname</label>
+                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="firstname"
+                           ng-model="userViewCtrlVm.user.firstname">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="lastname">lastname</label>
+                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="lastname"
+                           ng-model="userViewCtrlVm.user.lastname">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="email">email</label>
+                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="email"
+                           ng-model="userViewCtrlVm.user.email">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="address">address</label>
+                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="address"
+                           ng-model="userViewCtrlVm.user.address">
+                  </div>
+                </div>
+              </div>
+              <div ba-panel ba-panel-title="User Location" class="viewport100">
+                <div id="google-maps"></div>
+              </div>
+            </div>
+          </uib-tab>
+        </uib-tabset>
+      </div>
+    </div>
+  </div>
+</div>
