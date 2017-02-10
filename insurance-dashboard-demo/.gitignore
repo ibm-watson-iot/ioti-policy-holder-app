@@ -27,3 +27,6 @@ bower_components/
 
 # Brunch output folder.
 public/
+
+# Developer specific config file
+app/config-dev.js
