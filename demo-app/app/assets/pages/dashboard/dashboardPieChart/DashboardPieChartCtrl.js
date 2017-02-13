@@ -16,7 +16,7 @@
     $scope.charts = [{
       color: pieColor,
       description: 'Active Shields',
-      stats: '5',
+      stats: '0',
       icon: 'shield',
     }, {
       color: pieColor,
@@ -28,11 +28,6 @@
       description: 'Hazards',
       stats: '0',
       icon: 'attention',
-    }, {
-      color: pieColor,
-      description: 'Returned',
-      stats: '2,592',
-      icon: 'refresh',
     }
     ];
 
@@ -49,7 +44,7 @@
     });
 
     hazardService.findAll($rootScope.loggedInUser.username).success(function(hazards) {
-      $scope.charts[2].stats = hazards.length;
+      $scope.charts[2].stats = hazards.total;
     }).error(function(err) {
       console.error("Fetching user's hazards is failed!");
     });
