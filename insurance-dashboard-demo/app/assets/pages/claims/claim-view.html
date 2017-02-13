@@ -1,0 +1,93 @@
+<div class="widgets" ng-controller="ClaimViewCtrl as claimViewCtrlVm">
+  <div class="row">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-class="with-scroll">
+        <div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="policyNumber">policyNumber</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="policyNumber"
+                    ng-model="claimViewCtrlVm.claim.policyNumber">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="policyName">policyName</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="policyName"
+                    ng-model="claimViewCtrlVm.claim.policyName">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="username">username</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="username"
+                    ng-model="claimViewCtrlVm.claim.username">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="policyHolder">policyHolder</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="policyHolder"
+                    ng-model="claimViewCtrlVm.claim.policyHolder">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="address">address</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="address"
+                       ng-model="claimViewCtrlVm.claim.address">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="phone">phone</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="phone"
+                       ng-model="claimViewCtrlVm.claim.phone">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="damageDate">damageDate</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="damageDate"
+                       ng-model="claimViewCtrlVm.claim.damageDate">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="damageTime">damageTime</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="damageTime"
+                       ng-model="claimViewCtrlVm.claim.damageTime">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="damageIncurred">damageIncurred</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="damageIncurred"
+                       ng-model="claimViewCtrlVm.claim.damageIncurred">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="description">description</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="description"
+                       ng-model="claimViewCtrlVm.claim.description">
+              </div>
+            </div>
+          </div>
+          <div ba-panel ba-panel-title="Claim Location" class="viewport100">
+            <div id="google-maps"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

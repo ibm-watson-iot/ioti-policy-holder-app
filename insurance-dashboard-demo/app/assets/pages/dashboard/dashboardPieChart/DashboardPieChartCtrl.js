@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function DashboardPieChartCtrl($rootScope, $scope, $timeout, baConfig, baUtil,
-    shieldService, hazardService, deviceService, userService) {
+                                 shieldAssociationService, hazardService, deviceService, userService, claimService) {
 
     var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
     $scope.charts = [{
@@ -20,7 +20,7 @@
       icon: 'shield',
     }, {
       color: pieColor,
-      description: 'Active Devices',
+      description: 'Devices',
       stats: '0',
       icon: 'device',
     }, {
@@ -41,22 +41,28 @@
     }
     ];
 
-    shieldService.findAll($rootScope.loggedInUser.username).success(function(shields) {
-      $scope.charts[0].stats = shields.length;
+    shieldAssociationService.findAll().success(function(shields) {
+      $scope.charts[0].stats = shields.total;
     }).error(function(err) {
       console.error("Fetching user's shields is failed!");
     });
 
-    deviceService.findAll($rootScope.loggedInUser.username).success(function(devices) {
-      $scope.charts[1].stats = devices.length;
+    deviceService.findAll().success(function(devices) {
+      $scope.charts[1].stats = devices.total;
     }).error(function(err) {
       console.error("Fetching user's devices is failed!");
     });
 
-    hazardService.findAll($rootScope.loggedInUser.username).success(function(hazards) {
+    hazardService.findAll().success(function(hazards) {
       $scope.charts[2].stats = hazards.total;
     }).error(function(err) {
       console.error("Fetching user's hazards is failed!");
+    });
+
+    claimService.findAll().success(function(claims) {
+      $scope.charts[3].stats = claims.length;
+    }).error(function(err) {
+      console.error("Fetching claims has failed!");
     });
 
     userService.findAll().success(function(users) {

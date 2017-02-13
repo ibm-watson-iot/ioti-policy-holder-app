@@ -2,7 +2,7 @@
  * @author v.lugovsky
  * created on 16.12.2015
  */
-(function () {
+(function() {
   'use strict';
 
   angular.module('BlurAdmin.pages', [
@@ -11,10 +11,9 @@
     'BlurAdmin.pages.main',
     'BlurAdmin.pages.dashboard',
     'BlurAdmin.pages.profile',
-    'BlurAdmin.pages.shields',
     'BlurAdmin.pages.hazards',
     'BlurAdmin.pages.users',
-    'BlurAdmin.pages.devices'
+    'BlurAdmin.pages.claims'
 
   ]).config(routeConfig);
 

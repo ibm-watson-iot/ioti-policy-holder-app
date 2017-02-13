@@ -7,25 +7,29 @@
     <div class="row" ng-controller="UserListCtrl as userListCtrlVm">
         <div class="col-md-12">
             <div ba-panel ba-panel-class="with-scroll">
-                <div class="horizontal-scroll">
-                    <table class="table table-hover">
-                        <tr class="header-row">
-                            <th class="table-id">#</th>
-                            <th>Full Name</th>
-                            <th>User Name</th>
-                        </tr>
-                        <tr ng-repeat="user in userListCtrlVm.users"
-                            ui-sref="main.user-view({username: user.username})" class="editable-tr-wrap">
-                            <td class="table-id">{{$index + 1}}</td>
-                            <td>
-                                {{user.fullname}}
-                            </td>
-                            <td>
-                                {{user.username}}
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <uib-tabset active="$tabSetStatus.activeTab">
+                    <uib-tab heading="Users">
+                        <div class="horizontal-scroll">
+                            <table class="table table-hover">
+                                <tr class="header-row">
+                                    <th class="table-id">#</th>
+                                    <th>Full Name</th>
+                                    <th>User Name</th>
+                                </tr>
+                                <tr ng-repeat="user in userListCtrlVm.users"
+                                    ui-sref="main.user-view({username: user.username})" class="editable-tr-wrap">
+                                    <td class="table-id">{{$index + 1}}</td>
+                                    <td>
+                                        {{user.fullname}}
+                                    </td>
+                                    <td>
+                                        {{user.username}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
             </div>
         </div>
     </div>

@@ -11,14 +11,14 @@ function AuthenticationService() {
 
   return {
     isLoggedIn: function() {
-      if (localStorage.getItem('authToken')) {
+      if (localStorage.getItem('dashboardAuthToken')) {
         return true;
       }
       return false;
     },
     isAdmin: function() {
-      if (localStorage.getItem('authToken')) {
-        var user = JSON.parse(localStorage.getItem('user'));
+      if (localStorage.getItem('dashboardAuthToken')) {
+        var user = JSON.parse(localStorage.getItem('dashboardUser'));
         if (user && user.accessLevel === '1') {
           return true;
         }
@@ -26,21 +26,21 @@ function AuthenticationService() {
       return false;
     },
     getUser: function() {
-      var user = JSON.parse(localStorage.getItem('user'));
+      var user = JSON.parse(localStorage.getItem('dashboardUser'));
       //console.info("User is fetched from localStorage.");
       return user;
     },
     setUser: function(user) {
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('dashboardUser', JSON.stringify(user));
       console.info("User is saved in localStorage.");
     },
     getToken: function() {
-      var token = localStorage.getItem('authToken');
+      var token = localStorage.getItem('dashboardAuthToken');
       console.info("AuthToken is fetched from localStorage.");
       return token;
     },
     setToken: function(token) {
-      localStorage.setItem('authToken', token);
+      localStorage.setItem('dashboardAuthToken', token);
       console.info("User is saved in localStorage.");
     },
     signOut: function() {

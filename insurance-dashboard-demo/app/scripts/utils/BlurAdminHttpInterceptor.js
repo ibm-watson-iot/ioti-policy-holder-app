@@ -1,13 +1,14 @@
 'use strict';
 
-angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function($q, $location, $rootScope) {
+angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function($q, $location, $rootScope, claimApiHost) {
 
   return {
     request: function($config) {
       var isRestCall = $config.url.indexOf('api') > 0;
-      if (angular.isDefined(localStorage.getItem('authToken'))) {
-        $config.headers['Authorization'] = 'Basic ' + localStorage.getItem('authToken');
+      if (angular.isDefined(localStorage.getItem('dashboardAuthToken')) && !($config.url.indexOf(claimApiHost) > 0)) {
+        $config.headers['Authorization'] = 'Basic ' + localStorage.getItem('dashboardAuthToken');
       }
+
       return $config || $q.when($config);
     },
     response: function($config) {
@@ -18,8 +19,8 @@ angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function($
       if (isRestCall && ($config.status === 401 || $config.status === -1)) {
         var originalPath = $location.path();
         if (originalPath !== "/signin") {
-          localStorage.removeItem('user');
-          localStorage.removeItem('authToken');
+          localStorage.removeItem('dashboardUser');
+          localStorage.removeItem('dashboardAuthToken');
           $location.path("/signin");
         }
       }

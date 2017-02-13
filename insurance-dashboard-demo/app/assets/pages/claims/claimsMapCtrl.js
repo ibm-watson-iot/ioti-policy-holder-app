@@ -1,49 +1,37 @@
 (function() {
   'use strict';
 
-  angular.module('BlurAdmin.pages.hazards')
-  .controller('HazardsMapCtrl', HazardsMapCtrl);
+  angular.module('BlurAdmin.pages.claims')
+  .controller('ClaimsMapCtrl', ClaimsMapCtrl);
 
   /** @ngInject */
-  function HazardsMapCtrl(baConfig, $timeout, layoutPaths, cityLocationService, hazardService, userService) {
+  function ClaimsMapCtrl(baConfig, $timeout, layoutPaths, cityLocationService, claimService) {
     var layoutColors = baConfig.colors;
     var latlong;
     cityLocationService.me().success(function(data) {
-      latlong = data;
+        latlong = data;
 
-      // get all users and cash user location
-      userService.findAll().success(function(data) {
-        var allUsers = data.users;
-        var userCityMap = {};
-        _.each(allUsers, function(user) {
-          if (!user.address) {
-            console.warn('user ' + user.username + ' does not have an address');
-          }
-          var addressWords = user.address.split(',');
-          var city = addressWords[addressWords.length - 1];
-          userCityMap[user.username] = city.replace(/\s+/g, '').toLowerCase();
-        });
-
-        // get all hazards and find hazard city
-        hazardService.findAll().success(function(data) {
-          var hazards = data.hazardEvents;
-          var cityHazardCount = {};
-          _.each(hazards, function(hazard) {
-            var hazardCity = userCityMap[hazard.username];
-            if (hazardCity) {
-              if (!cityHazardCount[hazardCity]) {
-                cityHazardCount[hazardCity] = 0;
+        // get all claims
+        claimService.findAll().success(function(data) {
+          var allClaims = data;
+          var cityClaimCount = {};
+          _.each(allClaims, function(claim) {
+            var addressWords = claim.address.split(',');
+            var city = addressWords[addressWords.length - 1].replace(/\s+/g, '').toLowerCase();
+            if (city) {
+              if (!cityClaimCount[city]) {
+                cityClaimCount[city] = 0;
               }
-              cityHazardCount[hazardCity] = cityHazardCount[hazardCity] + 1;
+              cityClaimCount[city] = cityClaimCount[city] + 1;
             }
           });
 
           // populate the map data
           var mapData = [];
-          for (var city in cityHazardCount) {
+          for (var city in cityClaimCount) {
             var mapDataEntry = {};
             mapDataEntry.name = city;
-            mapDataEntry.value = cityHazardCount[city];
+            mapDataEntry.value = cityClaimCount[city];
             mapDataEntry.code = city;
             mapDataEntry.color = layoutColors.primaryDark;
             mapData.push(mapDataEntry);
@@ -53,14 +41,10 @@
             loadMap(mapData);
           }
         }).error(function(err) {
-          console.error("Fetching all users failed!");
+          console.error("Fetching all claims failed!");
         });
-
-      }).error(function(err) {
-        console.error("Fetching all users failed!");
-      });
-
-    }).error(function(err) {
+      }
+    ).error(function(err) {
       console.error("Fetching city locations failed!");
     });
 
@@ -86,7 +70,7 @@
       AmCharts.theme = AmCharts.themes.blur;
       map = new AmCharts.AmMap();
 
-      //map.addTitle('Hazards ', 14);
+      //map.addTitle('Claims ', 14);
       //map.addTitle('source: Gapminder', 11);
       map.areasSettings = {
         unlistedAreasColor: '#000000',
@@ -147,4 +131,5 @@
     }
   }
 
-})();
+})
+();

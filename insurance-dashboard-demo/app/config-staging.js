@@ -2,4 +2,5 @@
 
 angular.module('BlurAdmin').constant('apiProtocol', 'https');
 angular.module('BlurAdmin').constant('apiHost', '');
+angular.module('BlurAdmin').constant('claimApiHost', '');
 angular.module('BlurAdmin').constant('apiPath', '/');

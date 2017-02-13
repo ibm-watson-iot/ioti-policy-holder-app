@@ -1,40 +1,24 @@
 (function() {
   'use strict';
 
-  angular.module('BlurAdmin.pages.users').controller('UserViewCtrl', UserViewCtrl);
+  angular.module('BlurAdmin.pages.claims').controller('ClaimViewCtrl', ClaimViewCtrl);
 
-  function UserViewCtrl($stateParams, userService, shieldAssociationService, deviceService, hazardService, claimService) {
+  function ClaimViewCtrl($stateParams, claimService) {
     var vm = this;
-    vm.user = {};
+    vm.claim = {};
 
-    if ($stateParams.username) {
-      userService.findAll($stateParams.username).success(function(user) {
-        vm.user = user;
-        initializeLocationMap(user.address);
-        shieldAssociationService.findAll($stateParams.username).success(function(data) {
-          vm.userShields = data.shieldassociations;
-        });
-
-        deviceService.findAll($stateParams.username).success(function(data) {
-          vm.userDevices = data;
-        });
-
-        hazardService.findAll($stateParams.username).success(function(data) {
-          vm.userHazards = data.hazardEvents;
-        });
-
-        claimService.findAll($stateParams.username).success(function(data) {
-          vm.userClaims = data;
-        }).error(function(err) {
-          vm.userClaims = [];
-          console.log('Failed to retrieve claims !');
-        });
+    if ($stateParams.claimId) {
+      claimService.find($stateParams.claimId).success(function(claim) {
+        vm.claim = claim;
+        initializeLocationMap(claim);
       });
     }
 
-    function initializeLocationMap(address) {
+    function initializeLocationMap(claim) {
+      // get claim location
       var geocoder;
       var map;
+      var address = claim.address;
 
       geocoder = new google.maps.Geocoder();
       var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -73,7 +57,6 @@
           }
         });
       }
-
     }
   }
 })();

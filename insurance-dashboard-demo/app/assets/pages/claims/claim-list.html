@@ -1,30 +1,33 @@
-<div ba-panel ba-panel-title="Hazards Map" ng-controller="HazardsMapCtrl as hazardsMapCtrlVM" class="viewport100">
+<div ba-panel ba-panel-title="Claims Map" ng-controller="ClaimsMapCtrl as claimsMapCtrlVM" class="viewport100">
     <div id="map-bubbles"></div>
 </div>
 
 
 <div class="widgets">
-    <div class="row" ng-controller="HazardListCtrl as hazardListCtrlVm">
+    <div class="row" ng-controller="ClaimListCtrl as claimListCtrlVm">
         <div class="col-md-12">
             <div ba-panel ba-panel-class="with-scroll">
                 <uib-tabset active="$tabSetStatus.activeTab">
-                    <uib-tab heading="Hazards">
+                    <uib-tab heading="Claims">
                         <div class="horizontal-scroll">
+                            <div class="heading-widget section-block ng-scope"
+                                 ng-if="claimListCtrlVm.claims.length === 0">
+                                <h2>No Claims</h2>
+                            </div>
                             <table class="table table-hover">
                                 <tr class="header-row">
                                     <th class="table-id">#</th>
-                                    <th>Happened At</th>
-                                    <th>Shield-UUID</th>
+                                    <th>policyNumber</th>
+                                    <th>username</th>
                                 </tr>
-                                <tr ng-repeat="hazard in hazardListCtrlVm.hazards"
-                                    ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})"
-                                    class="editable-tr-wrap">
+                                <tr ng-repeat="claim in claimListCtrlVm.claims"
+                                    ui-sref="main.claim-view({claimId: claim._id})" class="editable-tr-wrap">
                                     <td class="table-id">{{$index + 1}}</td>
                                     <td>
-                                        {{hazard.timestamp}}
+                                        {{claim.policyNumber}}
                                     </td>
                                     <td>
-                                        {{hazard.shieldUUID}}
+                                        {{claim.username}}
                                     </td>
                                 </tr>
                             </table>

@@ -24,6 +24,7 @@ exports.config =
       conventions:
         ignored: [
           /((.*(\/|\\))[_].*\.scss)/,
+          'bower_components/requirejs/require.js',
           'app/config-dev.js',
           'app/config-production.js',
           /^app\/lib/
@@ -32,6 +33,7 @@ exports.config =
       conventions:
         ignored: [
           /((.*(\/|\\))[_].*\.scss)/,
+          'bower_components/requirejs/require.js',
           'app/config-dev.js',
           'app/config-staging.js',
           /^app\/lib/
