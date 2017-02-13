@@ -1,0 +1,16 @@
+{
+  "_id": "e403898a4accf2957985b4f6cea57b3f",
+  "_rev": "1-5331e23b2535b1529c4e4b9582543336",
+  "policyNumber": "23234234",
+  "policyName": "House Hold Insurance",
+  "username": "user1",
+  "policyHolder": "Uwe Krieger",
+  "address": "Engadiner str. 4, Munich",
+  "phone": "017672246110",
+  "damageDate": "11.02.2017",
+  "damageTime": 1486975976,
+  "claimFiled": true,
+  "damageIncurred": 2000,
+  "description": "water leakage damaged floor",
+  "createdAt": "2017-02-13T08:53:30.481Z"
+}

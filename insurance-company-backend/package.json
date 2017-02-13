@@ -1,0 +1,21 @@
+{
+  "name": "insurance-company-backend",
+  "version": "1.0.0",
+  "description": "an insurance company backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "body-parser": "^1.13.3",
+    "boom": "^3.1.2",
+    "cloudant": "^1.4.1",
+    "winston": "^2.1.1",
+    "moment": "^2.11.1",
+    "when": "^3.7.4",
+    "uuid": "^3.0.1"
+  }
+}
