@@ -10,13 +10,13 @@
 
   /** @ngInject */
   function DashboardPieChartCtrl($rootScope, $scope, $timeout, baConfig, baUtil,
-    shieldService, hazardService, deviceService) {
+    shieldService, hazardService, deviceService, userService) {
 
     var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
     $scope.charts = [{
       color: pieColor,
       description: 'Active Shields',
-      stats: '5',
+      stats: '0',
       icon: 'shield',
     }, {
       color: pieColor,
@@ -30,9 +30,14 @@
       icon: 'attention',
     }, {
       color: pieColor,
-      description: 'Returned',
-      stats: '2,592',
+      description: 'Claims',
+      stats: '0',
       icon: 'refresh',
+    }, {
+      color: pieColor,
+      description: 'Users',
+      stats: '0',
+      icon: 'user',
     }
     ];
 
@@ -49,9 +54,15 @@
     });
 
     hazardService.findAll($rootScope.loggedInUser.username).success(function(hazards) {
-      $scope.charts[2].stats = hazards.length;
+      $scope.charts[2].stats = hazards.total;
     }).error(function(err) {
       console.error("Fetching user's hazards is failed!");
+    });
+
+    userService.findAll().success(function(users) {
+      $scope.charts[4].stats = users.total;
+    }).error(function(err) {
+      console.error("Fetching users has failed!");
     });
 
     function getRandomArbitrary(min, max) {
@@ -90,6 +101,6 @@
     $timeout(function () {
       loadPieCharts();
       updatePieCharts();
-    }, 1000);
+    }, 3000);
   }
 })();
