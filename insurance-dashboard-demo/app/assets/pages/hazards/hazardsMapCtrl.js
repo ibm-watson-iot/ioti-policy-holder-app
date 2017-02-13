@@ -16,6 +16,9 @@
         var allUsers = data.users;
         var userCityMap = {};
         _.each(allUsers, function(user) {
+          if (!user.address) {
+            console.warn('user ' + user.username + ' does not have an address');
+          }
           var addressWords = user.address.split(',');
           var city = addressWords[addressWords.length - 1];
           userCityMap[user.username] = city.replace(/\s+/g, '').toLowerCase();
