@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('claimService', function($http, apiProtocol, claimApiHost, apiHost, apiPath) {
+angular.module('BlurAdmin.services').factory('claimService', function($http, apiProtocol, claimApiHost, apiPath) {
   var apiUrl = apiProtocol + "://" + claimApiHost + apiPath + 'api/v1/claims';
 
   return {
