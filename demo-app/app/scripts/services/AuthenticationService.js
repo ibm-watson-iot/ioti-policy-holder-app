@@ -45,7 +45,9 @@ function AuthenticationService(notificationService) {
     },
     signOut: function() {
       localStorage.clear();
-      notificationService.unRegisterDevice();
+      try {
+        notificationService.unRegisterDevice();
+      } catch(exp) { }
     }
   };
 

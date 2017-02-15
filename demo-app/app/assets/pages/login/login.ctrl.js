@@ -23,8 +23,12 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr,
       $rootScope.authToken = authToken;
       authenticationService.setToken(authToken);
 
-      notificationService.initialize();
-      notificationService.registerWithUserId(user.username);
+      try {
+        notificationService.initialize();
+        notificationService.registerWithUserId(user.username);
+      } catch(exp) {
+        toastr.error("You are using unsupported browser for notifications.");
+      }
 
       $state.go('main.dashboard');
     }).error(function(err) {
