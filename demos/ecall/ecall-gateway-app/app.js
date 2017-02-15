@@ -20,6 +20,9 @@ var appConfig = {
     "org": 'r6sunr',
     "apiKey": 'a-r6sunr-igpyaf4sez',
     "apiToken": 'p*JQd3q*TzlD1N*nAs'
+    // "org": '0vfbpa',
+    // "apiKey": 'a-0vfbpa-mzjwjeq2gc',
+    // "apiToken": 'u)4MgXyeAX@d)yXU0f'
 };
 var ioTPlatformClient = IoTPlatformClient.getInstance(appConfig);
 
@@ -32,3 +35,23 @@ ioTPlatformClient.connect()
 }).catch(function(err) {
     console.error("Connection to IoTP failed, err:", err);
 });
+
+process.stdin.resume();//so the program will not close instantly
+
+function exitHandler(options, err) {
+    if (options.cleanup) {
+      console.log('clean');
+      bleClient.stop();
+    }
+    if (err) console.log(err.stack);
+    if (options.exit) process.exit();
+}
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
