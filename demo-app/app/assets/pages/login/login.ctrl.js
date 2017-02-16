@@ -19,17 +19,13 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr,
     userService.me().success(function(user) {
       $rootScope.loggedInUser = user;
       authenticationService.setUser(user);
-
-      $rootScope.authToken = authToken;
       authenticationService.setToken(authToken);
-
       try {
         notificationService.initialize();
         notificationService.registerWithUserId(user.username);
       } catch(exp) {
         toastr.error("You are using unsupported browser for notifications.");
       }
-
       $state.go('main.dashboard');
     }).error(function(err) {
       console.error("Signin is failed.");
@@ -39,7 +35,6 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr,
   };
 
   vm.signUp = function() {
-
     userService.signUp(vm.user.email, vm.user.password, function(err, result) {
       if (err) {
         console.error('Signing up is failed for', vm.user.email);
@@ -59,7 +54,6 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr,
     var userData = {
       username: vm.email
     };
-
     userService.confirmRegistration(vm.confirmationCode, true, function(err, result) {
       if (err) {
         console.error('Confirmation is failed for user', vm.email);
@@ -76,7 +70,6 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr,
     var userData = {
       username: vm.email
     };
-
     userService.forgotPassword({
       onSuccess: function(result) {
         toastr.success(null, 'Success');

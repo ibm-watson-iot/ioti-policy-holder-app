@@ -11,7 +11,7 @@ function HazardListCtrl($rootScope, editableThemes, toastr, hazardService) {
   var vm = this;
   vm.hazards = [];
 
-  hazardService.me().success(function(data) {
+  hazardService.findAll().success(function(data) {
     vm.hazards = data.hazardEvents;
   }).error(function(err) {
     console.error("Fetching all hazards is failed!");

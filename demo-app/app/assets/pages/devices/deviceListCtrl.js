@@ -12,7 +12,11 @@ function DeviceListCtrl($rootScope, editableThemes, toastr, deviceService) {
   vm.devices = [];
 
   deviceService.findAll().success(function(data) {
-    vm.devices = data.devices;
+    if (data.devices) {
+      vm.devices = data.devices;
+    } else {
+      vm.devices = data;
+    }
   }).error(function(err) {
     console.error("Fetching all devices is failed!");
   });

@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('hazardService', function($http, apiProtocol, apiHost, apiPath) {
+angular.module('BlurAdmin.services').factory('hazardService', function(
+  $http, authenticationService, apiProtocol, apiHost, apiPath) {
+
   var apiUrl = apiProtocol + "://" + apiHost + apiPath + 'hazardEvent';
 
   return {
@@ -10,12 +12,12 @@ angular.module('BlurAdmin.services').factory('hazardService', function($http, ap
     find: function(hazardEventId) {
       return $http.get(apiUrl + '/byHazardId/' + hazardEventId);
     },
-    findAll: function(username) {
+    findAll: function() {
       var url;
-      if (username) {
-        url = apiUrl;
-      } else {
+      if (authenticationService.isAdmin()) {
         url = apiUrl + '/all';
+      } else {
+        url = apiUrl;
       }
       return $http.get(url);
     },

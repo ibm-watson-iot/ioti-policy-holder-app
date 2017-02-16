@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('deviceService', function($http, apiProtocol, apiHost, apiPath) {
+angular.module('BlurAdmin.services').factory('deviceService', function(
+  $http, authenticationService, apiProtocol, apiHost, apiPath) {
+
   var apiUrl = apiProtocol + "://" + apiHost + apiPath + 'device';
 
   return {
@@ -10,12 +12,12 @@ angular.module('BlurAdmin.services').factory('deviceService', function($http, ap
     find: function(deviceId) {
       return $http.get(apiUrl + '/' + deviceId);
     },
-    findAll: function(username) {
+    findAll: function() {
       var url;
-      if (username) {
-        url = apiUrl + '/byUser/' + username;
-      } else {
+      if (authenticationService.isAdmin()) {
         url = apiUrl + '/all';
+      } else {
+        url = apiUrl;
       }
       return $http.get(url);
     },

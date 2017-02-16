@@ -20,7 +20,7 @@
       icon: 'shield',
     }, {
       color: pieColor,
-      description: 'Active Devices',
+      description: 'Devices',
       stats: '0',
       icon: 'device',
     }, {
@@ -37,13 +37,13 @@
       console.error("Fetching user's shields is failed!");
     });
 
-    deviceService.findAll($rootScope.loggedInUser.username).success(function(devices) {
+    deviceService.findAll().success(function(devices) {
       $scope.charts[1].stats = devices.length;
     }).error(function(err) {
       console.error("Fetching user's devices is failed!");
     });
 
-    hazardService.findAll($rootScope.loggedInUser.username).success(function(hazards) {
+    hazardService.findAll().success(function(hazards) {
       $scope.charts[2].stats = hazards.total;
     }).error(function(err) {
       console.error("Fetching user's hazards is failed!");

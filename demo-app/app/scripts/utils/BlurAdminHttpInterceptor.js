@@ -1,26 +1,27 @@
 'use strict';
 
-angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function($q, $location, $rootScope) {
+angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor',
+function($q, $location, authenticationService, apiHost) {
 
   return {
     request: function($config) {
-      var isRestCall = $config.url.indexOf('api') > 0;
-      if (angular.isDefined(localStorage.getItem('authToken'))) {
-        $config.headers['Authorization'] = 'Basic ' + localStorage.getItem('authToken');
+      var isAPICall = $config.url.indexOf(apiHost) > 0;
+      var authToken = localStorage.getItem('authToken');
+      if (isAPICall && angular.isDefined(authToken)) {
+        $config.headers['Authorization'] = 'Basic ' + authToken;
       }
       return $config || $q.when($config);
     },
     response: function($config) {
       return $config;
     },
-    responseError: function($config, asd) {
-      var isRestCall = $config.config.url.indexOf('api') > 0;
-      if (isRestCall && ($config.status === 401 || $config.status === -1)) {
+    responseError: function($config) {
+      var isAPICall = $config.config.url.indexOf(apiHost) > 0;
+      if (isAPICall && ($config.status === 401)) {
         var originalPath = $location.path();
         if (originalPath !== "/signin") {
-          localStorage.removeItem('user');
-          localStorage.removeItem('authToken');
-          $location.path("/signin");
+          authenticationService.signOut();
+          $location.path("#/signin");
         }
       }
       return $q.reject($config);
