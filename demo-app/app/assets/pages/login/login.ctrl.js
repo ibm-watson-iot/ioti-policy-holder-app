@@ -3,7 +3,7 @@
 
 angular.module('BlurAdmin.pages.login').controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl($rootScope, $scope, $state, $http, toastr,
+function LoginCtrl($rootScope, $scope, $state, toastr,
   authenticationService, notificationService, userService) {
 
   var vm = this;

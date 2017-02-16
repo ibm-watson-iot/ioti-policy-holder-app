@@ -3,7 +3,7 @@
 
 angular.module('BlurAdmin.pages.login').controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, authenticationService, userService) {
+function LoginCtrl($rootScope, $scope, $state, toastr, authenticationService, userService) {
 
   var vm = this;
   vm.user = {
@@ -18,10 +18,7 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, auth
     userService.me().success(function(user) {
       $rootScope.loggedInUser = user;
       authenticationService.setUser(user);
-
-      $rootScope.authToken = authToken;
       authenticationService.setToken(authToken);
-
       $state.go('main.dashboard');
     }).error(function(err) {
       console.error("Signin is failed.");
@@ -31,7 +28,6 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, auth
   };
 
   vm.signUp = function() {
-
     userService.signUp(vm.user.email, vm.user.password, function(err, result) {
       if (err) {
         console.error('Signing up is failed for', vm.user.email);
@@ -51,7 +47,6 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, auth
     var userData = {
       username: vm.email
     };
-
     userService.confirmRegistration(vm.confirmationCode, true, function(err, result) {
       if (err) {
         console.error('Confirmation is failed for user', vm.email);
@@ -68,7 +63,6 @@ function LoginCtrl($rootScope, $scope, $state, $http, toastr, printService, auth
     var userData = {
       username: vm.email
     };
-
     userService.forgotPassword({
       onSuccess: function(result) {
         toastr.success(null, 'Success');

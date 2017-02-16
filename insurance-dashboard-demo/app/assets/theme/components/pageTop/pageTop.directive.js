@@ -5,19 +5,18 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.theme.components')
-      .directive('pageTop', pageTop);
+  angular.module('BlurAdmin.theme.components').directive('pageTop', pageTop);
 
-  /** @ngInject */
-  function pageTop($state, authenticationService) {
+  function pageTop($rootScope, $state, authenticationService) {
     return {
       restrict: 'E',
       templateUrl: 'theme/components/pageTop/pageTop.html',
       link: function (scope, element, attrs) {
-          scope.signOut = function() {
-              authenticationService.signOut();
-              $state.go('signin');
-          };
+        scope.signOut = function() {
+          $rootScope.loggedInUser = undefined;
+          authenticationService.signOut();
+          $state.go('signin');
+        };
       }
     };
   }
