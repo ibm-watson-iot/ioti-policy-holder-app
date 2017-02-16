@@ -75,7 +75,6 @@ exports.config =
           'app/assets/pages/shields/shields.module.js',
           'app/assets/pages/hazards/hazards.module.js',
           'app/assets/pages/devices/devices.module.js',
-          'app/assets/pages/maps/maps.module.js',
 
           'app/app.js'
         ]

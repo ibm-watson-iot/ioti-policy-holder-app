@@ -13,8 +13,7 @@
     'BlurAdmin.pages.profile',
     'BlurAdmin.pages.shields',
     'BlurAdmin.pages.hazards',
-    'BlurAdmin.pages.devices',
-    'BlurAdmin.pages.maps'
+    'BlurAdmin.pages.devices'
   ]).config(routeConfig);
 
   /** @ngInject */
