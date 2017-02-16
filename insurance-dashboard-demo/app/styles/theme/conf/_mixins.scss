@@ -50,7 +50,7 @@
 }
 
 @mixin main-background() {
-  $mainBgUrl: $images-root + 'blur-bg.jpg';
+  $mainBgUrl: $images-root + 'sky-bg.jpg';
 
   &::before {
     content: '';
