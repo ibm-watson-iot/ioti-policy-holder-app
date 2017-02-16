@@ -13,8 +13,8 @@ function routeConfig($stateProvider) {
     templateUrl: 'pages/users/user-list.html',
     title: 'Users',
     sidebarMeta: {
-      icon: 'fa fa-bolt',
-      order: 5
+      icon: 'fa fa-user',
+      order: 3
     }
   }).state('main.user-view', {
     url: 'users/:username',

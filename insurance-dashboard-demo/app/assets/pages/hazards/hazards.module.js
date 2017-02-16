@@ -14,12 +14,12 @@ function routeConfig($stateProvider) {
     title: 'Hazards',
     sidebarMeta: {
       icon: 'fa fa-bolt',
-      order: 4
+      order: 2
     }
   }).state('main.hazard-view', {
     url: 'hazards/:hazardEventId',
     templateUrl: 'pages/hazards/hazard-view.html',
-    title: 'View Hazard'
+    title: 'Hazard'
   });
 }
 
