@@ -4,18 +4,21 @@
  */
 'use strict';
 
-angular.module('BlurAdmin.services').factory('authenticationService', function(notificationService) {
+angular.module('BlurAdmin.services').factory('authenticationService', function($location, notificationService) {
+
+  var tokenKey = $location.host() + '_' + $location.port() + '_' + 'authToken';
+  var userKey = $location.host() + '_' + $location.port() + '_' + 'user';
 
   return {
     isAuthenticated: function() {
-      if (localStorage.getItem('authToken')) {
+      if (localStorage.getItem(tokenKey)) {
         return true;
       }
       return false;
     },
     isAdmin: function() {
-      if (localStorage.getItem('authToken')) {
-        var user = JSON.parse(localStorage.getItem('user'));
+      if (localStorage.getItem(tokenKey)) {
+        var user = JSON.parse(localStorage.getItem(userKey));
         if (user && user.accessLevel === '3') {
           return true;
         }
@@ -23,20 +26,20 @@ angular.module('BlurAdmin.services').factory('authenticationService', function(n
       return false;
     },
     getUser: function() {
-      return JSON.parse(localStorage.getItem('user'));
+      return JSON.parse(localStorage.getItem(userKey));
     },
     setUser: function(user) {
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem(userKey, JSON.stringify(user));
     },
     getToken: function() {
-      return localStorage.getItem('authToken');
+      return localStorage.getItem(tokenKey);
     },
     setToken: function(token) {
-      localStorage.setItem('authToken', token);
+      localStorage.setItem(tokenKey, token);
     },
     signOut: function() {
-      localStorage.removeItem('user')
-      localStorage.removeItem('authToken');
+      localStorage.removeItem(userKey)
+      localStorage.removeItem(tokenKey);
       try {
         notificationService.unRegisterDevice();
       } catch(exp) { }

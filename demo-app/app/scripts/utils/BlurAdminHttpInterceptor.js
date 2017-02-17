@@ -3,10 +3,12 @@
 angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor',
 function($q, $location, authenticationService, apiHost) {
 
+  var tokenKey = $location.host() + '_' + $location.port() + '_' + 'authToken';
+
   return {
     request: function($config) {
       var isAPICall = $config.url.indexOf(apiHost) > 0;
-      var authToken = localStorage.getItem('authToken');
+      var authToken = localStorage.getItem(tokenKey);
       if (isAPICall && angular.isDefined(authToken)) {
         $config.headers['Authorization'] = 'Basic ' + authToken;
       }

@@ -4,18 +4,21 @@
  */
 'use strict';
 
-angular.module('BlurAdmin.services').factory('authenticationService', function() {
+angular.module('BlurAdmin.services').factory('authenticationService', function($location) {
+
+  var tokenKey = $location.host() + '_' + $location.port() + '_' + 'dashboardAuthToken';
+  var userKey = $location.host() + '_' + $location.port() + '_' + 'dashboardUser';
 
   return {
     isAuthenticated: function() {
-      if (localStorage.getItem('dashboardAuthToken')) {
+      if (localStorage.getItem(tokenKey)) {
         return true;
       }
       return false;
     },
     isAdmin: function() {
-      if (localStorage.getItem('dashboardAuthToken')) {
-        var user = JSON.parse(localStorage.getItem('dashboardUser'));
+      if (localStorage.getItem(tokenKey)) {
+        var user = JSON.parse(localStorage.getItem(userKey));
         if (user && user.accessLevel === '3') {
           return true;
         }
@@ -23,20 +26,20 @@ angular.module('BlurAdmin.services').factory('authenticationService', function()
       return false;
     },
     getUser: function() {
-      return JSON.parse(localStorage.getItem('dashboardUser'));
+      return JSON.parse(localStorage.getItem(userKey));
     },
     setUser: function(user) {
-      localStorage.setItem('dashboardUser', JSON.stringify(user));
+      localStorage.setItem(userKey, JSON.stringify(user));
     },
     getToken: function() {
-      return localStorage.getItem('dashboardAuthToken');
+      return localStorage.getItem(tokenKey);
     },
     setToken: function(token) {
-      localStorage.setItem('dashboardAuthToken', token);
+      localStorage.setItem(tokenKey, token);
     },
     signOut: function() {
-      localStorage.removeItem('dashboardUser')
-      localStorage.removeItem('dashboardAuthToken');
+      localStorage.removeItem(userKey)
+      localStorage.removeItem(tokenKey);
     }
   };
 
