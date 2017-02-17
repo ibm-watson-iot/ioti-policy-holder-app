@@ -9,7 +9,7 @@
       templateUrl: 'pages/claims/claim-list.html',
       title: 'Claims',
       sidebarMeta: {
-        icon: 'fa fa-comment',
+        icon: 'fa fa-envelope-o',
         order: 1
       }
     }).state('main.claim-view', {

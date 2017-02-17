@@ -5,11 +5,23 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.theme.components')
-      .controller('MsgCenterCtrl', MsgCenterCtrl);
+  angular.module('BlurAdmin.theme.components').controller('MsgCenterCtrl', MsgCenterCtrl);
 
   /** @ngInject */
-  function MsgCenterCtrl($scope, $sce) {
+  function MsgCenterCtrl($scope, $sce, hazardService, claimService) {
+
+    hazardService.findAll().success(function(data) {
+      $scope.hazards = data.hazardEvents;
+    }).error(function(err) {
+      console.error("Fetching all hazards is failed!");
+    });
+
+    claimService.findAll().success(function(data) {
+      $scope.claims = data;
+    }).error(function(err) {
+      console.error("Fetching all claims is failed!");
+    });
+
     $scope.users = {
       0: {
         name: 'Vlad',
