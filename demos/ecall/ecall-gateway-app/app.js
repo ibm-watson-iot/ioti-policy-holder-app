@@ -13,16 +13,25 @@ var when = require('when');
 var IoTPlatformClient = require('./lib/IoTPlatformClient');
 var BleClient = require('./lib/BleClient');
 
+var constants = require('./lib/constants');
+var uuid = require( 'uuid');
+
 var appConfig = {
-    "id": "eCallAlertsAppID",
-    "type": 'shared',
+	"session" : uuid.v4(),	
+	"_gateway": true,
+	"type": "TEP120-G",
+	"id" : "iot4i-tep120-demo-g",
     "domain": 'internetofthings.ibmcloud.com',
-    "org": 'r6sunr',
-    "apiKey": 'a-r6sunr-igpyaf4sez',
-    "apiToken": 'p*JQd3q*TzlD1N*nAs'
-    // "org": '0vfbpa',
-    // "apiKey": 'a-0vfbpa-mzjwjeq2gc',
-    // "apiToken": 'u)4MgXyeAX@d)yXU0f'
+    "org": "w9u594",
+    "auth-key": "a-w9u594-rffhk6c56p",
+    "auth-token": "yiDfQFtUp5zVNpF4le",
+    "auth-method" : "token"
+	// "org": 'r6sunr',
+    // "apiKey": 'a-r6sunr-igpyaf4sez',
+    // "apiToken": 'p*JQd3q*TzlD1N*nAs'
+    //"org": '0vfbpa',
+    //"apiKey": 'a-0vfbpa-mzjwjeq2gc',
+    //"apiToken": 'u)4MgXyeAX@d)yXU0f'
 };
 var ioTPlatformClient = IoTPlatformClient.getInstance(appConfig);
 
@@ -39,19 +48,15 @@ ioTPlatformClient.connect()
 process.stdin.resume();//so the program will not close instantly
 
 function exitHandler(options, err) {
-    if (options.cleanup) {
-      console.log('clean');
-      bleClient.stop();
-    }
-    if (err) console.log(err.stack);
-    if (options.exit) process.exit();
+	
+	ioTPlatformClient.publishDeviceEvent( constants.IOTP.STATUS_MESSAGE, constants.IOTP.JSON_FORMAT, { status: 'disconnected', date: new Date()}, null);
+	
+  console.log('cleaning');
+  bleClient.stop(function() {
+    console.log('cleaned');
+    process.exit();
+  });
 }
 
-//do something when app is closing
-process.on('exit', exitHandler.bind(null,{cleanup:true}));
-
 //catches ctrl+c event
-process.on('SIGINT', exitHandler.bind(null, {exit:true}));
-
-//catches uncaught exceptions
-process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+process.on('SIGINT', exitHandler.bind(null, {}));
