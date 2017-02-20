@@ -180,3 +180,9 @@ a.collapse-menu-link {
   color: #fff;
   font-weight: 300;
 }
+
+@media screen and (max-width: 768px) {
+  .questions-section {
+    display: none
+  }
+}

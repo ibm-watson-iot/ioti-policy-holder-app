@@ -13,10 +13,10 @@ exports.config =
       (not /\.js/.test path) and /assets(\/|\\)/.test path
     ignored: [
       /((.*(\/|\\))[_].*\.scss)/,
-      'bower_components/requirejs/require.js',
+      /^bower_components\/requirejs\/require.js/,
       /^app\/config-staging.js/,
       /^app\/config-production.js/,
-      /^app\/lib/
+      /^app\/lib\/bmx-push/
     ]
 
   overrides:
@@ -24,25 +24,25 @@ exports.config =
       conventions:
         ignored: [
           /((.*(\/|\\))[_].*\.scss)/,
-          'bower_components/requirejs/require.js',
-          'app/config-dev.js',
-          'app/config-production.js',
-          /^app\/lib/
+          /^bower_components\/requirejs\/require.js/,
+          /^app\/config-dev.js/,
+          /^app\/config-production.js/,
+          /^app\/lib\/bmx-push/
         ]
     production:
       conventions:
         ignored: [
           /((.*(\/|\\))[_].*\.scss)/,
-          'bower_components/requirejs/require.js',
-          'app/config-dev.js',
-          'app/config-staging.js',
-          /^app\/lib/
+          /^bower_components\/requirejs\/require.js/,
+          /^app\/config-dev.js/,
+          /^app\/config-staging.js/,
+          /^app\/lib\/bmx-push/
         ]
 
   files:
     javascripts:
       joinTo:
-        'scripts/vendor.js': /^bower_components|^app\/vendor/
+        'scripts/vendor.js': /^bower_components|^lib/
         'scripts/app.js': /^app/
       order:
         before: [
@@ -56,12 +56,8 @@ exports.config =
           'bower_components/moment/min/moment-with-locales.js',
           'bower_components/ng-file-upload/ng-file-upload.js',
 
-          'app/vendor/*',
-
           'app/scripts/utils/utils.module.js',
-          'app/scripts/utils/*',
           'app/scripts/services/services.module.js',
-          'app/scripts/services/*',
 
           'app/assets/theme/components/components.module.js',
           'app/assets/theme/inputs/inputs.module.js',
@@ -114,9 +110,9 @@ exports.config =
     afterBrunch: [
       [
          'cp manifest.yml public/',
-         'cp app/lib/bmx-push/BMSPushSDK.js public/BMSPushSDK.js',
-         'cp app/lib/bmx-push/BMSPushServiceWorker.js public/BMSPushServiceWorker.js',
-         'cp app/lib/bmx-push/manifest.json public/manifest.json',
+         'cp lib/bmx-push/BMSPushSDK.js public/BMSPushSDK.js',
+         'cp lib/bmx-push/BMSPushServiceWorker.js public/BMSPushServiceWorker.js',
+         'cp lib/bmx-push/manifest.json public/manifest.json',
          'cp bower_components/Ionicons/fonts/* public/fonts',
          'cp bower_components/font-awesome/fonts/* public/fonts',
          'mkdir -p public/img/theme/vendor/ionrangeslider/img',
