@@ -20,27 +20,22 @@ IoTPlatformClient.getInstance = function (appConfig) {
 
 function IoTPlatformClient(appConfig) {
 
-    var appClientConfig = {
-        "id": appConfig.id,
-        "type": appConfig.type,
-        "domain": appConfig.domain,
-        "org": appConfig.org,
-        "auth-key": appConfig.apiKey,
-        "auth-token": appConfig.apiToken
-    };
+    var clientConfig = appConfig;
    
-    var iotfAppClient = new iotClient.IotfApplication(appClientConfig);
+    var iotfAppClient = clientConfig._gateway ? new iotClient.IotfApplication( clientConfig) :	new iotClient.IotfDevice( clientConfig);
 
     this.connect = function () {
         return when.promise(function (resolve, reject) {
             try {
-                iotfAppClient.connect();
+            	iotfAppClient.connect();
+            	
+            	// iotfAppClient.log.setLevel('debug');
 
-                iotfAppClient.on("connect", function () {
+            	iotfAppClient.on("connect", function () {
                     console.log(messages.iotP_connected);
                     resolve();
                 });
-                iotfAppClient.on("error", function (err) {
+            	iotfAppClient.on("error", function (err) {
                     console.error(messages.iotP_uncaught_error, err);
                     reject(err);
                 });
@@ -51,19 +46,26 @@ function IoTPlatformClient(appConfig) {
         });
     };
 
-    this.publishDeviceEvent = function (deviceType, deviceId, eventType, eventFormat, payload, qos) {
+    this.publishDeviceEvent = function ( eventType, eventFormat, payload, qos) {
         try {
-            iotfAppClient.publishDeviceEvent(deviceType, deviceId, eventType, eventFormat, payload);
+        	// console.log('Sending %s to %s/%s',eventType, clientConfig.type, clientConfig.id);
+        	
+        	payload.session = clientConfig.session;
+        	
+        	if ( clientConfig._gateway) {
+        		iotfAppClient.publishDeviceEvent( clientConfig.type, clientConfig.id, eventType, eventFormat, payload);
+        	} else {
+        		iotfAppClient.publish(eventType, eventFormat, payload);
+        	}
         } catch (err) {
-            console.error(messages.iotp_publish_failed, err, deviceId);
+            console.error(messages.iotp_publish_failed, err, clientConfig.id);
         }
     };
-
 
     this.subscribeToEvents = function () {
         return when.promise(function (resolve, reject) {
             try {
-                iotfAppClient.subscribeToDeviceEvents();
+           		iotfAppClient.subscribeToDeviceEvents();
                 resolve();
             } catch (err) {
                 console.error(messages.subscribe_to_events_failed);
@@ -74,14 +76,14 @@ function IoTPlatformClient(appConfig) {
 
     this.disconnect = function () {
         try {
-            iotfAppClient.disconnect();
+        	iotfAppClient.disconnect();
         } catch (err) {
-            console.log("already disconnected");
+            console.log("Error disconnecting iot client: %s", err);
         }
     };
 
     this.processDeviceEvents = function (informSubscriber) {
-        iotfAppClient.on("deviceEvent", function (deviceType, deviceId, eventType, format, payload) {
+    	iotfDeviceClient.on("deviceEvent", function (deviceType, deviceId, eventType, format, payload) {
             informSubscriber(deviceType, deviceId, eventType, format, payload);
         });
     };
