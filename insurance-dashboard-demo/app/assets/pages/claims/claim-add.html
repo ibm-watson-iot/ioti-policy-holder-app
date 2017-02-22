@@ -1,127 +1,121 @@
 <div class="widgets" ng-controller="ClaimAddCtrl as claimAddCtrlVm">
-    <div class="row">
-        <div class="col-md-12">
-            <div ba-panel ba-panel-class="with-scroll">
-                <div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="policyNumber">policyNumber</label>
-                                <input type="text" class="form-control" id="policyNumber"
-                                       ng-model="claimAddCtrlVm.claim.policyNumber">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="policyName">policyName</label>
-                                <input type="text" class="form-control" id="policyName"
-                                       ng-model="claimAddCtrlVm.claim.policyName">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="username">username</label>
-                                <input ng-disabled="true" style="color: black;" type="text" class="form-control"
-                                       id="username"
-                                       ng-model="claimAddCtrlVm.claim.username">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="policyHolder">policyHolder</label>
-                                <input type="text" class="form-control" id="policyHolder"
-                                       ng-model="claimAddCtrlVm.claim.policyHolder">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="address">address</label>
-                                <input type="text" class="form-control" id="address"
-                                       ng-model="claimAddCtrlVm.claim.address">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="phone">phone</label>
-                                <input type="text" class="form-control" id="phone"
-                                       ng-model="claimAddCtrlVm.claim.phone">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="damageDate">damageDate</label>
-                                <input ng-disabled="true" style="color: black;" type="text" class="form-control"
-                                       id="damageDate"
-                                       ng-model="claimAddCtrlVm.claim.damageDate">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="damageTime">damageTime</label>
-                                <input ng-disabled="true" style="color: black;" type="text" class="form-control"
-                                       id="damageTime"
-                                       ng-model="claimAddCtrlVm.claim.damageTime">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="damageIncurred">damageIncurred</label>
-                                <input type="text" class="form-control" id="damageIncurred"
-                                       ng-model="claimAddCtrlVm.claim.damageIncurred">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="description">description</label>
-                                <input type="text" class="form-control" id="description"
-                                       ng-model="claimAddCtrlVm.claim.description">
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" ng-click="claimAddCtrlVm.saveClaim()">Save</button>
-                </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-class="with-scroll">
+        <div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="policyNumber">Policy Number</label>
+                <input type="text" class="form-control" id="policyNumber"
+                     ng-model="claimAddCtrlVm.claim.policyNumber">
+              </div>
             </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="policyName">Policy Name</label>
+                <input type="text" class="form-control" id="policyName"
+                     ng-model="claimAddCtrlVm.claim.policyName">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="policyHolder">Policy Holder</label>
+                <input style="color: black;" type="text" class="form-control" id="policyHolder"
+                    ng-model="claimAddCtrlVm.claim.policyHolder">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="phone">Telephone</label>
+                <input style="color: black;" type="text" class="form-control" id="phone"
+                       ng-model="claimAddCtrlVm.claim.phone">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input style="color: black;" type="text" class="form-control" id="address"
+                       ng-model="claimViewCtrlVm.claim.address">
+              </div>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="damageDate">Damage Date</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control"
+                     id="damageDate"
+                     ng-model="claimAddCtrlVm.claim.damageDate">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="damageTime">Damage Time</label>
+                <input ng-disabled="true" style="color: black;" type="text" class="form-control"
+                     id="damageTime"
+                     ng-model="claimAddCtrlVm.claim.damageTime">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="damageIncurred">Damage Incurred</label>
+                <input type="text" class="form-control" id="damageIncurred"
+                     ng-model="claimAddCtrlVm.claim.damageIncurred">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description"
+                     ng-model="claimAddCtrlVm.claim.description">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="claimAddCtrlVm.saveClaim()">Save</button>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
-
 <div class="widgets">
-    <div class="row" ng-controller="ClaimAddCtrl as claimAddCtrlVm">
-        <div class="col-md-12">
-            <div ba-panel ba-panel-class="with-scroll">
-                <uib-tabset active="$tabSetStatus.activeTab">
-                    <uib-tab heading="User Claims History">
-                        <div class="horizontal-scroll">
-                            <table class="table table-hover">
-                                <tr class="header-row">
-                                    <th class="table-id">#</th>
-                                    <th>policyNumber</th>
-                                    <th>username</th>
-                                </tr>
-                                <tr ng-repeat="claim in claimAddCtrlVm.claims"
-                                    ui-sref="main.claim-view({claimId: claim._id})" class="editable-tr-wrap">
-                                    <td class="table-id">{{$index + 1}}</td>
-                                    <td>
-                                        {{claim.policyNumber}}
-                                    </td>
-                                    <td>
-                                        {{claim.username}}
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </uib-tab>
-                </uib-tabset>
+  <div class="row" ng-controller="ClaimAddCtrl as claimAddCtrlVm">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-class="with-scroll">
+        <uib-tabset active="$tabSetStatus.activeTab">
+          <uib-tab heading="User Claims History">
+            <div class="horizontal-scroll">
+              <table class="table table-hover">
+                <tr class="header-row">
+                  <th class="table-id">#</th>
+                  <th>policyNumber</th>
+                  <th>username</th>
+                </tr>
+                <tr ng-repeat="claim in claimAddCtrlVm.claims"
+                  ui-sref="main.claim-view({claimId: claim._id})" class="editable-tr-wrap">
+                  <td class="table-id">{{$index + 1}}</td>
+                  <td>
+                    {{claim.policyNumber}}
+                  </td>
+                  <td>
+                    {{claim.username}}
+                  </td>
+                </tr>
+              </table>
             </div>
-        </div>
+          </uib-tab>
+        </uib-tabset>
+      </div>
     </div>
+  </div>
 </div>

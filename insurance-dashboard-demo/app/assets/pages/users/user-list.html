@@ -1,36 +1,41 @@
-<div ba-panel ba-panel-title="Users Map" ng-controller="UsersMapCtrl as usersMapCtrlVM" class="viewport100">
+<div ng-controller="UserListCtrl as userListCtrlVm">
+  <div ba-panel class="viewport100">
     <div id="map-bubbles"></div>
-</div>
+  </div>
 
-
-<div class="widgets">
-    <div class="row" ng-controller="UserListCtrl as userListCtrlVm">
-        <div class="col-md-12">
-            <div ba-panel ba-panel-class="with-scroll">
-                <uib-tabset active="$tabSetStatus.activeTab">
-                    <uib-tab heading="Users">
-                        <div class="horizontal-scroll">
-                            <table class="table table-hover">
-                                <tr class="header-row">
-                                    <th class="table-id">#</th>
-                                    <th>Full Name</th>
-                                    <th>User Name</th>
-                                </tr>
-                                <tr ng-repeat="user in userListCtrlVm.users"
-                                    ui-sref="main.user-view({username: user.username})" class="editable-tr-wrap">
-                                    <td class="table-id">{{$index + 1}}</td>
-                                    <td>
-                                        {{user.fullname}}
-                                    </td>
-                                    <td>
-                                        {{user.username}}
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </uib-tab>
-                </uib-tabset>
+  <div class="widgets">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-primary bootstrap-panel with-scroll">
+          <div class="panel-heading">All Customers</div>
+          <div class="panel-body">
+            <div class="horizontal-scroll">
+              <div class="heading-widget section-block ng-scope"
+                 ng-if="userListCtrlVm.isLoading">
+                <h2>Loading...</h2>
+              </div>
+              <div class="heading-widget section-block ng-scope"
+                 ng-if="!userListCtrlVm.isLoading && userListCtrlVm.users.length === 0">
+                <h2>You don't have any customers.</h2>
+              </div>
+              <table class="table table-hover"
+                  ng-if="!userListCtrlVm.isLoading && userListCtrlVm.users.length > 0">
+                <tr class="header-row">
+                  <th class="table-id">#</th>
+                  <th>Full Name</th>
+                  <th>User Name</th>
+                </tr>
+                <tr class="editable-tr-wrap" ng-repeat="user in userListCtrlVm.users"
+                    ui-sref="main.user-view({username: user.username})">
+                  <td class="table-id">{{$index + 1}}</td>
+                  <td> {{user.fullname}} </td>
+                  <td> {{user.username}} </td>
+                </tr>
+              </table>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

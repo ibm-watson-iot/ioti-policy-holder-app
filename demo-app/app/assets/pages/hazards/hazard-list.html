@@ -1,26 +1,38 @@
-<div class="widgets">
-  <div class="row" ng-controller="HazardListCtrl as hazardListCtrlVm">
+<div class="widgets" ng-controller="HazardListCtrl as hazardListCtrlVm">
+  <div class="row">
     <div class="col-md-12">
-      <div ba-panel ba-panel-class="with-scroll">
-        <div class="horizontal-scroll">
-          <table class="table table-hover">
-            <tr class="header-row">
-              <th class="table-id">#</th>
-              <th>Happened At</th>
-              <th>Shield-UUID</th>
-            </tr>
-            <tr ng-repeat="hazard in hazardListCtrlVm.hazards" class="editable-tr-wrap">
-              <td class="table-id">{{$index + 1}}</td>
-              <td>
-                <span ditable-text="hazard.name" blur="cancel"
-                    onaftersave="hazardListCtrlVm.saveHazard(hazard)">{{hazard.timestamp}}
-                </span>
-              </td>
-              <td>
-                  {{hazard.shieldUUID}}
-              </td>
-            </tr>
-          </table>
+      <div class="panel panel-primary bootstrap-panel with-scroll">
+        <div class="panel-body">
+          <div class="horizontal-scroll">
+            <div class="heading-widget section-block ng-scope"
+               ng-if="hazardListCtrlVm.isLoading">
+              <h2>Loading...</h2>
+            </div>
+            <div class="heading-widget section-block ng-scope"
+                ng-if="!hazardListCtrlVm.isLoading && hazardListCtrlVm.hazards.length === 0">
+              <h2>You don't have any hazards.</h2>
+            </div>
+            <table class="table table-hover"
+                ng-if="!hazardListCtrlVm.isLoading && hazardListCtrlVm.hazards.length > 0">
+              <tr class="header-row">
+                <th class="table-id">#</th>
+                <th>Event Time</th>
+                <th>Shield</th>
+              </tr>
+              <tr class="editable-tr-wrap"
+                  ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':reverse:false">
+                <td class="table-id">
+                  {{$index + 1}}
+                </td>
+                <td class="clickable">
+                  {{hazard.eventTimeStr}}
+                </td>
+                <td class="clickable">
+                  {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldUUID].name}}
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>

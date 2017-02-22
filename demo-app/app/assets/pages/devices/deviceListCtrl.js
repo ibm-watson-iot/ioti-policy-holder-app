@@ -10,8 +10,10 @@ angular.module('BlurAdmin.pages.devices').controller('DeviceListCtrl', DeviceLis
 function DeviceListCtrl($rootScope, editableThemes, toastr, deviceService) {
   var vm = this;
   vm.devices = [];
+  vm.isLoading = true;
 
   deviceService.findAll().success(function(data) {
+    vm.isLoading = false;
     if (data.devices) {
       vm.devices = data.devices;
     } else {

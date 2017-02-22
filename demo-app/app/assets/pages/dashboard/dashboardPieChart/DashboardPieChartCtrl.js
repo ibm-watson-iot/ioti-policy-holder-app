@@ -9,44 +9,41 @@
       .controller('DashboardPieChartCtrl', DashboardPieChartCtrl);
 
   /** @ngInject */
-  function DashboardPieChartCtrl($rootScope, $scope, $timeout, baConfig, baUtil,
-    shieldService, hazardService, deviceService) {
+  function DashboardPieChartCtrl($rootScope, $scope, $timeout, $filter,
+    baConfig, baUtil, shieldService, hazardService) {
 
+    $scope.charts = [];
+    $scope.isLoading = true;
     var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
-    $scope.charts = [{
-      color: pieColor,
-      description: 'Active Shields',
-      stats: '0',
-      icon: 'shield',
-    }, {
-      color: pieColor,
-      description: 'Devices',
-      stats: '0',
-      icon: 'device',
-    }, {
-      color: pieColor,
-      description: 'Hazards',
-      stats: '0',
-      icon: 'attention',
-    }
-    ];
 
-    shieldService.findAll($rootScope.loggedInUser.username).success(function(shields) {
-      $scope.charts[0].stats = shields.length;
-    }).error(function(err) {
-      console.error("Fetching user's shields is failed!");
-    });
+    hazardService.findAll().success(function(data) {
+      var shieldToHazardMap = {};
+      _.each(data.hazardEvents, function(hazard) {
+        shieldToHazardMap[hazard.shieldUUID] = true;
+      });
 
-    deviceService.findAll().success(function(devices) {
-      $scope.charts[1].stats = devices.length;
-    }).error(function(err) {
-      console.error("Fetching user's devices is failed!");
-    });
+      shieldService.findAll($rootScope.loggedInUser.username).success(function(shields) {
+        _.each(shields, function(shield) {
+          shield.hasHazard = shieldToHazardMap[shield.UUID];
+        });
 
-    hazardService.findAll().success(function(hazards) {
-      $scope.charts[2].stats = hazards.total;
+        shields = $filter('orderBy')(shields, 'hasHazard');
+
+        _.each(shields, function(shield) {
+          var date = new Date(shield.createdAt);
+          $scope.charts.push({
+            color: pieColor,
+            description: shield.name,
+            stats: 'Last updated ' + date.toLocaleString(),
+            icon: shieldToHazardMap[shield.UUID] ? (shield.image + 'Alert') : shield.image,
+          });
+        });
+        $scope.isLoading = false;
+      }).error(function(err) {
+        console.error("Fetching user's shields is failed!");
+      });
     }).error(function(err) {
-      console.error("Fetching user's hazards is failed!");
+      console.error("Fetching all hazards is failed!");
     });
 
     function getRandomArbitrary(min, max) {

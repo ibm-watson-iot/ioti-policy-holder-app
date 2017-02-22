@@ -23,11 +23,14 @@ angular.module('BlurAdmin.services').factory('hazardService', function($http, ap
       return $http['delete'](apiUrl + '/' + hazardEventId);
     },
     save: function(hazardEvent) {
-      if(hazardEvent.id) {
-        return $http.put(apiUrl + hazardEvent.id, hazardEvent);
+      if(hazardEvent._id) {
+        return $http.put(apiUrl + '/' + hazardEvent._id, hazardEvent);
       } else {
         return $http.post(apiUrl, hazardEvent);
       }
+    },
+    updateAttribute: function(hazardEvent, attributeName, attributeValue) {
+      return $http.post(apiUrl + '/' + hazardEvent._id + '/' + attributeName + '/' + attributeValue);
     }
   };
 

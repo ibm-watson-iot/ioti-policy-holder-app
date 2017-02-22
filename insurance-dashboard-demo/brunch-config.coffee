@@ -76,7 +76,8 @@ exports.config =
           'app/assets/pages/profile/profile.module.js',
           'app/assets/pages/hazards/hazards.module.js',
           'app/assets/pages/users/users.module.js',
-          'app/assets/pages/claims/claims.module.js'
+          'app/assets/pages/claims/claims.module.js',
+          'app/assets/pages/shields/shields.module.js',
         ]
         after: [
 

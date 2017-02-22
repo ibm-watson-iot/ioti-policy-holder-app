@@ -25,6 +25,19 @@
 @include svg-icon-class('person', 80, 80);
 @include svg-icon-class('refresh', 80, 80);
 
+@include svg-icon-class('airShield', 80, 80);
+@include svg-icon-class('airShieldAlert', 80, 80);
+@include svg-icon-class('fireShield', 80, 80);
+@include svg-icon-class('fireShieldAlert', 80, 80);
+@include svg-icon-class('crashShield', 80, 80);
+@include svg-icon-class('crashShieldAlert', 80, 80);
+@include svg-icon-class('waterShield', 80, 80);
+@include svg-icon-class('waterShieldAlert', 80, 80);
+@include svg-icon-class('weatherShield', 80, 80);
+@include svg-icon-class('weatherShieldAlert', 80, 80);
+@include svg-icon-class('emergencyShield', 80, 80);
+@include svg-icon-class('emergencyShieldAlert', 80, 80);
+
 
 @mixin png-icon($url, $width, $height) {
   display: inline-block;

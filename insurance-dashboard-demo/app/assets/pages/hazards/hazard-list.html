@@ -1,37 +1,63 @@
-<div ba-panel ba-panel-title="Hazards Map" ng-controller="HazardsMapCtrl as hazardsMapCtrlVM" class="viewport100">
+<div ng-controller="HazardListCtrl as hazardListCtrlVm">
+  <div ba-panel class="viewport100">
     <div id="map-bubbles"></div>
-</div>
+  </div>
 
-
-<div class="widgets">
-    <div class="row" ng-controller="HazardListCtrl as hazardListCtrlVm">
-        <div class="col-md-12">
-            <div ba-panel ba-panel-class="with-scroll">
-                <uib-tabset active="$tabSetStatus.activeTab">
-                    <uib-tab heading="Hazards">
-                        <div class="horizontal-scroll">
-                            <table class="table table-hover">
-                                <tr class="header-row">
-                                    <th class="table-id">#</th>
-                                    <th>Happened At</th>
-                                    <th>Shield-UUID</th>
-                                </tr>
-                                <tr ng-repeat="hazard in hazardListCtrlVm.hazards"
-                                    ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})"
-                                    class="editable-tr-wrap">
-                                    <td class="table-id">{{$index + 1}}</td>
-                                    <td>
-                                        {{hazard.timestamp}}
-                                    </td>
-                                    <td>
-                                        {{hazard.shieldUUID}}
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </uib-tab>
-                </uib-tabset>
+  <div class="widgets">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-primary bootstrap-panel with-scroll">
+          <div class="panel-heading">All Hazards</div>
+          <div class="panel-body">
+            <div class="horizontal-scroll">
+              <div class="heading-widget section-block ng-scope"
+                 ng-if="hazardListCtrlVm.isLoading">
+                <h2>Loading...</h2>
+              </div>
+              <div class="heading-widget section-block ng-scope"
+                  ng-if="!hazardListCtrlVm.isLoading && hazardListCtrlVm.hazards.length === 0">
+                <h2>You don't have any hazards.</h2>
+              </div>
+              <table class="table table-hover"
+                  ng-if="!hazardListCtrlVm.isLoading && hazardListCtrlVm.hazards.length > 0">
+                <tr class="header-row">
+                  <th class="table-id">#</th>
+                  <th>Event Time</th>
+                  <th>Shield</th>
+                  <th>City</th>
+                  <th>Customer</th>
+                  <th>Action</th>
+                </tr>
+                <tr class="editable-tr-wrap"
+                    ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':reverse:false">
+                  <td class="table-id" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                    {{$index + 1}}
+                  </td>
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                    {{hazard.eventTimeStr}}
+                  </td>
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                    {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldUUID].name}}
+                  </td>
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                    {{hazardListCtrlVm.userMap[hazard.username].cityName}}
+                  </td>
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                    {{hazardListCtrlVm.userMap[hazard.username].customer}}
+                  </td>
+                  <td>
+                    <button class="btn btn-primary editable-table-button btn-xs"
+                        ng-if="!hazard.ishandled"
+                        ng-click="hazardListCtrlVm.acknowledgeHazard(hazard)">
+                          Acknow.
+                    </button>
+                  </td>
+                </tr>
+              </table>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

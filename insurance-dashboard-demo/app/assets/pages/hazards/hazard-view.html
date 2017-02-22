@@ -1,77 +1,68 @@
 <div class="widgets" ng-controller="HazardViewCtrl as hazardViewCtrlVm">
+
   <div class="row">
     <div class="col-md-12">
       <div ba-panel ba-panel-class="with-scroll">
-        <div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="username">username</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="username"
-                    ng-model="hazardViewCtrlVm.hazard.username">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="hazardUUID">hazardUUID</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="hazardUUID"
-                    ng-model="hazardViewCtrlVm.hazard.hazardUUID">
-              </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="username">Customer</label>
+              <input type="text" class="form-control" id="username"
+                  ng-model="hazardViewCtrlVm.hazard.username">
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="title">title</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="title"
-                    ng-model="hazardViewCtrlVm.hazard.title">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="shieldUUID">shieldUUID</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="shieldUUID"
-                    ng-model="hazardViewCtrlVm.hazard.shieldUUID">
-              </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="shieldName">Shield</label>
+              <input type="text" class="form-control" id="shieldName"
+                  ng-model="hazardViewCtrlVm.shield.name">
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="timestamp">timestamp</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="timestamp"
-                       ng-model="hazardViewCtrlVm.hazard.timestamp">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="shieldID">shieldID</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="shieldID"
-                       ng-model="hazardViewCtrlVm.hazard.shieldID">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="islocal">islocal</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="islocal"
-                       ng-model="hazardViewCtrlVm.hazard.islocal">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="ishandled">ishandled</label>
-                <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="ishandled"
-                       ng-model="hazardViewCtrlVm.hazard.ishandled">
-              </div>
-            </div>
-          </div>
-          <div ba-panel ba-panel-title="Hazard Location" class="viewport100">
-            <div id="google-maps"></div>
-          </div>
-          <button ui-sref="main.claim-add({username: hazardViewCtrlVm.hazard.username})" class="btn btn-primary" >Claim</button>
         </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="title">Event</label>
+              <input type="text" class="form-control" id="title"
+                  ng-model="hazardViewCtrlVm.hazard.title">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="timestamp">Event Time</label>
+              <input type="text" class="form-control" id="timestamp"
+                     ng-model="hazardViewCtrlVm.hazard.eventTimeStr">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="ishandled">Acknowledged</label>
+              <input type="text" class="form-control" id="ishandled"
+                     ng-model="hazardViewCtrlVm.hazard.ishandled">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-primary pull-right"
+                ui-sref="main.claim-add({username: hazardViewCtrlVm.hazard.username})">
+              Create Claim
+            </button>
+            <button class="btn btn-primary pull-right" ng-if="!hazardViewCtrlVm.hazard.ishandled"
+                ng-click="hazardViewCtrlVm.acknowledgeHazard(hazardViewCtrlVm.hazard)">
+              Acknowledge
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-title="Hazard Location" class="viewport100">
+        <div id="google-maps"></div>
       </div>
     </div>
   </div>

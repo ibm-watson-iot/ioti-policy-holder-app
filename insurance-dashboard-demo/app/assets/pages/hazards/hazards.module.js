@@ -14,7 +14,7 @@ function routeConfig($stateProvider) {
     title: 'Hazards',
     sidebarMeta: {
       icon: 'fa fa-bolt',
-      order: 2
+      order: 1
     }
   }).state('main.hazard-view', {
     url: 'hazards/:hazardEventId',

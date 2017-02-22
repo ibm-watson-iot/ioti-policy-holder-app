@@ -15,12 +15,9 @@
     }
 
     function initializeLocationMap(claim) {
-      // get claim location
-      var geocoder;
       var map;
       var address = claim.address;
-
-      geocoder = new google.maps.Geocoder();
+      var geocoder = new google.maps.Geocoder();
       var latlng = new google.maps.LatLng(-34.397, 150.644);
       var myOptions = {
         zoom: 14,
@@ -59,4 +56,5 @@
       }
     }
   }
+
 })();

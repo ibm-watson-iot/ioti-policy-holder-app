@@ -38,6 +38,16 @@
       });
     }
 
+    var startDate;
+    var monthCount = 12;
+
+    _.each(chartData, function(item){
+      startDate = new Date();
+      startDate.setMonth(startDate.getMonth() - monthCount);
+      item.date = startDate;
+      monthCount--;
+    });
+
     var chart = AmCharts.makeChart('amchart', {
       type: 'serial',
       theme: 'blur',
@@ -97,7 +107,9 @@
     });
 
     function zoomChart() {
-      chart.zoomToDates(new Date(2016, 1), new Date(2016, 12));
+      var startDate = new Date();
+      startDate.setMonth(startDate.getMonth() - 12);
+      chart.zoomToDates(startDate, new Date());
     }
 
     chart.addListener('rendered', zoomChart);

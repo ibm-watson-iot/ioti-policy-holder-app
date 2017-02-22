@@ -10,7 +10,7 @@
       title: 'Claims',
       sidebarMeta: {
         icon: 'fa fa-envelope-o',
-        order: 1
+        order: 2
       }
     }).state('main.claim-view', {
       url: 'claims/:claimId',

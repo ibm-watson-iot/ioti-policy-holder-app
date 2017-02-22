@@ -3,57 +3,57 @@
     <div class="col-md-12">
       <div ba-panel ba-panel-class="with-scroll">
         <uib-tabset active="$tabSetStatus.activeTab">
-          <uib-tab heading="User Info">
+          <uib-tab heading="Details">
             <div>
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="username">username</label>
-                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="username"
-                           ng-model="userViewCtrlVm.user.username">
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="fullname">fullname</label>
-                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="fullname"
+                    <label for="fullname">Name</label>
+                    <input type="text" class="form-control" id="fullname"
                            ng-model="userViewCtrlVm.user.fullname">
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="firstname">firstname</label>
-                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="firstname"
-                           ng-model="userViewCtrlVm.user.firstname">
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="lastname">lastname</label>
-                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="lastname"
-                           ng-model="userViewCtrlVm.user.lastname">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="email">email</label>
-                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="email"
+                    <label for="email">E-mail</label>
+                    <input type="text" class="form-control" id="email"
                            ng-model="userViewCtrlVm.user.email">
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="address">address</label>
-                    <input ng-disabled="true" style="color: black;" type="text" class="form-control" id="address"
-                           ng-model="userViewCtrlVm.user.address">
+                    <label for="street">Street</label>
+                    <input type="text" class="form-control" id="street"
+                           ng-model="userViewCtrlVm.user.address.street">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="zipcode">Zipcode</label>
+                    <input type="text" class="form-control" id="zipcode"
+                           ng-model="userViewCtrlVm.user.address.zipcode">
                   </div>
                 </div>
               </div>
-              <div ba-panel ba-panel-title="User Location" class="viewport100">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city"
+                           ng-model="userViewCtrlVm.user.address.city">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="country">Country</label>
+                    <input type="text" class="form-control" id="country"
+                           ng-model="userViewCtrlVm.user.address.country">
+                  </div>
+                </div>
+              </div>
+              <div ba-panel ba-panel-title="Customer Location" class="viewport100">
                 <div id="google-maps"></div>
               </div>
             </div>
