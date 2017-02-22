@@ -18,7 +18,7 @@ In the lib/BleClient.js file, there is a section with the current TEP120 devices
 `//var PERIPHERAL_NAME = 'UMS iPhone 64A'; // The yellow buggy`
 
 # Watchdog events
-When in connected state, the TEP120 will send watchdog events as a heart beat. This needs to happen from the application as well or the TEP120 will disconnect. A watchdog event is being sent every 10 seconds from this application.
+When in connected state, the TEP120 will send watchdog events as a heart beat. This MUST happen from the application as well or the TEP120 will disconnect. A watchdog event is being sent every 10 seconds from this application.
 
 # Calibration
 For PHYD events to be sent, the TEP120 needs to be in a calibrated state (calibration_flag set to 0x01 as part of calibration events)  
@@ -65,3 +65,21 @@ Event Type Byte
 - Heavy Speed Up 0x02
 - Heavy Lateral Speed Up Right 0x03
 - Heavy Lateral Speed Up Left 0x04
+
+#Setup
+
+##MAC
+See https://github.com/sandeepmistry/noble
+
+##Linux
+See https://github.com/sandeepmistry/noble
+
+##Windows 7
+The Bluetooth driver available on Windows cannot be used by the Bluetooth library. See the Windows section in https://github.com/sandeepmistry/noble for information on how to install the WinUSB driver.
+
+In addition to installing the driver you will need to explicity provide the VID and PID of your specific Bluetooth chip. This is required if your chipset is not supported out of the box by the https://github.com/sandeepmistry/node-bluetooth-hci-socket library as is the case for the Lenovo P50 machines equiped with the Intel Wireless Bluetooth 8260 chip. The error message thrown by the library in these scenarios is `No compatible USBB luetooth 4.0 device found!`
+
+Setup the chip information and start the gateway:  
+`set BLUETOOTH_HCI_SOCKET_USB_VID=<your chip vid>`  
+`set BLUETOOTH_HCI_SOCKET_USB_PID=<your chip pid>`  
+`node app.js`  
