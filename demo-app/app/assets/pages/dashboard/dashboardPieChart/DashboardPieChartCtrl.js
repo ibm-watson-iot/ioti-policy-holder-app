@@ -34,7 +34,7 @@
           $scope.charts.push({
             color: pieColor,
             description: shield.name,
-            stats: 'Last updated ' + date.toLocaleString(),
+            stats: 'Last updated at ' + $filter('date')(date, 'h:mm a MMM d, y'),
             icon: shieldToHazardMap[shield.UUID] ? (shield.image + 'Alert') : shield.image,
           });
         });

@@ -14,13 +14,17 @@
         <div class="form-group row clearfix">
           <label for="inputRoom" class="col-sm-3 control-label">Access Level</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="inputRoom" ng-model="user.accessLevel" readonly>
+            <span class="form-control" id="inputRoom">
+              {{user.accessLevel}}
+            </span>
           </div>
         </div>
         <div class="form-group row clearfix">
           <label for="inputUsername" class="col-sm-3 control-label">Username</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="inputUsername" ng-model="user.username" readonly>
+            <span class="form-control" id="inputUsername">
+              {{user.username}}
+            </span>
           </div>
         </div>
       </div>
