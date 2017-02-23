@@ -28,7 +28,7 @@ function MsgCenterCtrl($scope, $sce, $filter, toastr, hazardService, claimServic
     _.each(data, function(claim) {
       claim.eventTime = new Date(claim.damageDate);
     });
-    $scope.claims = $filter('orderBy')(data, 'damageTime', true);
+    $scope.claims = data;
   }).error(function(err) {
     console.error("Fetching all claims is failed!");
   });

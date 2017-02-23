@@ -38,13 +38,13 @@
         <strong>Claims</strong>
       </div>
       <div class="msg-list">
-        <a href class="clearfix" ng-repeat="claim in claims"
+        <a href class="clearfix" ng-repeat="claim in claims | orderBy:'damageDate' | limitTo: 10"
             ui-sref="main.claim-view({claimId: claim._id})">
           <div class="img-area">
             <i class="fa fa-envelope-o"></i>
           </div>
           <div class="msg-area">
-            <div>{{ claim.policyHolder }}</div>
+            <div>{{claim.damageDate | date:'h:mm a  MM/dd/yyyy'}}</div>
             <span>{{ claim.eventTime | elapsed }}</span>
           </div>
         </a>

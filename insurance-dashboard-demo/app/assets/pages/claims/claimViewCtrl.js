@@ -3,20 +3,23 @@
 
   angular.module('BlurAdmin.pages.claims').controller('ClaimViewCtrl', ClaimViewCtrl);
 
-  function ClaimViewCtrl($stateParams, claimService) {
+  function ClaimViewCtrl($stateParams, claimService, userService) {
     var vm = this;
     vm.claim = {};
 
     if ($stateParams.claimId) {
       claimService.find($stateParams.claimId).success(function(claim) {
         vm.claim = claim;
-        initializeLocationMap(claim);
+        userService.findAll(vm.claim.policyHolderName).success(function(user) {
+          vm.user = user;
+          initializeLocationMap(user.address.street + ", " + user.address.zipcode
+                            + " " + user.address.city + ", " + user.address.country);
+        });
       });
     }
 
-    function initializeLocationMap(claim) {
+    function initializeLocationMap(address) {
       var map;
-      var address = claim.address;
       var geocoder = new google.maps.Geocoder();
       var latlng = new google.maps.LatLng(-34.397, 150.644);
       var myOptions = {

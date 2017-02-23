@@ -17,7 +17,11 @@
       templateUrl: 'pages/claims/claim-view.html',
       title: 'Claim'
     }).state('main.claim-add', {
-      url: 'claims/add/:username',
+      url: 'claims/new/',
+      params: {
+          hazardId: null,
+          username: null
+      },
       templateUrl: 'pages/claims/claim-add.html',
       title: 'New Claim'
     });

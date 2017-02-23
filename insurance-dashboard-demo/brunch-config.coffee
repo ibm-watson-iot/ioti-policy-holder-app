@@ -117,6 +117,7 @@ exports.config =
          'cp manifest.yml public/',
          'cp bower_components/Ionicons/fonts/* public/fonts',
          'cp bower_components/font-awesome/fonts/* public/fonts',
+         'cp bower_components/bootstrap/fonts/* public/fonts',
          'mkdir -p public/img/theme/vendor/ionrangeslider/img',
          'cp bower_components/ionrangeslider/img/* public/img/theme/vendor/ionrangeslider/img',
          'mkdir -p public/img/theme/vendor/ammap/img',

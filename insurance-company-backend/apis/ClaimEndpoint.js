@@ -20,6 +20,7 @@ class ClaimsEndpoint {
     router.get(this.basePath, this.list.bind(this));
     router.get(this.basePath + '/:id', this.get.bind(this));
     router.get(this.basePath + '/user/:username', this.getClaimsByUsername.bind(this));
+    router.get(this.basePath + '/hazard/:hazardId', this.getClaimsByHazardId.bind(this));
     router.post(this.basePath, this.create.bind(this));
     router.put(this.basePath , this.update.bind(this));
     router.delete(this.basePath, this.delete.bind(this));
@@ -115,7 +116,7 @@ class ClaimsEndpoint {
 
   getClaimsByUsername(req, res) {
     var method = 'ClaimsEndpoint.getClaimsByUsername';
-    var path = 'GET ' + this.basePath + '/';
+    var path = 'GET ' + this.basePath + '/user/' + req.params.username;
     console.info(method, 'Access to', path);
 
     var username = req.params.username;
@@ -123,6 +124,24 @@ class ClaimsEndpoint {
       res.status(400).json({error: "username not given"});
     } else {
       this.claimStore.getClaimsByUsername(username)
+      .then(function(docs) {
+        res.send(docs);
+      }).catch(function(err) {
+        res.status(502).json({error: err.message});
+      });
+    }
+  }
+
+  getClaimsByHazardId(req, res) {
+    var method = 'ClaimsEndpoint.getClaimsByUsername';
+    var path = 'GET ' + this.basePath + '/hazard/' + req.params.hazardId;
+    console.info(method, 'Access to', path);
+
+    var hazardId = req.params.hazardId;
+    if (!hazardId) {
+      res.status(400).json({error: "hazardId not given"});
+    } else {
+      this.claimStore.getClaimsByHazardId(hazardId)
       .then(function(docs) {
         res.send(docs);
       }).catch(function(err) {

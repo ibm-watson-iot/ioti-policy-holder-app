@@ -7,15 +7,17 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="policyNumber">Policy Number</label>
-                <input style="color: black;" type="text" class="form-control" id="policyNumber"
-                    ng-model="claimViewCtrlVm.claim.policyNumber">
+                <span class="form-control" id="policyNumber">
+                  {{claimViewCtrlVm.claim.policyId}}
+                </span>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="policyName">Policy Name</label>
-                <input style="color: black;" type="text" class="form-control" id="policyName"
-                    ng-model="claimViewCtrlVm.claim.policyName">
+                <span class="form-control" id="policyName">
+                  {{claimViewCtrlVm.claim.policyName}}
+                </span>
               </div>
             </div>
           </div>
@@ -23,60 +25,90 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="policyHolder">Policy Holder</label>
-                <input style="color: black;" type="text" class="form-control" id="policyHolder"
-                    ng-model="claimViewCtrlVm.claim.policyHolder">
+                <span class="form-control" id="policyHolder">
+                  {{claimViewCtrlVm.user.fullname}}
+                </span>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="phone">Telephone</label>
-                <input style="color: black;" type="text" class="form-control" id="phone"
-                       ng-model="claimViewCtrlVm.claim.phone">
+                <label for="email">Email</label>
+                <span class="form-control" id="email">
+                  {{claimViewCtrlVm.user.email}}
+                </span>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="address">Address</label>
-                <input style="color: black;" type="text" class="form-control" id="address"
-                       ng-model="claimViewCtrlVm.claim.address">
+                <label for="street">Street</label>
+                <span type="text" class="form-control" id="street">
+                  {{claimViewCtrlVm.user.address.street}}
+                </span>
               </div>
             </div>
             <div class="col-sm-6">
-
+              <div class="form-group">
+                <label for="zipcode">Zipcode</label>
+                <span type="text" class="form-control" id="zipcode">
+                  {{claimViewCtrlVm.user.address.zipcode}}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="city">City</label>
+                <span type="text" class="form-control" id="city">
+                  {{claimViewCtrlVm.user.address.city}}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <span type="text" class="form-control" id="country">
+                  {{claimViewCtrlVm.user.address.country}}
+                </span>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="damageDate">Damage Date</label>
-                <input style="color: black;" type="text" class="form-control" id="damageDate"
-                       ng-model="claimViewCtrlVm.claim.damageDate">
+                <span class="form-control" id="damageDate">
+                  {{claimViewCtrlVm.claim.damageDate | date:'h:mm a  MM/dd/yyyy'}}
+                </span>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="damageTime">Damage Time</label>
-                <input style="color: black;" type="text" class="form-control" id="damageTime"
-                       ng-model="claimViewCtrlVm.claim.damageTime">
+                <label for="damageIncurred">Damage Incurred</label>
+                <span class="form-control" id="damageIncurred">
+                  {{claimViewCtrlVm.claim.damageIncurred | number}}
+                </span>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="damageIncurred">Damage Incurred</label>
-                <input style="color: black;" type="text" class="form-control" id="damageIncurred"
-                       ng-model="claimViewCtrlVm.claim.damageIncurred">
-              </div>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
               <div class="form-group">
                 <label for="description">Description</label>
-                <input style="color: black;" type="text" class="form-control" id="description"
-                       ng-model="claimViewCtrlVm.claim.description">
+                <span class="form-control" id="description">
+                  {{claimViewCtrlVm.claim.description}}
+                </span>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button class="btn btn-primary pull-right" ng-if="claimViewCtrlVm.claim.hazardId"
+                  ui-sref="main.hazard-view({hazardId: claimViewCtrlVm.claim.hazardId})">
+                Show Hazard
+              </button>
             </div>
           </div>
         </div>

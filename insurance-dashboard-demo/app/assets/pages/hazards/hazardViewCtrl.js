@@ -3,7 +3,7 @@
 
 angular.module('BlurAdmin.pages.hazards').controller('HazardViewCtrl', HazardViewCtrl);
 
-function HazardViewCtrl($stateParams, $filter, toastr, hazardService, shieldService, userService) {
+function HazardViewCtrl($stateParams, $filter, toastr, hazardService, shieldService, userService, claimService) {
   var vm = this;
   vm.hazard = {};
 
@@ -20,6 +20,11 @@ function HazardViewCtrl($stateParams, $filter, toastr, hazardService, shieldServ
       shieldService.find(vm.hazard.shieldUUID).success(function(shield) {
         vm.shield = shield;
       });
+    });
+    claimService.findByHazardId($stateParams.hazardEventId).success(function(claims) {
+      vm.claims = claims;
+    }).error(function(err) {
+      console.log("Failed to get the claim of the hazard!");
     });
   }
 

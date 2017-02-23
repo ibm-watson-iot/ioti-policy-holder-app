@@ -42,12 +42,33 @@ class ClaimStore extends BaseStore {
   getClaimsByUsername(username) {
     var self = this;
     return when.promise(function(resolve, reject) {
-      self.selectByAttribute("username", username)
+      self.selectByAttribute("policyHolderName", username)
       .then(function(result) {
         if (result && result.docs && (result.docs.length > 0)) {
           resolve(result.docs);
+        } else if (result && result.docs && (result.docs.length === 0)) {
+          resolve([]);
         } else {
           reject(new Error('There is not any claims with username ' + username));
+        }
+      })
+      .catch(function(err) {
+        reject(err);
+      });
+    });
+  }
+
+  getClaimsByHazardId(hazardId) {
+    var self = this;
+    return when.promise(function(resolve, reject) {
+      self.selectByAttribute("hazardId", hazardId)
+      .then(function(result) {
+        if (result && result.docs && (result.docs.length > 0)) {
+          resolve(result.docs);
+        } else if (result && result.docs && (result.docs.length === 0)) {
+          resolve([]);
+        } else {
+          reject(new Error('There is not any claims with hazardId ' + hazardId));
         }
       })
       .catch(function(err) {
@@ -58,4 +79,3 @@ class ClaimStore extends BaseStore {
 }
 
 module.exports = ClaimStore;
-

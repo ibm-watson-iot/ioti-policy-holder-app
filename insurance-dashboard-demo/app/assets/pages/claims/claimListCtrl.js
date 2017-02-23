@@ -3,53 +3,47 @@
 
 angular.module('BlurAdmin.pages.claims').controller('ClaimListCtrl', ClaimListCtrl);
 
-function ClaimListCtrl($timeout, baConfig, layoutPaths, claimService, cityLocationService) {
+function ClaimListCtrl($timeout, baConfig, layoutPaths, claimService, userService, cityLocationService) {
   var vm = this;
   var latlong;
   vm.claims = [];
+  vm.userMap = {};
 
-  claimService.findAll().success(function(data) {
-    vm.claims = data;
-  }).error(function(err) {
-    console.error("Fetching all claims is failed!");
-  });
-
-  cityLocationService.me().success(function(data) {
-    latlong = data;
-
-    claimService.findAll().success(function(data) {
-      vm.claims = data;
-      var cityClaimCount = {};
-      _.each(vm.claims, function(claim) {
-        var addressWords = claim.address.split(',');
-        var city = addressWords[addressWords.length - 1].replace(/\s+/g, '').toLowerCase();
-        if (city) {
-          if (!cityClaimCount[city]) {
-            cityClaimCount[city] = 0;
-          }
-          cityClaimCount[city] = cityClaimCount[city] + 1;
+  cityLocationService.me().then(function(result){
+    latlong = result.data;
+    return claimService.findAll();
+  }).then(function(result){
+    vm.claims = result.data;
+    return userService.findAll();
+  }).then(function(result){
+    var i = 0;
+    var users = result.data.users;
+    for(; i < users.length; i++) {
+      vm.userMap[users[i].username] = users[i];
+    }
+    var user, city, cityClaimCount = {};
+    for(i = 0; i < vm.claims.length; i++) {
+      user = vm.userMap[vm.claims[i].policyHolderName];
+      city = user.address.city.replace(/\s+/g, '').toLowerCase();
+      if (city) {
+        if (!cityClaimCount[city]) {
+          cityClaimCount[city] = 0;
         }
+        cityClaimCount[city] = cityClaimCount[city] + 1;
+      }
+    }
+    var mapData = [];
+    for (city in cityClaimCount) {
+      mapData.push({
+        name: city,
+        value: cityClaimCount[city],
+        code: city,
+        color: baConfig.colors.primaryDark
       });
-
-      // populate the map data
-      var mapData = [];
-      for (var city in cityClaimCount) {
-        var mapDataEntry = {};
-        mapDataEntry.name = city;
-        mapDataEntry.value = cityClaimCount[city];
-        mapDataEntry.code = city;
-        mapDataEntry.color = baConfig.colors.primaryDark;
-        mapData.push(mapDataEntry);
-      }
-
-      if (mapData.length > 0) {
-        loadMap(mapData);
-      }
-    }).error(function(err) {
-      console.error("Fetching all claims failed!");
-    });
-  }).error(function(err) {
-    console.error("Fetching city locations failed!");
+    }
+    if (mapData.length > 0) {
+      loadMap(mapData);
+    }
   });
 
   function loadMap(mapData) {

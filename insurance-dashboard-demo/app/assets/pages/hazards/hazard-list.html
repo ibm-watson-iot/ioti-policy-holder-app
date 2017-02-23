@@ -29,7 +29,7 @@
                   <th>Action</th>
                 </tr>
                 <tr class="editable-tr-wrap"
-                    ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':reverse:false">
+                    ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':true">
                   <td class="table-id" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
                     {{$index + 1}}
                   </td>

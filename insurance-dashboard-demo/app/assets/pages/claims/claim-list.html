@@ -22,17 +22,25 @@
                   ng-if="!claimListCtrlVm.isLoading && claimListCtrlVm.claims.length > 0">
                 <tr class="header-row">
                   <th class="table-id">#</th>
-                  <th>Policy Number</th>
-                  <th>Username</th>
+                  <th>Damage Date</th>
+                  <th>Damage Incurred</th>
+                  <th>Policy Id</th>
+                  <th>Policy Holder</th>
                 </tr>
-                <tr ng-repeat="claim in claimListCtrlVm.claims"
+                <tr ng-repeat="claim in claimListCtrlVm.claims | orderBy:'damageDate':true"
                   ui-sref="main.claim-view({claimId: claim._id})" class="editable-tr-wrap">
                   <td class="table-id">{{$index + 1}}</td>
                   <td>
-                    {{claim.policyNumber}}
+                    {{claim.damageDate | date:'h:mm a  MM/dd/yyyy'}}
                   </td>
                   <td>
-                    {{claim.username}}
+                    {{claim.damageIncurred | number}}
+                  </td>
+                  <td>
+                    {{claim.policyId}}
+                  </td>
+                  <td>
+                    {{claimListCtrlVm.userMap[claim.policyHolderName].fullname}}
                   </td>
                 </tr>
               </table>

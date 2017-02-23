@@ -7,15 +7,18 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label for="username">Customer</label>
-              <input type="text" class="form-control" id="username"
-                  ng-model="hazardViewCtrlVm.hazard.username">
+              <span class="form-control" id="username">
+                {{hazardViewCtrlVm.hazard.username}}
+              </span>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label for="shieldName">Shield</label>
-              <input type="text" class="form-control" id="shieldName"
+              <span class="form-control" id="shieldName"
                   ng-model="hazardViewCtrlVm.shield.name">
+                  {{hazardViewCtrlVm.hazard.username}}
+                </span>
             </div>
           </div>
         </div>
@@ -23,15 +26,18 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label for="title">Event</label>
-              <input type="text" class="form-control" id="title"
+              <span class="form-control" id="title"
                   ng-model="hazardViewCtrlVm.hazard.title">
+                  {{hazardViewCtrlVm.hazard.username}}
+                </span>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label for="timestamp">Event Time</label>
-              <input type="text" class="form-control" id="timestamp"
-                     ng-model="hazardViewCtrlVm.hazard.eventTimeStr">
+              <span class="form-control" id="timestamp">
+                {{hazardViewCtrlVm.hazard.eventTimeStr}}
+              </span>
             </div>
           </div>
         </div>
@@ -39,15 +45,22 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label for="ishandled">Acknowledged</label>
-              <input type="text" class="form-control" id="ishandled"
-                     ng-model="hazardViewCtrlVm.hazard.ishandled">
+              <span class="form-control" id="ishandled">
+                {{hazardViewCtrlVm.hazard.ishandled}}
+              </span>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <button class="btn btn-primary pull-right"
-                ui-sref="main.claim-add({username: hazardViewCtrlVm.hazard.username})">
+                ng-if="hazardViewCtrlVm.claims.length > 0"
+                ui-sref="main.claim-view({claimId: hazardViewCtrlVm.claims[0]._id})">
+              Show Claim
+            </button>
+            <button class="btn btn-primary pull-right"
+                ng-if="hazardViewCtrlVm.claims.length === 0"
+                ui-sref="main.claim-add({hazardId: hazardViewCtrlVm.hazard.hazardid, username: hazardViewCtrlVm.hazard.username})">
               Create Claim
             </button>
             <button class="btn btn-primary pull-right" ng-if="!hazardViewCtrlVm.hazard.ishandled"

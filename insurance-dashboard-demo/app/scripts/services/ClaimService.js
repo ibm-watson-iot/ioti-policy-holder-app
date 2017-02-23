@@ -19,6 +19,10 @@ angular.module('BlurAdmin.services').factory('claimService', function($http, api
       }
       return $http.get(url);
     },
+    findByHazardId: function(hazardId) {
+      var url = apiUrl + '/hazard/' + hazardId
+      return $http.get(url);
+    },
     remove: function(claim) {
       return $http['delete'](apiUrl + '/', claim);
     },
