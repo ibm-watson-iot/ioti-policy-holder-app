@@ -33,7 +33,7 @@
     }
   }, {
     "username": "bilal.alsaeedi@de.ibm.com",
-    "password": "04ba73304613b45d910a93f1a4d1f180",
+    "password": "3fc22ac42e33f551ef0dfb8ed3e2ee31",
     "accessLevel": "13",
     "fullname": "Bilal Al-Saeedi",
     "email": "bilal.alsaeedi@de.ibm.com",
@@ -74,7 +74,7 @@
     }
   }, {
     "username": "uwe.krieger@de.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "password": "987317e2158b49734c586a995dba0a67",
     "accessLevel": "13",
     "fullname": "Uwe Krieger",
     "email": "uwe.krieger@de.ibm.com",
@@ -90,7 +90,7 @@
     }
   }, {
     "username": "markus_mueller@de.ibm.com",
-    "password": "b67c135dc70a07587c85771b51ec8a47",
+    "password": "82c1f7431c444835a4d4c1fb7a02d679",
     "accessLevel": "13",
     "fullname": "Markus Mueller",
     "email": "markus_mueller@de.ibm.com",
@@ -139,7 +139,7 @@
     }
   }, {
     "username": "patrick.pircher@ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "password": "5cd0e1cb1931c125136c707f1df49be0",
     "accessLevel": "13",
     "fullname": "Patrick Pircher",
     "email": "patrick.pircher@ibm.com",
@@ -155,7 +155,7 @@
     }
   }, {
     "username": "horia.alungulesei@ro.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "password": "71936b6f8a14ae9de59bc9db0899d4d6",
     "accessLevel": "13",
     "fullname": "Horia Alungulesei",
     "email": "horia.alungulesei@ro.ibm.com",
@@ -171,7 +171,7 @@
     }
   }, {
     "username": "dragos.cojocari@ro.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "password": "2ff098ca608383ea1aa5e07c33255f1c",
     "accessLevel": "13",
     "fullname": "Dragos Cojocari",
     "email": "dragos.cojocari@ro.ibm.com",
@@ -186,11 +186,11 @@
     "iotresult": {
     }
   }, {
-    "username": "rechnitz@@de.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "username": "rechnitz@de.ibm.com",
+    "password": "d5a3c8b1a99efbb1f81ed5c07df32e2b",
     "accessLevel": "13",
     "fullname": "Thomas Rechnitzer",
-    "email": "rechnitz@@de.ibm.com",
+    "email": "rechnitz@de.ibm.com",
     "phonenumber": "+49153112233",
     "address": {
       "street": "Magnolienweg 7",
@@ -203,7 +203,7 @@
     }
   }, {
     "username": "thomas.mattsson@se.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "password": "99e2823d87628dda44c5be6d68a71ebe",
     "accessLevel": "13",
     "fullname": "Thomas Mattsson",
     "email": "thomas.mattsson@se.ibm.com",
@@ -219,7 +219,7 @@
     }
   }, {
     "username": "schwa@us.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "password": "1daa8a74a2bbded418897967f7737f2d",
     "accessLevel": "13",
     "fullname": "Phil Schwartz",
     "email": "schwa@us.ibm.com",
@@ -235,7 +235,7 @@
     }
   }, {
     "username": "jbmassey@us.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "password": "9ae4b11593168f3e2c1dd895d7d18c9d",
     "accessLevel": "13",
     "fullname": "Brian Massey",
     "email": "jbmassey@us.ibm.com",
