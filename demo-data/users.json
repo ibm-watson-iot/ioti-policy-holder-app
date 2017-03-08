@@ -1,10 +1,26 @@
 {
   "users": [{
-    "username": "iot4i@us.ibm.com",
-    "password": "4cd7577f9ee2d60939ee9252a1833274",
+    "username": "iot4i@blueinsurance.com",
+    "password": "d9c68cf3b75f81cf0699ae8abb4e4474",
     "accessLevel": "1",
-    "fullname": "IoT Insurance",
-    "email": "iot4i@us.ibm.com",
+    "fullname": "Blue Insurance Admin",
+    "email": "iot4i@blueinsurance.com",
+    "phonenumber": "+4917610022333",
+    "address": {
+      "street": "Mies-van-der-Rohe-Straße 6",
+      "zipcode": "80807",
+      "city": "Munich",
+      "country": "Germany"
+    },
+    "gatewayIds": [],
+    "iotresult": {
+    }
+  }, {
+    "username": "iot4i_admin@ibm.com",
+    "password": "4f3d474eaebd5e0eeac17172bee4d119",
+    "accessLevel": "1",
+    "fullname": "IoT4I Admin",
+    "email": "iot4i_admin@ibm.com",
     "phonenumber": "+4917610022333",
     "address": {
       "street": "Mies-van-der-Rohe-Straße 6",
