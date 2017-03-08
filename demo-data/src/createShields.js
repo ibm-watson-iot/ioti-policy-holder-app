@@ -41,5 +41,5 @@ _.each(data.shields, function(newShieldInfo) {
       logger.info(tid, 'catch', 'Shield creation was failed:', Boom.wrap(err, err.statusCode));
     });
   }, timeout);
-  timeout += 500;
+  timeout += 1000;
 });

@@ -11,6 +11,7 @@
 
 var Boom = require('boom');
 var when = require('when');
+var uuidV4 = require('uuid/v4');
 var cloudant = require('cloudant');
 
 class BaseStore {
@@ -32,7 +33,7 @@ class BaseStore {
     self.logger.info(tid, method, 'Getting', self.documentType, 'document with an id', documentId);
 
     return when.promise(function(resolve, reject) {
-      self.db.get(documentId, function(err, device) {
+      self.db.get(documentId, function(err, resultDoc) {
         if (err) {
           var error = Boom.wrap(err, err.statusCode);
           self.logger.error(tid, method, self.documentType,
@@ -40,45 +41,45 @@ class BaseStore {
           reject(error);
         } else {
           self.logger.info(tid, method, 'Found', self.documentType, 'document in database with an id', documentId);
-          resolve(device);
+          resolve(resultDoc);
         }
       });
     });
   }
 
-  list(tid) {
+  list(tid, page, limit) {
     var self = this;
     var method = 'BaseStore.list';
-    self.logger.info(tid, method, 'Listing', self.documentType, 'documents');
+    self.logger.info(tid, method, 'Listing', self.documentType, 'documents for page', page, 'with a limit', limit);
 
     return when.promise(function(resolve, reject) {
       // TODO: this hack has to be fixed.
       var designName = 'iot4i';
       var viewName = self.documentType + 's';
       var viewOptions = {
-        include_docs: true
+        include_docs: true,
+        limit: limit,
+        skip: limit * page
       };
-      var includeDocs = true;
 
-      self.db.view(designName, viewName, viewOptions, function(err, docs) {
+      self.db.view(designName, viewName, viewOptions, function(err, viewResult) {
         if (err) {
           var error = Boom.wrap(err, err.statusCode);
-          self.logger.error(tid, method, 'error while listing',
+          self.logger.error(tid, method, 'Error while listing',
             self.documentType, 'document', error.statusCode, error.message);
           reject(error);
         } else {
-          var results = docs.rows;
-          var newResults = [];
-
-          if (includeDocs) {
-            results.forEach(function(result) {
-              newResults.push(result.doc);
-            });
-          } else {
-            newResults = results;
-          }
-          self.logger.info(tid, method, newResults.length, self.documentType, 'documents are found.');
-          resolve(newResults);
+          var result = {
+            page: page,
+            limit: limit,
+            total: viewResult.total_rows,
+            items: []
+          };
+          viewResult.rows.forEach(function(row) {
+            result.items.push(row.doc);
+          });
+          self.logger.info(tid, method, result.items.length, self.documentType, 'documents are found.');
+          resolve(result);
         }
       });
     });
@@ -88,19 +89,17 @@ class BaseStore {
     var self = this;
     var method = 'BaseStore.create';
     self.logger.info(tid, method, 'Creating new', self.documentType, 'document');
-    newDocument.createdAt = new Date();
-    newDocument.docType = self.documentType;
 
     return when.promise(function(resolve, reject) {
-      self.db.insert(newDocument, function(err, document) {
+      self.db.insert(newDocument, function(err, resultDoc) {
         if (err) {
           var error = Boom.wrap(err, err.statusCode);
-          self.logger.error(tid, method, 'error while inserting',
+          self.logger.error(tid, method, 'Error while inserting',
             self.documentType, 'document', error.statusCode, error.message);
           reject(error);
         } else {
-          self.logger.info(tid, method, 'Inserted', self.documentType, 'document for', document.id);
-          resolve(document);
+          self.logger.info(tid, method, 'Inserted', self.documentType, 'document for', resultDoc.id);
+          resolve(newDocument);
         }
       });
     });
@@ -110,19 +109,17 @@ class BaseStore {
     var self = this;
     var method = 'BaseStore.update';
     self.logger.info(tid, method, 'Updating', self.documentType, 'document with an id', documentToUpdate._id);
-    documentToUpdate.updatedAt = new Date();
-    documentToUpdate.docType = self.documentType;
 
     return when.promise(function(resolve, reject) {
-      self.db.insert(documentToUpdate, documentToUpdate._id, function(err, document) {
+      self.db.insert(documentToUpdate, documentToUpdate._id, function(err, resultDoc) {
         if (err) {
           var error = Boom.wrap(err, err.statusCode);
-          self.logger.error(tid, method, 'error while updating',
+          self.logger.error(tid, method, 'Error while updating',
             self.documentType, 'document', error.statusCode, error.message);
           reject(error);
         } else {
-          self.logger.info(tid, method, 'Updated', self.documentType, 'document with id', document.id);
-          resolve(document);
+          self.logger.info(tid, method, 'Updated', self.documentType, 'document with id', resultDoc.id);
+          resolve(documentToUpdate);
         }
       });
     });
@@ -137,22 +134,22 @@ class BaseStore {
       self.db.destroy(document._id, document._rev, function(err, result) {
         if (err) {
           var error = Boom.wrap(err, err.statusCode);
-          self.logger.error(tid, method, 'error while deleting',
+          self.logger.error(tid, method, 'Error while deleting',
             self.documentType, 'document', error.statusCode, error.message);
           reject(error);
         } else {
-          self.logger.info(tid, method, 'deleted', self.documentType, 'document with id', document.id);
+          self.logger.info(tid, method, 'Deleted', self.documentType, 'document with id', document.id);
           resolve(result);
         }
       });
     });
   }
 
-  selectByAttribute(tid, attributeName, attributeValue) {
+  query(tid, queryParams) {
     var self = this;
-    var method = 'BaseStore.selectByAttribute';
-    self.logger.info(tid, method, 'Select', self.documentType,
-      'document with attributeName', attributeName, 'and attributeValue', attributeValue);
+    var method = 'BaseStore.query';
+    self.logger.info(tid, method, 'Query', self.documentType,
+      'document with the params:', queryParams);
 
     var query = {
       "selector": {
@@ -162,18 +159,22 @@ class BaseStore {
         }
       }
     };
-    query.selector[attributeName] = attributeValue;
+    for (var key in queryParams) {
+      if (queryParams.hasOwnProperty(key)) {
+        query.selector[key] = queryParams[key];
+      }
+    }
 
     return when.promise(function(resolve, reject) {
       self.db.find(query, function(err, result) {
         if (err) {
           var error = Boom.wrap(err, err.statusCode);
-          self.logger.error(tid, method, 'error while selecting',
+          self.logger.error(tid, method, 'Error while querying',
             self.documentType, 'document', error.statusCode, error.message);
           reject(error);
         } else {
-          self.logger.info(tid, method, 'selected', self.documentType,
-            'document with attributeName', attributeName, 'and attributeValue', attributeValue);
+          self.logger.info(tid, method, 'Queried', self.documentType,
+            'document with the params', queryParams);
           resolve(result);
         }
       });
@@ -201,7 +202,8 @@ class BaseStore {
       self.db.view(designName, viewName, viewOptions, function(err, result) {
         if (err) {
           var error = Boom.wrap(err, err.statusCode);
-          self.logger.error(tid, method, 'error while selecting', self.documentType, 'document', error.statusCode, error.message);
+          self.logger.error(tid, method, 'error while selecting',
+              self.documentType, 'document', error.statusCode, error.message);
           reject(error);
         } else {
           var results = result.rows;
@@ -215,7 +217,8 @@ class BaseStore {
             newResults = results;
           }
 
-          self.logger.info(tid, method, 'selected', self.documentType, 'document with key', key, 'and view name', viewName);
+          self.logger.info(tid, method, 'selected', self.documentType,
+              'document with key', key, 'and view name', viewName);
           resolve(newResults);
         }
       });
