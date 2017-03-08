@@ -2,7 +2,7 @@
   "shields": [{
     "shield": {
       "UUID": "1",
-      "name": "Water Shield",
+      "name": "EnOcean Water Shield",
       "type": "Home",
       "description": "It detects water leakages.",
       "image": "waterShield",
@@ -56,7 +56,7 @@
       "actions": [
         "push-chrome"
       ],
-      "code": "(function () {\n  var shieldUuid = 99999;\n  var shieldName = 'smoke-detection-shield';\n  var hazardTitle = 'Smoke was detected!';\n\n  var delay = 20000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n    return (payload.cname === 'SMOKE');\n  }\n\n  function entryCondition(payload) {\n    return (payload.cname === 'SMOKE');\n  }\n\n  function message(payload) {\n    payload.extra = payload.extra || {};\n    payload.extra.isHandled = false;\n    payload.extra.urgent = true;\n    payload.extra.locationDesc = 'Office';\n    payload.extra.deviceDesc = 'SmokeSmart Sensor';\n\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
+      "code": "(function() {\n  var shieldUuid = 2;\n  var shieldName = 'smoke-detection-shield';\n  var hazardTitle = 'Smoke was detected!';\n\n  var delay = 20000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n    return ((payload.cname === 'SMOKE')) && (payload.val === 1);\n  }\n\n  function entryCondition(payload) {\n    return (payload.cname === 'SMOKE');\n  }\n\n  function message(payload) {\n    payload.extra = payload.extra || {};\n    payload.extra.isHandled = false;\n    payload.extra.urgent = true;\n    payload.extra.locationDesc = 'Office';\n    payload.extra.deviceDesc = 'SmokeSmart Sensor';\n\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
     }
   }, {
     "shield": {
@@ -87,7 +87,7 @@
         "push-chrome",
         "send-sms"
       ],
-      "code": "(function () {\n  var shieldUuid = 3;\n  var shieldName = 'crash-detection-shield';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  var crashMessage;\n\n  function safelet(payload) {\n    var crash = false;\n    if (payload.crashStatus === 2 && payload.crashIndex > 2) {\n      crashMessage = 'normal. But it might indicate begining of a crash';\n      crash = true;\n    } else if (payload.crashStatus === 3 && payload.crashIndex > 40) {\n      crashMessage = 'medium';\n      crash = true;\n    } else if (payload.crashStatus === 4 && payload.crashIndex > 50) {\n      crashMessage = 'massive';\n      crash = true;\n    } else {\n      crash = false;\n    }\n    return (crash);\n  }\n\n  function entryCondition(payload) {\n    return (payload.crashIndex && payload.crashStatus && payload.eventType);\n  }\n\n  function message(payload) {\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, 'Crash was detected. Level of the crash: ' + crashMessage));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
+      "code": "(function() {\n  var shieldUuid = 3;\n  var shieldName = 'crash-detection-shield';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  var crashMessage;\n\n  function safelet(payload) {\n    var crash = false;\n    if (payload.crashStatus === 2 && payload.crashIndex > 2) {\n      crashMessage = 'normal. But it might indicate begining of a crash';\n      crash = true;\n    } else if (payload.crashStatus === 3 && payload.crashIndex > 40) {\n      crashMessage = 'medium';\n      crash = true;\n    } else if (payload.crashStatus === 4 && payload.crashIndex > 50) {\n      crashMessage = 'massive';\n      crash = true;\n    } else {\n      crash = false;\n    }\n    return (crash);\n  }\n\n  function entryCondition(payload) {\n    return (payload.crashIndex && payload.crashStatus && payload.eventType);\n  }\n\n  function message(payload) {\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, 'Crash was detected. Level of the crash: ' + crashMessage));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
     }
   }, {
     "shield": {
@@ -145,7 +145,7 @@
       "actions": [
         "pushios"
       ],
-      "code": ""
+      "code": "(function() {\n  var shieldUuid = 5;\n  var shieldName = 'weather-shield';\n  var hazardTitle = 'Temperature outside limits';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  var tempMin = -10;\n  var tempMax = 35;\n\n  function safelet(payload) {\n    return ((payload.weatherData.temperature < tempMin) || (payload.weatherData.temperature > tempMax));\n  }\n\n  function entryCondition(payload) {\n    return (payload && payload.weatherData && payload.weatherData.temperature);\n  }\n\n  function message(payload) {\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();\n"
     }
   }, {
     "shield": {
@@ -174,7 +174,36 @@
       "actions": [
         "pushios"
       ],
-      "code": "(function () {\n  var shieldUuid = 99999;\n  var shieldName = 'emergency-button-shield';\n  var hazardTitle = 'Emergency button was pressed.';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n    /* Value can be either released or pressed as string. */\n    return (payload.d.states.button.value === 'pressed');\n  }\n\n  function entryCondition(payload) {\n    return (payload.d && payload.d.states && payload.d.states.button);\n  }\n\n  function message(payload) {\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
+      "code": "(function() {\n  var shieldUuid = 6;\n  var shieldName = 'emergency-button-shield';\n  var hazardTitle = 'Emergency button was pressed.';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n    /* Value can be either released or pressed as string. */\n    return (payload.d.states.button.value === 'pressed');\n  }\n\n  function entryCondition(payload) {\n    return (payload.d && payload.d.states && payload.d.states.button);\n  }\n\n  function message(payload) {\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
+    }
+  }, {
+    "shield": {
+      "UUID": "7",
+      "name": "Wibutler Water Shield",
+      "type": "Home",
+      "description": "It detects water leakages.",
+      "image": "waterShield",
+      "canBeDisabled": false,
+      "hazardDetectionOnCloud": true,
+      "jsCodeMethod": "waterDetectedShield",
+      "services": [],
+      "shieldHazards": [
+        "WaterLeakHazard"
+      ],
+      "shieldActions": [
+        "WaterLeakAction"
+      ],
+      "sensorType": "leakDetector",
+      "potentialClaimAmount": "10",
+      "shieldParameters": []
+    },
+    "jscode": {
+      "shieldUUID": 7,
+      "type": "shield",
+      "actions": [
+        "push-chrome"
+      ],
+      "code": "(function() {\n  var shieldUuid = 7;\n  var shieldName = 'wibutler-water-detection-shield';\n  var hazardTitle = 'Water Leakage Detected';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n   return ((payload.cname === 'WTRLEAK') && (payload.val === 1));\n  }\n\n  function entryCondition(payload) {\n   return (payload.cname === 'WTRLEAK');\n  }\n\n  function message(payload) {\n   var hazardUuid = shieldName + '_' + Date.now();\n   return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
     }
   }]
 }
