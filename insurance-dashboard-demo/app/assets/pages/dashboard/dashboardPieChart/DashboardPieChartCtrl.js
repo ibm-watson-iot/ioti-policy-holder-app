@@ -7,7 +7,7 @@
 
 angular.module('BlurAdmin.pages.dashboard').controller('DashboardPieChartCtrl', DashboardPieChartCtrl);
 
-function DashboardPieChartCtrl($rootScope, $scope, $timeout, baConfig, baUtil,
+function DashboardPieChartCtrl($rootScope, $scope, $timeout, $filter, baConfig, baUtil,
   shieldService, hazardService, deviceService, userService, claimService) {
 
   var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
@@ -42,8 +42,11 @@ function DashboardPieChartCtrl($rootScope, $scope, $timeout, baConfig, baUtil,
     icon: 'device'
   }];
 
-  hazardService.findAll().success(function(hazards) {
-    $scope.charts[0].stats = hazards.total;
+  hazardService.findAll().success(function(data) {
+    var allHazardCount = data.total;
+    var hazardEvents = $filter('filter')(data.hazardEvents, {ishandled: false});
+    var allNonAcknowledgedCount = hazardEvents.length;
+    $scope.charts[0].stats = allHazardCount + ' / ' + allNonAcknowledgedCount;
   }).error(function(err) {
     console.error("Fetching user's hazards is failed!");
   });

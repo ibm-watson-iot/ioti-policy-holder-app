@@ -51,24 +51,6 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <button class="btn btn-primary pull-right"
-                ng-if="hazardViewCtrlVm.claims.length > 0"
-                ui-sref="main.claim-view({claimId: hazardViewCtrlVm.claims[0]._id})">
-              Show Claim
-            </button>
-            <button class="btn btn-primary pull-right"
-                ng-if="hazardViewCtrlVm.claims.length === 0"
-                ui-sref="main.claim-add({hazardId: hazardViewCtrlVm.hazard.hazardid, username: hazardViewCtrlVm.hazard.username})">
-              Create Claim
-            </button>
-            <button class="btn btn-primary pull-right" ng-if="!hazardViewCtrlVm.hazard.ishandled"
-                ng-click="hazardViewCtrlVm.acknowledgeHazard(hazardViewCtrlVm.hazard)">
-              Acknowledge
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>

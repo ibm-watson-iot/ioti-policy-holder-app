@@ -7,30 +7,48 @@
 
 angular.module('BlurAdmin.theme.components').controller('MsgCenterCtrl', MsgCenterCtrl);
 
-function MsgCenterCtrl($scope, $sce, $filter, toastr, hazardService, claimService) {
+function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimService) {
 
-  hazardService.findAll().success(function(data) {
-    // TODO: remove this hack when we have proper timestamps.
-    _.each(data.hazardEvents, function(hazard) {
-      hazard.eventTime = new Date(hazard.timestamp);
-      hazard.eventTimestamp = hazard.eventTime.getTime();
-      if (hazard.ishandled === 'true') {
-        hazard.ishandled = true;
-      }
+  function getHazards() {
+    hazardService.findAll().success(function(data) {
+      // TODO: remove this hack when we have proper timestamps.
+      _.each(data.hazardEvents, function(hazard) {
+        hazard.eventTime = new Date(hazard.timestamp);
+        hazard.eventTimestamp = hazard.eventTime.getTime();
+        var date = new Date(hazard.timestamp);
+        hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
+        if (hazard.ishandled === 'true') {
+          hazard.ishandled = true;
+        }
+      });
+      data.hazardEvents = $filter('filter')(data.hazardEvents, {ishandled: false});
+      $scope.hazards = $filter('orderBy')(data.hazardEvents, 'eventTimestamp', true);
+    }).error(function(err) {
+      console.error("Fetching all hazards is failed!");
     });
-    data.hazardEvents = $filter('filter')(data.hazardEvents, {ishandled: false});
-    $scope.hazards = $filter('orderBy')(data.hazardEvents, 'eventTimestamp', true);
-  }).error(function(err) {
-    console.error("Fetching all hazards is failed!");
-  });
+  }
 
-  claimService.findAll().success(function(data) {
-    _.each(data, function(claim) {
-      claim.eventTime = new Date(claim.damageDate);
+  function getClaims() {
+    claimService.findAll().success(function(data) {
+      _.each(data, function(claim) {
+        claim.eventTime = new Date(claim.damageDate);
+      });
+      $scope.claims = data;
+    }).error(function(err) {
+      console.error("Fetching all claims is failed!");
     });
-    $scope.claims = data;
-  }).error(function(err) {
-    console.error("Fetching all claims is failed!");
+  }
+
+  getHazards();
+  getClaims();
+
+  var refreshingHazards = $interval(function() {
+    getHazards();
+    getClaims();
+  }, 5000);
+
+  $scope.$on('$destroy', function () {
+    $interval.cancel(refreshingHazards);
   });
 
   $scope.acknowledgeAll = function() {
@@ -97,13 +115,6 @@ function MsgCenterCtrl($scope, $sce, $filter, toastr, hazardService, claimServic
     }
   ];
 
-  $scope.getMessage = function(msg) {
-    var text = msg.template;
-    if (msg.userId || msg.userId === 0) {
-      text = text.replace('&name', '<strong>' + $scope.users[msg.userId].name + '</strong>');
-    }
-    return $sce.trustAsHtml(text);
-  };
 }
 
 })();

@@ -28,13 +28,13 @@
                   <th>Policy Holder</th>
                 </tr>
                 <tr ng-repeat="claim in claimListCtrlVm.claims | orderBy:'damageDate':true"
-                  ui-sref="main.claim-view({claimId: claim._id})" class="editable-tr-wrap">
+                  ui-sref="main.claim-view({claimId: claim._id})" class="editable-tr-wrap clickable">
                   <td class="table-id">{{$index + 1}}</td>
                   <td>
-                    {{claim.damageDate | date:'h:mm a  MM/dd/yyyy'}}
+                    {{claim.damageDate | date:'hh:mm:ss a  M/dd/yyyy'}}
                   </td>
                   <td>
-                    {{claim.damageIncurred | number}}
+                    ${{claim.damageIncurred | number}}
                   </td>
                   <td>
                     {{claim.policyId}}

@@ -3,7 +3,8 @@
 
 angular.module('BlurAdmin.pages.users').controller('UserViewCtrl', UserViewCtrl);
 
-function UserViewCtrl($stateParams, userService, shieldAssociationService, deviceService, hazardService, claimService) {
+function UserViewCtrl($stateParams, $filter, userService, shieldAssociationService,
+  deviceService, hazardService, claimService) {
   var vm = this;
   vm.user = {};
 
@@ -19,8 +20,14 @@ function UserViewCtrl($stateParams, userService, shieldAssociationService, devic
         vm.userDevices = data;
       });
 
-      hazardService.findAll($stateParams.username).success(function(data) {
-        vm.userHazards = data.hazardEvents;
+      hazardService.findAll().success(function(data) {
+        vm.userHazards = $filter('filter')(data.hazardEvents, {username: $stateParams.username});
+        _.each(vm.userHazards, function(hazard) {
+          // TODO: remove this hack when we have proper timestamps.
+          var date = new Date(hazard.timestamp);
+          hazard.eventTime = date.getTime();
+          hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
+        });
       });
 
       claimService.findAll($stateParams.username).success(function(data) {

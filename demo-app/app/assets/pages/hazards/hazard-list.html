@@ -16,18 +16,23 @@
                 ng-if="!hazardListCtrlVm.isLoading && hazardListCtrlVm.hazards.length > 0">
               <tr class="header-row">
                 <th class="table-id">#</th>
+                <th>Event Title</th>
                 <th>Event Time</th>
                 <th>Shield</th>
               </tr>
-              <tr class="editable-tr-wrap"
-                  ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':reverse:false">
+              <tr class="editable-tr-wrap clickable"
+                  ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':true"
+                  ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
                 <td class="table-id">
                   {{$index + 1}}
                 </td>
-                <td class="clickable">
+                <td>
+                  {{hazard.title}}
+                </td>
+                <td>
                   {{hazard.eventTimeStr}}
                 </td>
-                <td class="clickable">
+                <td>
                   {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldID].name}}
                 </td>
               </tr>

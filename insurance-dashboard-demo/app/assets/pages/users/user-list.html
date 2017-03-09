@@ -25,7 +25,7 @@
                   <th>Full Name</th>
                   <th>User Name</th>
                 </tr>
-                <tr class="editable-tr-wrap" ng-repeat="user in userListCtrlVm.users"
+                <tr class="editable-tr-wrap clickable" ng-repeat="user in userListCtrlVm.users"
                     ui-sref="main.user-view({username: user.username})">
                   <td class="table-id">{{$index + 1}}</td>
                   <td> {{user.fullname}} </td>

@@ -7,24 +7,28 @@
 
 angular.module('BlurAdmin.pages.hazards').controller('HazardListCtrl', HazardListCtrl);
 
-function HazardListCtrl($rootScope, editableThemes, toastr, hazardService, shieldService) {
+function HazardListCtrl($rootScope, $scope, $interval, editableThemes, toastr, hazardService, shieldService) {
   var vm = this;
   vm.hazards = [];
   vm.isLoading = true;
   vm.uuidToShieldMap = {};
 
-  hazardService.findAll().success(function(data) {
-    vm.isLoading = false;
-    vm.hazards = data.hazardEvents;
-    _.each(vm.hazards, function(hazard) {
-      // TODO: remove this hack when we have proper timestamps.
-      var date = new Date(hazard.timestamp);
-      hazard.eventTime = date.getTime();
-      hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
+  function getHazards() {
+    hazardService.findAll().success(function(data) {
+      vm.isLoading = false;
+      vm.hazards = data.hazardEvents;
+      _.each(vm.hazards, function(hazard) {
+        // TODO: remove this hack when we have proper timestamps.
+        var date = new Date(hazard.timestamp);
+        hazard.eventTime = date.getTime();
+        hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
+      });
+    }).error(function(err) {
+      console.error("Fetching all hazards is failed!");
     });
-  }).error(function(err) {
-    console.error("Fetching all hazards is failed!");
-  });
+  }
+
+  getHazards();
 
   shieldService.findAll().success(function(data) {
     _.each(data.shields, function(shield) {
@@ -32,6 +36,14 @@ function HazardListCtrl($rootScope, editableThemes, toastr, hazardService, shiel
     });
   }).error(function(err) {
     console.error("Fetching all shields is failed!");
+  });
+
+  var refreshingHazards = $interval(function() {
+    getHazards();
+  }, 10000);
+
+  $scope.$on('$destroy', function () {
+    $interval.cancel(refreshingHazards);
   });
 
   vm.saveHazard = function(hazard) {

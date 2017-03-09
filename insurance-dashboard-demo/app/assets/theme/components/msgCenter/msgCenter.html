@@ -19,7 +19,8 @@
           </div>
           <div class="msg-area">
             <div ng-bind-html="hazard.title"></div>
-            <span>{{ hazard.eventTime | elapsed }}</span>
+            <div style="display:inline;">{{hazard.eventTimeStr}}</div>
+            <span style="display:inline; float:right;">{{ hazard.eventTime | elapsed }}</span>
           </div>
         </a>
       </div>

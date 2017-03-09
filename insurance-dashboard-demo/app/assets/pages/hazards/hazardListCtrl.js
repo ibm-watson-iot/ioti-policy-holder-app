@@ -7,7 +7,7 @@
 
 angular.module('BlurAdmin.pages.hazards').controller('HazardListCtrl', HazardListCtrl);
 
-function HazardListCtrl($timeout, baConfig, layoutPaths, toastr,
+function HazardListCtrl($scope, $timeout, $interval, baConfig, layoutPaths, toastr,
   hazardService, shieldService, userService, cityLocationService) {
 
   var vm = this;
@@ -33,6 +33,49 @@ function HazardListCtrl($timeout, baConfig, layoutPaths, toastr,
     });
   };
 
+  function getHazards() {
+    // get all hazards and find hazard city
+    hazardService.findAll().success(function(data) {
+      vm.isLoading = false;
+      vm.hazards = data.hazardEvents;
+      var cityHazardCount = {};
+      _.each(vm.hazards, function(hazard) {
+        // TODO: remove this hack when we have proper timestamps.
+        var date = new Date(hazard.timestamp);
+        hazard.eventTime = date.getTime();
+        hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
+        var userInfo = vm.userMap[hazard.username];
+        if (userInfo) {
+          if (!cityHazardCount[userInfo.cityId]) {
+            cityHazardCount[userInfo.cityId] = 0;
+          }
+          cityHazardCount[userInfo.cityId] = cityHazardCount[userInfo.cityId] + 1;
+        } else {
+          vm.userMap[hazard.username] = {
+            customer: '-',
+            cityName: '-'
+          };
+        }
+      });
+      // populate the map data
+      var mapData = [];
+      for (var city in cityHazardCount) {
+        var mapDataEntry = {};
+        mapDataEntry.name = city;
+        mapDataEntry.value = cityHazardCount[city];
+        mapDataEntry.code = city;
+        mapDataEntry.color = baConfig.colors.primaryDark;
+        mapData.push(mapDataEntry);
+      }
+
+      if (mapData.length > 0) {
+        loadMap(mapData);
+      }
+    }).error(function(err) {
+      console.error("Fetching all hazards failed!");
+    });
+  }
+
   cityLocationService.me().success(function(data) {
     latlong = data;
 
@@ -52,51 +95,21 @@ function HazardListCtrl($timeout, baConfig, layoutPaths, toastr,
         }
       });
 
-      // get all hazards and find hazard city
-      hazardService.findAll().success(function(data) {
-        vm.isLoading = false;
-        vm.hazards = data.hazardEvents;
-        var cityHazardCount = {};
-        _.each(vm.hazards, function(hazard) {
-          // TODO: remove this hack when we have proper timestamps.
-          var date = new Date(hazard.timestamp);
-          hazard.eventTime = date.getTime();
-          hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
-          var userInfo = vm.userMap[hazard.username];
-          if (userInfo) {
-            if (!cityHazardCount[userInfo.cityId]) {
-              cityHazardCount[userInfo.cityId] = 0;
-            }
-            cityHazardCount[userInfo.cityId] = cityHazardCount[userInfo.cityId] + 1;
-          } else {
-            vm.userMap[hazard.username] = {
-              customer: '-',
-              cityName: '-'
-            };
-          }
-        });
-        // populate the map data
-        var mapData = [];
-        for (var city in cityHazardCount) {
-          var mapDataEntry = {};
-          mapDataEntry.name = city;
-          mapDataEntry.value = cityHazardCount[city];
-          mapDataEntry.code = city;
-          mapDataEntry.color = baConfig.colors.primaryDark;
-          mapData.push(mapDataEntry);
-        }
+      getHazards();
 
-        if (mapData.length > 0) {
-          loadMap(mapData);
-        }
-      }).error(function(err) {
-        console.error("Fetching all hazards failed!");
-      });
     }).error(function(err) {
       console.error("Fetching all users failed!");
     });
   }).error(function(err) {
     console.error("Fetching city locations failed!");
+  });
+
+  var refreshingHazards = $interval(function() {
+    getHazards();
+  }, 10000);
+
+  $scope.$on('$destroy', function () {
+    $interval.cancel(refreshingHazards);
   });
 
 

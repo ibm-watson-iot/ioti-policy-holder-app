@@ -16,6 +16,10 @@ function routeConfig($stateProvider) {
       icon: 'fa fa-bolt',
       order: 4,
     }
+  }).state('main.hazard-view', {
+    url: 'hazards/:hazardEventId',
+    templateUrl: 'pages/hazards/hazard-view.html',
+    title: 'Hazard'
   });
 }
 
