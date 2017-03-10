@@ -13,8 +13,8 @@
       "shieldHazards": [
         "WaterLeakHazard"
       ],
-      "shieldActions": [
-        "WaterLeakAction"
+      "actions": [
+        "pushios"
       ],
       "sensorType": "leakDetector",
       "potentialClaimAmount": "10",
@@ -24,7 +24,7 @@
       "shieldUUID": 1,
       "type": "shield",
       "actions": [
-        "push-chrome"
+        "pushios"
       ],
       "code": "(function () {\n  var shieldUuid = 1;\n  var shieldName = 'water-detection-shield';\n  var hazardTitle = 'Water Leakage Detected';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n    return (payload.d.states.liquidDetected.value);\n  }\n\n  function entryCondition(payload) {\n    return (payload.d && payload.d.states && payload.d.states.liquidDetected);\n  }\n\n  function message(payload) {\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
     }
@@ -42,8 +42,8 @@
       "shieldHazards": [
         "SmokeHazard"
       ],
-      "shieldActions": [
-        "SmokeAction"
+      "actions": [
+        "pushios"
       ],
       "sensorType": "leakDetector",
       "potentialClaimAmount": "10",
@@ -54,7 +54,7 @@
       "shieldUUID": 2,
       "type": "shield",
       "actions": [
-        "push-chrome"
+        "pushios"
       ],
       "code": "(function() {\n  var shieldUuid = 2;\n  var shieldName = 'smoke-detection-shield';\n  var hazardTitle = 'Smoke was detected!';\n\n  var delay = 20000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n    return ((payload.cname === 'SMOKE')) && (payload.val === 1);\n  }\n\n  function entryCondition(payload) {\n    return (payload.cname === 'SMOKE');\n  }\n\n  function message(payload) {\n    payload.extra = payload.extra || {};\n    payload.extra.isHandled = false;\n    payload.extra.urgent = true;\n    payload.extra.locationDesc = 'Office';\n    payload.extra.deviceDesc = 'SmokeSmart Sensor';\n\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
     }
@@ -72,9 +72,8 @@
       "shieldHazards": [
         "CrashHazard"
       ],
-      "shieldActions": [
-        "send-sms",
-        "push-chrome"
+      "actions": [
+        "pushios"
       ],
       "sensorType": "crashDetector",
       "potentialClaimAmount": "100",
@@ -84,8 +83,7 @@
       "shieldUUID": 3,
       "type": "shield",
       "actions": [
-        "push-chrome",
-        "send-sms"
+        "pushios"
       ],
       "code": "(function() {\n  var shieldUuid = 3;\n  var shieldName = 'crash-detection-shield';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  var crashMessage;\n\n  function safelet(payload) {\n    var crash = false;\n    if (payload.crashStatus === 2 && payload.crashIndex > 2) {\n      crashMessage = 'normal. But it might indicate begining of a crash';\n      crash = true;\n    } else if (payload.crashStatus === 3 && payload.crashIndex > 40) {\n      crashMessage = 'medium';\n      crash = true;\n    } else if (payload.crashStatus === 4 && payload.crashIndex > 50) {\n      crashMessage = 'massive';\n      crash = true;\n    } else {\n      crash = false;\n    }\n    return (crash);\n  }\n\n  function entryCondition(payload) {\n    return (payload.crashIndex && payload.crashStatus && payload.eventType);\n  }\n\n  function message(payload) {\n    var hazardUuid = shieldName + '_' + Date.now();\n    return (constructMessage(payload, shieldUuid, hazardUuid, 'Crash was detected. Level of the crash: ' + crashMessage));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
     }
@@ -103,7 +101,7 @@
       "shieldHazards": [
         "AirHazard"
       ],
-      "shieldActions": [
+      "actions": [
         "pushios"
       ],
       "sensorType": "co2Detector",
@@ -132,7 +130,7 @@
       "shieldHazards": [
         "WeatherHazard"
       ],
-      "shieldActions": [
+      "actions": [
         "pushios"
       ],
       "sensorType": "weatherService",
@@ -161,7 +159,7 @@
       "shieldHazards": [
         "EmergencyHazard"
       ],
-      "shieldActions": [
+      "actions": [
         "pushios"
       ],
       "sensorType": "emergencyButton",
@@ -190,8 +188,8 @@
       "shieldHazards": [
         "WaterLeakHazard"
       ],
-      "shieldActions": [
-        "WaterLeakAction"
+      "actions": [
+        "pushios"
       ],
       "sensorType": "leakDetector",
       "potentialClaimAmount": "10",
@@ -201,7 +199,7 @@
       "shieldUUID": 7,
       "type": "shield",
       "actions": [
-        "push-chrome"
+        "pushios"
       ],
       "code": "(function() {\n  var shieldUuid = 7;\n  var shieldName = 'wibutler-water-detection-shield';\n  var hazardTitle = 'Water Leakage Detected';\n\n  var delay = 5000;\n  var preProcessing = undefined;\n\n  function safelet(payload) {\n   return ((payload.cname === 'WTRLEAK') && (payload.val === 1));\n  }\n\n  function entryCondition(payload) {\n   return (payload.cname === 'WTRLEAK');\n  }\n\n  function message(payload) {\n   var hazardUuid = shieldName + '_' + Date.now();\n   return (constructMessage(payload, shieldUuid, hazardUuid, hazardTitle));\n  }\n\n  registerShield(shieldUuid, shieldName, entryCondition, preProcessing, safelet, message, delay);\n})();"
     }
