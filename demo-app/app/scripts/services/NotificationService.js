@@ -16,7 +16,9 @@ angular.module('BlurAdmin.services').factory('notificationService', function() {
   };
 
   service.registerWithUserId = function(username) {
-    bmsPush.registerWithUserId(username, function(response) {
+    // Hack for setting deviceId for bmx-push lib.
+    localStorage.setItem('deviceId', username);
+    bmsPush.register(function(response) {
       console.log("RegisterWithUserId:", response.response);
     });
   };
