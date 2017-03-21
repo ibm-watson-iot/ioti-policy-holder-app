@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('notificationService', function() {
+angular.module('BlurAdmin.services').factory('notificationService', function(appGUID, appRegion, clientSecret) {
   var service = {};
   var bmsPush = new BMSPush();
   var initParams = {
-    "appGUID": "0fb99bcf-b441-41fc-850b-d3bdf348055a",
-    "appRegion": ".eu-gb.bluemix.net",
-    "clientSecret": "71bb4ac6-63e2-4020-97ed-1f952d281ba2"
+    "appGUID": appGUID,
+    "appRegion": appRegion,
+    "clientSecret": clientSecret
   };
 
   service.initialize = function() {
