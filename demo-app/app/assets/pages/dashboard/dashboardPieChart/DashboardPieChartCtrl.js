@@ -30,7 +30,7 @@
         shields = $filter('orderBy')(shields, 'hasHazard');
 
         _.each(shields, function(shield) {
-          var date = new Date(shield.createdAt);
+          var date = new Date(shield.updatedAt);
           $scope.charts.push({
             color: pieColor,
             description: shield.name,
