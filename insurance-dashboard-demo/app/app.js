@@ -17,6 +17,7 @@ angular.module('BlurAdmin', [
   'ui.bootstrap',
   'ui.slimscroll',
   'angular-progress-button-styles',
+  'angular-jwt',
 
   'permission',
   'permission.ui',
@@ -26,13 +27,16 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
 
   $httpProvider.interceptors.push('blurAdminHttpInterceptor');
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 
 })
-.run(function($rootScope, $state, editableOptions, editableThemes,
-  PermRoleStore, authenticationService, userService) {
+.run(function($rootScope, $state, editableOptions, editableThemes, PermRoleStore, authenticationService) {
 
     // xeditable theme
     editableOptions.theme = 'bs3';
@@ -46,16 +50,9 @@ angular.module('BlurAdmin', [
         return authenticationService.isAdmin();
     });
 
-    if (authenticationService.isAuthenticated()) {
-        $rootScope.loggedInUser = authenticationService.getUser();
-        if (!$rootScope.loggedInUser) {
-          userService.me().success(function(user) {
-            $rootScope.loggedInUser = user;
-          }).error(function(err) {
-            console.error("Fetching the loggedin user is failed.");
-          });
-        }
-    }
+    authenticationService.isAuthenticated().then(function() {
+      $rootScope.loggedInUser = authenticationService.getUser();
+    });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, params) {
       if (toState.redirectTo) {

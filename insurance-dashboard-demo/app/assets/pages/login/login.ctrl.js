@@ -6,25 +6,9 @@ angular.module('BlurAdmin.pages.login').controller('LoginCtrl', LoginCtrl);
 function LoginCtrl($rootScope, $scope, $state, toastr, authenticationService, userService) {
 
   var vm = this;
-  vm.user = {
-    email: '',
-    password: ''
-  };
 
   vm.signIn = function() {
-    var authToken = btoa(vm.user.email + ":" + vm.user.password);
-    authenticationService.setToken(authToken);
-
-    userService.me().success(function(user) {
-      $rootScope.loggedInUser = user;
-      authenticationService.setUser(user);
-      authenticationService.setToken(authToken);
-      $state.go('main.dashboard');
-    }).error(function(err) {
-      console.error("Signin is failed.");
-      toastr.error("Signin is failed.", 'Error');
-    });
-
+    authenticationService.authenticate();
   };
 
   vm.signUp = function() {
