@@ -1,32 +1,43 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('actionService', function($http, apiProtocol, apiHost, apiPath) {
-  var apiUrl = apiProtocol + "://" + apiHost + apiPath + 'action';
+angular.module('BlurAdmin.services').factory('actionService', function($http, apiProtocol, apiHost, apiPath, tenantId) {
+  var apiUrl = apiProtocol + '://' + apiHost + apiPath + '/' + tenantId + '/actions';
 
   return {
     me: function() {
       return $http.get(apiUrl);
     },
-    find: function(deviceId) {
-      return $http.get(apiUrl + '/' + deviceId);
+    find: function(actionId) {
+      return $http.get(apiUrl + '/' + actionId);
     },
-    findAll: function(username) {
-      var url;
-      if (username) {
-        url = apiUrl + '/byUser/' + username;
-      } else {
-        url = apiUrl + '/all';
+    findAll: function(skip, limit) {
+      var params = [];
+      if (skip) {
+        params.push('skip=' + skip);
       }
+      if (limit) {
+        params.push('limit=' + limit);
+      }
+      var url = apiUrl;
+      if (Object.keys(params) && (Object.keys(params).length > 0)) {
+        url =+ '?';
+      }
+      Object.keys(params).forEach(function(key) {
+        url =+ params[key] + '&';
+      });
       return $http.get(url);
     },
-    remove: function(deviceId) {
-      return $http['delete'](apiUrl + '/' + deviceId);
+    remove: function(actionId) {
+      return $http['delete'](apiUrl + '/' + actionId);
     },
-    save: function(device) {
-      if(device.id) {
-        return $http.put(apiUrl + device.id, device);
+    updatePartial: function(actionId, partOfAction) {
+      return $http.post(apiUrl + '/' + actionId, partOfAction);
+    },
+    save: function(action) {
+      if(action._id) {
+        return $http.put(apiUrl + '/' + action._id, action);
       } else {
-        return $http.post(apiUrl, device);
+        return $http.post(apiUrl, action);
       }
     }
   };

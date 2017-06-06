@@ -8,23 +8,23 @@
     vm.claim = {};
     vm.claims = [];
 
-    if ($state.params.username && $state.params.hazardId) {
-      userService.findAll($state.params.username).success(function(user) {
+    if ($state.params.userId && $state.params.hazardId) {
+      userService.find($state.params.userId).success(function(user) {
         vm.user = user;
         vm.claim = {
-          policyHolderName: $state.params.username,
+          userId: $state.params.userId,
           hazardId: $state.params.hazardId,
           damageDate: (new Date()).getTime()
         };
       });
 
-      claimService.findAll($state.params.username).success(function(claims) {
-        vm.claims = claims;
+      claimService.findByUserId($state.params.userId).success(function(data) {
+        vm.claims = data.items;
       }).error(function(err) {
         console.log("Failed to get claims history or user !");
       });
     } else {
-      toastr.error("You did not select any hazard. Redirecting to hazars.!");
+      toastr.error("You did not select any hazard. Redirecting to hazards.!");
       setTimeout(function() {
         $state.go('main.hazards');
       }, 3000);

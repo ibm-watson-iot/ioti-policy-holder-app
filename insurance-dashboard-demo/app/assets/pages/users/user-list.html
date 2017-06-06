@@ -23,14 +23,22 @@
                 <tr class="header-row">
                   <th class="table-id">#</th>
                   <th>Full Name</th>
-                  <th>User Name</th>
+                  <th>Email</th>
                 </tr>
                 <tr class="editable-tr-wrap clickable" ng-repeat="user in userListCtrlVm.users"
-                    ui-sref="main.user-view({username: user.username})">
+                    ui-sref="main.user-view({userId: user._id})">
                   <td class="table-id">{{$index + 1}}</td>
-                  <td> {{user.fullname}} </td>
-                  <td> {{user.username}} </td>
+                  <td> {{user.name}} </td>
+                  <td> {{user.email}} </td>
                 </tr>
+                <tfoot>
+                <tr>
+                  <td colspan="6" class="text-center">
+                    <ul uib-pagination direction-links="false" total-items="userListCtrlVm.totalItems"
+                      ng-model="userListCtrlVm.currentPage" num-pages="userListCtrlVm.smallnumPages"></ul>
+                  </td>
+                </tr>
+                </tfoot>
               </table>
             </div>
           </div>

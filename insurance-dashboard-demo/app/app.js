@@ -42,8 +42,12 @@ angular.module('BlurAdmin', [
     editableOptions.theme = 'bs3';
     editableThemes.bs3.inputClass = 'input-sm';
 
+    String.prototype.capitalizeFirstLetter = function() {
+      return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
     PermRoleStore.defineRole('AUTHORIZED', function() {
-        return authenticationService.isAuthenticated();
+      return authenticationService.isAuthenticated();
     });
 
     PermRoleStore.defineRole('ADMIN', function() {

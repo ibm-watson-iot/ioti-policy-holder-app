@@ -4,11 +4,13 @@
  */
 'use strict';
 
-angular.module('BlurAdmin.services').factory('authenticationService', function($http, $q, $location, $httpParamSerializer, $window, jwtHelper, apiProtocol, apiHost, apiPath) {
+angular.module('BlurAdmin.services').factory('authenticationService', function(
+  $http, $httpParamSerializer, $q, $location, $window, jwtHelper, userService,
+  apiProtocol, apiHost, apiPath) {
 
   var tokenKey = $location.host() + '_' + $location.port() + '_' + 'dashboardAuthToken';
   var userKey = $location.host() + '_' + $location.port() + '_' + 'dashboardUser';
-  var apiUrl = apiProtocol + "://" + apiHost + apiPath; // FIXME: tenantId
+  var apiUrl = apiProtocol + '://' + apiHost + apiPath + '/'; // FIXME: tenantId
   var redirectUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
 
   var authorizeCode = $q(function(resolve, reject) {
@@ -29,8 +31,23 @@ angular.module('BlurAdmin.services').factory('authenticationService', function($
       }).then(function(response) {
         var token = response.data;
         localStorage.setItem(tokenKey, token.access_token);
-        var id = jwtHelper.decodeToken(token.id_token);
-        localStorage.setItem(userKey, JSON.stringify(id));
+        var authenticatedUser = jwtHelper.decodeToken(token.id_token);
+        localStorage.setItem(userKey, JSON.stringify(authenticatedUser));
+
+        userService.find(authenticatedUser.sub).success(function(user) {
+        }).error(function(err, statusCode) {
+          if (statusCode === 404) {
+            authenticatedUser.address = {
+              city: 'Munich'
+            };
+            userService.save(authenticatedUser).success(function(newUser) {
+            }).error(function(err, statusCode) {
+              console.error("Saving new user is failed.", err);
+            });
+          } else {
+            console.error("Fetching the authenticated user is failed.", err);
+          }
+        });
         resolve();
       }, reject);
     } else {

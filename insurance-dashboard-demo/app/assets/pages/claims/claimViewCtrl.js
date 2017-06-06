@@ -10,7 +10,7 @@
     if ($stateParams.claimId) {
       claimService.find($stateParams.claimId).success(function(claim) {
         vm.claim = claim;
-        userService.findAll(vm.claim.policyHolderName).success(function(user) {
+        userService.find(vm.claim.userId).success(function(user) {
           vm.user = user;
           initializeLocationMap(user.address.street + ", " + user.address.zipcode
                             + " " + user.address.city + ", " + user.address.country);

@@ -43,22 +43,22 @@ function DashboardPieChartCtrl($rootScope, $scope, $timeout, $filter, baConfig, 
   }];
 
   hazardService.findAll().success(function(data) {
-    var allHazardCount = data.total;
-    var hazardEvents = $filter('filter')(data.hazardEvents, {ishandled: false});
+    var allHazardCount = data.totalItems;
+    var hazardEvents = $filter('filter')(data.items, {ishandled: false});
     var allNonAcknowledgedCount = hazardEvents.length;
     $scope.charts[0].stats = allHazardCount + ' / ' + allNonAcknowledgedCount;
   }).error(function(err) {
     console.error("Fetching user's hazards is failed!");
   });
 
-  claimService.findAll().success(function(claims) {
-    $scope.charts[1].stats = claims.length;
+  claimService.findAll().success(function(data) {
+    $scope.charts[1].stats = data.totalItems;
   }).error(function(err) {
     console.error("Fetching claims has failed!");
   });
 
   shieldService.findAll().success(function(data) {
-    $scope.charts[3].stats = data.shields.length;
+    $scope.charts[3].stats = data.totalItems;
   }).error(function(err) {
     console.error("Fetching user's shields is failed!");
   });
@@ -96,10 +96,10 @@ function DashboardPieChartCtrl($rootScope, $scope, $timeout, $filter, baConfig, 
     });
   }
 
-  $timeout(function () {
-    loadPieCharts();
-    updatePieCharts();
-  }, 3000);
+  // $timeout(function () {
+  //   loadPieCharts();
+  //   updatePieCharts();
+  // }, 3000);
 }
 
 })();

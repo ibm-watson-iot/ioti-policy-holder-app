@@ -17,7 +17,7 @@ function routeConfig($stateProvider) {
       order: 3
     }
   }).state('main.user-view', {
-    url: 'customers/:username',
+    url: 'customers/:userId',
     templateUrl: 'pages/users/user-view.html',
     title: 'Customer'
   }).state('main.user-shield-view', {

@@ -13,15 +13,15 @@ function UserViewCtrl($stateParams, $filter, userService, shieldAssociationServi
       vm.user = user;
       initializeLocationMap(user.address.street + ", " + user.address.zipcode + " " + user.address.city + ", " + user.address.country);
       shieldAssociationService.findAll($stateParams.username).success(function(data) {
-        vm.userShields = data.shieldassociations;
+        vm.userShields = data.items;
       });
 
       deviceService.findAll($stateParams.username).success(function(data) {
-        vm.userDevices = data;
+        vm.userDevices = data.items;
       });
 
       hazardService.findAll().success(function(data) {
-        vm.userHazards = $filter('filter')(data.hazardEvents, {username: $stateParams.username});
+        vm.userHazards = $filter('filter')(data.items, {username: $stateParams.username});
         _.each(vm.userHazards, function(hazard) {
           // TODO: remove this hack when we have proper timestamps.
           var date = new Date(hazard.timestamp);

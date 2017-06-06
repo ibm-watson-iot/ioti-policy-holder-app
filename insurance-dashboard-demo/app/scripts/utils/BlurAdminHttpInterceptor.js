@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function(
-  $q, $location, $rootScope, apiHost, claimApiHost) {
+  $q, $location, $rootScope, apiHost, backendHost) {
 
   var tokenKey = $location.host() + '_' + $location.port() + '_' + 'dashboardAuthToken';
 
@@ -9,8 +9,8 @@ angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function(
     request: function($config) {
       var isAPICall = $config.url.indexOf(apiHost) > 0;
       var authToken = localStorage.getItem(tokenKey);
-      if (isAPICall && angular.isDefined(authToken) && !($config.url.indexOf(claimApiHost) > 0)) {
-        $config.headers['Authorization'] = 'Basic ' + authToken;
+      if (isAPICall && angular.isDefined(authToken) && !($config.url.indexOf(backendHost) > 0)) {
+        $config.headers['Authorization'] = 'Bearer ' + authToken;
       }
       return $config || $q.when($config);
     },

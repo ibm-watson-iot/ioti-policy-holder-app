@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('deviceService', function($http, apiProtocol, apiHost, apiPath) {
-  var apiUrl = apiProtocol + "://" + apiHost + apiPath + 'device';
+angular.module('BlurAdmin.services').factory('deviceService', function($http, apiProtocol, apiHost, apiPath, tenantId) {
+  var apiUrl = apiProtocol + '://' + apiHost + apiPath + '/' + tenantId + '/devices';
 
   return {
     me: function() {
@@ -10,21 +10,29 @@ angular.module('BlurAdmin.services').factory('deviceService', function($http, ap
     find: function(deviceId) {
       return $http.get(apiUrl + '/' + deviceId);
     },
-    findAll: function(username) {
-      var url;
-      if (username) {
-        url = apiUrl + '/byUser/' + username;
-      } else {
-        url = apiUrl + '/all';
+    findAll: function(skip, limit) {
+      var params = [];
+      if (skip) {
+        params.push('skip=' + skip);
       }
+      if (limit) {
+        params.push('limit=' + limit);
+      }
+      var url = apiUrl;
+      if (Object.keys(params) && (Object.keys(params).length > 0)) {
+        url =+ '?';
+      }
+      Object.keys(params).forEach(function(key) {
+        url =+ params[key] + '&';
+      });
       return $http.get(url);
     },
     remove: function(deviceId) {
       return $http['delete'](apiUrl + '/' + deviceId);
     },
     save: function(device) {
-      if(device.id) {
-        return $http.put(apiUrl + device.id, device);
+      if(device._id) {
+        return $http.put(apiUrl + '/' + device._id, device);
       } else {
         return $http.post(apiUrl, device);
       }

@@ -16,7 +16,7 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
   var shieldToAssociationMap = {};
 
   shieldService.findAll().success(function(data) {
-    vm.allShields = data.shields;
+    vm.allShields = data.items;
 
     shieldAssociationService.findAll($rootScope.loggedInUser.username).success(function(data) {
       shieldAssociations = data.shieldassociations;

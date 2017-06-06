@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('BlurAdmin.services').factory('shieldAssociationService', function($http, apiProtocol, apiHost, apiPath) {
-  var apiUrl = apiProtocol + "://" + apiHost + apiPath + 'shieldassociation';
+  var apiUrl = apiProtocol + '://' + apiHost + apiPath + 'shieldassociation';
 
   return {
     me: function() {

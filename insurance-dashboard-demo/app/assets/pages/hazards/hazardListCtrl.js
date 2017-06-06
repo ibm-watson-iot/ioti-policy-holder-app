@@ -17,8 +17,8 @@ function HazardListCtrl($scope, $timeout, $interval, baConfig, layoutPaths, toas
   vm.uuidToShieldMap = {};
 
   shieldService.findAll().success(function(data) {
-    _.each(data.shields, function(shield) {
-      vm.uuidToShieldMap[shield.UUID] = shield;
+    _.each(data.items, function(shield) {
+      vm.uuidToShieldMap[shield._id] = shield;
     });
   }).error(function(err) {
     console.error("Fetching all shields is failed!");
@@ -26,7 +26,7 @@ function HazardListCtrl($scope, $timeout, $interval, baConfig, layoutPaths, toas
 
   vm.acknowledgeHazard = function(hazard) {
     hazard.ishandled = true;
-    hazardService.updateAttribute(hazard, 'ishandled', true).success(function(data) {
+    hazardService.updatePartial(hazard._id, { ishandled: true }).success(function(data) {
       toastr.success("Acknowledged.");
     }).error(function(err) {
       toastr.error("Saving hazard is failed!", "Error");
@@ -37,7 +37,7 @@ function HazardListCtrl($scope, $timeout, $interval, baConfig, layoutPaths, toas
     // get all hazards and find hazard city
     hazardService.findAll().success(function(data) {
       vm.isLoading = false;
-      vm.hazards = data.hazardEvents;
+      vm.hazards = data.items;
       var cityHazardCount = {};
       _.each(vm.hazards, function(hazard) {
         // TODO: remove this hack when we have proper timestamps.
@@ -188,10 +188,6 @@ function HazardListCtrl($scope, $timeout, $interval, baConfig, layoutPaths, toas
       map.write('map-bubbles');
     }, 100);
 
-  }
-
-  String.prototype.capitalizeFirstLetter = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
   }
 
 }

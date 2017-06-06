@@ -60,7 +60,7 @@
             </button>
             <button class="btn btn-primary pull-right"
                 ng-if="hazardViewCtrlVm.claims.length === 0"
-                ui-sref="main.claim-add({hazardId: hazardViewCtrlVm.hazard.hazardid, username: hazardViewCtrlVm.hazard.username})">
+                ui-sref="main.claim-add({hazardId: hazardViewCtrlVm.hazard.hazardid, userId: hazardViewCtrlVm.hazard.userId})">
               Create Claim
             </button>
             <button class="btn btn-primary pull-right" ng-if="!hazardViewCtrlVm.hazard.ishandled"

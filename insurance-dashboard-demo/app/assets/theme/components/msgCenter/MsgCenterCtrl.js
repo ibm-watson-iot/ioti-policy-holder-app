@@ -12,7 +12,7 @@ function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimS
   function getHazards() {
     hazardService.findAll().success(function(data) {
       // TODO: remove this hack when we have proper timestamps.
-      _.each(data.hazardEvents, function(hazard) {
+      _.each(data.items, function(hazard) {
         hazard.eventTime = new Date(hazard.timestamp);
         hazard.eventTimestamp = hazard.eventTime.getTime();
         var date = new Date(hazard.timestamp);
@@ -21,8 +21,8 @@ function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimS
           hazard.ishandled = true;
         }
       });
-      data.hazardEvents = $filter('filter')(data.hazardEvents, {ishandled: false});
-      $scope.hazards = $filter('orderBy')(data.hazardEvents, 'eventTimestamp', true);
+      data.items = $filter('filter')(data.items, {ishandled: false});
+      $scope.hazards = $filter('orderBy')(data.items, 'eventTimestamp', true);
     }).error(function(err) {
       console.error("Fetching all hazards is failed!");
     });
@@ -30,10 +30,10 @@ function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimS
 
   function getClaims() {
     claimService.findAll().success(function(data) {
-      _.each(data, function(claim) {
+      _.each(data.items, function(claim) {
         claim.eventTime = new Date(claim.damageDate);
       });
-      $scope.claims = data;
+      $scope.claims = data.items;
     }).error(function(err) {
       console.error("Fetching all claims is failed!");
     });
@@ -43,8 +43,8 @@ function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimS
   getClaims();
 
   var refreshingHazards = $interval(function() {
-    getHazards();
-    getClaims();
+    //getHazards();
+    //getClaims();
   }, 5000);
 
   $scope.$on('$destroy', function () {

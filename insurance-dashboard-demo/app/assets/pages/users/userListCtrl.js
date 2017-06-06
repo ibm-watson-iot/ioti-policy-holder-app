@@ -18,7 +18,11 @@ function UserListCtrl($timeout, baConfig, layoutPaths, userService, cityLocation
 
     userService.findAll().success(function(data) {
       vm.isLoading = false;
-      vm.users = data.users;
+      vm.users = data.items;
+      vm.totalItems = data.totalItems;
+      vm.currentPage = 1;
+      vm.smallnumPages = 10;
+
       var cityUserCount = {};
       _.each(vm.users, function(user) {
         var city = user.address.city;
@@ -122,10 +126,6 @@ function UserListCtrl($timeout, baConfig, layoutPaths, userService, cityLocation
     $timeout(function() {
       map.write('map-bubbles');
     }, 100);
-  }
-
-  String.prototype.capitalizeFirstLetter = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
   }
 
 }

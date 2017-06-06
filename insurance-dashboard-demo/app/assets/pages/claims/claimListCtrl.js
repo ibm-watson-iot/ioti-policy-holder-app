@@ -13,7 +13,7 @@ function ClaimListCtrl($timeout, baConfig, layoutPaths, claimService, userServic
     latlong = result.data;
     return claimService.findAll();
   }).then(function(result){
-    vm.claims = result.data;
+    vm.claims = result.items;
     return userService.findAll();
   }).then(function(result){
     var i = 0;
@@ -116,10 +116,6 @@ function ClaimListCtrl($timeout, baConfig, layoutPaths, claimService, userServic
     $timeout(function() {
       map.write('map-bubbles');
     }, 100);
-  }
-
-  String.prototype.capitalizeFirstLetter = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
   }
 
 }

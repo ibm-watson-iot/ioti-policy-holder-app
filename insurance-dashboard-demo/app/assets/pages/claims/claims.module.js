@@ -19,8 +19,8 @@
     }).state('main.claim-add', {
       url: 'claims/new/',
       params: {
-          hazardId: null,
-          username: null
+          userId: null,
+          hazardId: null
       },
       templateUrl: 'pages/claims/claim-add.html',
       title: 'New Claim'
