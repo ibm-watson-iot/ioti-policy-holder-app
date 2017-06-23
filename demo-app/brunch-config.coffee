@@ -15,8 +15,7 @@ exports.config =
       /((.*(\/|\\))[_].*\.scss)/,
       /^bower_components\/requirejs\/require.js/,
       /^app\/config-staging.js/,
-      /^app\/config-production.js/,
-      /^app\/lib\/bmx-push/
+      /^app\/config-production.js/
     ]
 
   overrides:
@@ -26,8 +25,7 @@ exports.config =
           /((.*(\/|\\))[_].*\.scss)/,
           /^bower_components\/requirejs\/require.js/,
           /^app\/config-dev.js/,
-          /^app\/config-production.js/,
-          /^app\/lib\/bmx-push/
+          /^app\/config-production.js/
         ]
     production:
       conventions:
@@ -35,8 +33,7 @@ exports.config =
           /((.*(\/|\\))[_].*\.scss)/,
           /^bower_components\/requirejs\/require.js/,
           /^app\/config-dev.js/,
-          /^app\/config-staging.js/,
-          /^app\/lib\/bmx-push/
+          /^app\/config-staging.js/
         ]
 
   files:
@@ -111,9 +108,6 @@ exports.config =
     afterBrunch: [
       [
          'cp manifest.yml public/',
-         'cp lib/bmx-push/BMSPushSDK.js public/BMSPushSDK.js',
-         'cp lib/bmx-push/BMSPushServiceWorker.js public/BMSPushServiceWorker.js',
-         'cp lib/bmx-push/manifest.json public/manifest.json',
          'cp bower_components/Ionicons/fonts/* public/fonts',
          'cp bower_components/font-awesome/fonts/* public/fonts',
          'mkdir -p public/img/theme/vendor/ionrangeslider/img',

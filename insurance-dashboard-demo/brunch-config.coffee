@@ -15,8 +15,7 @@ exports.config =
       /((.*(\/|\\))[_].*\.scss)/,
       'bower_components/requirejs/require.js',
       /^app\/config-staging.js/,
-      /^app\/config-production.js/,
-      /^app\/lib/
+      /^app\/config-production.js/
     ]
 
   overrides:
@@ -26,8 +25,7 @@ exports.config =
           /((.*(\/|\\))[_].*\.scss)/,
           'bower_components/requirejs/require.js',
           'app/config-dev.js',
-          'app/config-production.js',
-          /^app\/lib/
+          'app/config-production.js'
         ]
     production:
       conventions:
@@ -35,8 +33,7 @@ exports.config =
           /((.*(\/|\\))[_].*\.scss)/,
           'bower_components/requirejs/require.js',
           'app/config-dev.js',
-          'app/config-staging.js',
-          /^app\/lib/
+          'app/config-staging.js'
         ]
 
   files:
