@@ -27,10 +27,9 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $httpProvider.interceptors.push('blurAdminHttpInterceptor');
-  $locationProvider.html5Mode(true);
 
 })
 .run(function($rootScope, $state, editableOptions, editableThemes, PermRoleStore, authenticationService) {

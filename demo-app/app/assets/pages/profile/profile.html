@@ -23,7 +23,7 @@
           <label for="inputUsername" class="col-sm-3 control-label">Username</label>
           <div class="col-sm-9">
             <span class="form-control" id="inputUsername">
-              {{user.username}}
+              {{user.name}}
             </span>
           </div>
         </div>
@@ -67,7 +67,7 @@
     </div>
 
     <button type="button" class="btn btn-primary btn-with-icon save-profile"
-        ng-disabled="!user.username" ng-click="saveUser()">
+        ng-disabled="!user.name" ng-click="saveUser()">
       <i class="ion-android-checkmark-circle"></i>Update Profile
     </button>
   </div>

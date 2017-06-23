@@ -16,7 +16,7 @@ function ProfilePageCtrl($scope, $filter, $uibModal, fileReader, toastr, userSer
 
   $scope.phoneNumbers = [ "+4917672246110", "+4915207145469" ];
 
-  userService.me().success(function(user) {
+  userService.find($scope.loggedInUser.sub).success(function(user) {
     $scope.user = user;
 
     $scope.$watch('user.fullname', function(newValue, oldValue) {
