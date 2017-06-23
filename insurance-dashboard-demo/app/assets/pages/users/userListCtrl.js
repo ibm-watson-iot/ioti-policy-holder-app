@@ -7,11 +7,15 @@
 
 angular.module('BlurAdmin.pages.users').controller('UserListCtrl', UserListCtrl);
 
-function UserListCtrl($timeout, baConfig, layoutPaths, userService, cityLocationService) {
+function UserListCtrl($scope, $timeout, baConfig, layoutPaths, userService, cityLocationService) {
   var vm = this;
   var latlong;
   vm.users = [];
   vm.isLoading = true;
+
+  $scope.$watch("userListCtrlVm.currentPage", function() {
+    vm.paginatedUsers = vm.users.slice((vm.currentPage-1)*vm.itemsPerPage, (vm.currentPage-1)*vm.itemsPerPage+vm.itemsPerPage);
+  });
 
   cityLocationService.me().success(function(data) {
     latlong = data;
@@ -19,9 +23,10 @@ function UserListCtrl($timeout, baConfig, layoutPaths, userService, cityLocation
     userService.findAll().success(function(data) {
       vm.isLoading = false;
       vm.users = data.items;
+      vm.paginatedUsers = vm.users.slice(0, 10);
       vm.totalItems = data.totalItems;
       vm.currentPage = 1;
-      vm.smallnumPages = 10;
+      vm.itemsPerPage = 10;
 
       var cityUserCount = {};
       _.each(vm.users, function(user) {

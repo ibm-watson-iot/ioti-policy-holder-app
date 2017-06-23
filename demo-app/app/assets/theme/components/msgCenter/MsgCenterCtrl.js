@@ -7,43 +7,37 @@
 
 angular.module('BlurAdmin.theme.components').controller('MsgCenterCtrl', MsgCenterCtrl);
 
-function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService) {
+function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, webSocketService) {
 
   function getHazards() {
     hazardService.findAll().success(function(data) {
       // TODO: remove this hack when we have proper timestamps.
-      _.each(data.hazardEvents, function(hazard) {
-        hazard.eventTime = new Date(hazard.timestamp);
-        hazard.eventTimestamp = hazard.eventTime.getTime();
-        var date = new Date(hazard.timestamp);
-        hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
+      _.each(data.items, function(hazard) {
         if (hazard.ishandled === 'true') {
           hazard.ishandled = true;
         }
       });
-      data.hazardEvents = $filter('filter')(data.hazardEvents, {ishandled: false});
-      $scope.hazards = $filter('orderBy')(data.hazardEvents, 'eventTimestamp', true);
+      data.items = $filter('filter')(data.items, {ishandled: false});
+      $scope.hazards = $filter('orderBy')(data.items, 'createdAt', true);
     }).error(function(err) {
-      console.error("Fetching all hazards is failed!");
+      console.error("Fetching all hazards has failed!");
     });
   }
 
   getHazards();
 
-  var refreshingHazards = $interval(function() {
-    getHazards();
-  }, 5000);
+  webSocketService.on('new-hazard', getHazards);
 
   $scope.$on('$destroy', function () {
-    $interval.cancel(refreshingHazards);
+    webSocketService.removeEventListener('new-hazard', getHazards);
   });
 
   $scope.acknowledgeAll = function() {
     _.each($scope.hazards, function(hazard){
-      hazardService.updateAttribute(hazard, 'ishandled', true).success(function(data) {
+      hazardService.updatePartial(hazard._id, {'ishandled': true}).success(function(data) {
         hazard.ishandled = true;
       }).error(function(err) {
-        toastr.error("Saving hazard is failed!", "Error");
+        toastr.error("Saving hazard has failed!", "Error");
       });
     });
   };

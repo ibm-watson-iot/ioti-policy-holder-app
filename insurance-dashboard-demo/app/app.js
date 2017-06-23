@@ -30,10 +30,7 @@ angular.module('BlurAdmin', [
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
 
   $httpProvider.interceptors.push('blurAdminHttpInterceptor');
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
+  $locationProvider.html5Mode(true);
 
 })
 .run(function($rootScope, $state, editableOptions, editableThemes, PermRoleStore, authenticationService) {
@@ -51,7 +48,7 @@ angular.module('BlurAdmin', [
     });
 
     PermRoleStore.defineRole('ADMIN', function() {
-        return authenticationService.isAdmin();
+      return authenticationService.isAdmin();
     });
 
     authenticationService.isAuthenticated().then(function() {

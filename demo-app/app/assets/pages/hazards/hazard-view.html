@@ -6,9 +6,9 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="form-group">
-              <label for="username">Customer</label>
-              <span class="form-control" id="username">
-                {{hazardViewCtrlVm.hazard.username}}
+              <label for="userId">Customer</label>
+              <span class="form-control" id="userId">
+                {{hazardViewCtrlVm.hazard.userId}}
               </span>
             </div>
           </div>
@@ -28,7 +28,7 @@
               <label for="title">Event</label>
               <span class="form-control" id="title"
                   ng-model="hazardViewCtrlVm.hazard.title">
-                  {{hazardViewCtrlVm.hazard.title}}
+                  {{hazardViewCtrlVm.hazard.extra.title}}
                 </span>
             </div>
           </div>
@@ -36,7 +36,7 @@
             <div class="form-group">
               <label for="timestamp">Event Time</label>
               <span class="form-control" id="timestamp">
-                {{hazardViewCtrlVm.hazard.eventTimeStr}}
+                {{hazardViewCtrlVm.hazard.createdAt | date:'mediumTime'}} {{hazardViewCtrlVm.hazard.createdAt | date:'shortDate'}}
               </span>
             </div>
           </div>

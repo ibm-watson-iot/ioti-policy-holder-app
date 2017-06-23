@@ -29,21 +29,21 @@
                   <th>Action</th>
                 </tr>
                 <tr class="editable-tr-wrap"
-                    ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':true">
-                  <td class="table-id" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                    ng-repeat="hazard in hazardListCtrlVm.paginatedHazards">
+                  <td class="table-id" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
                     {{$index + 1}}
                   </td>
-                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
-                    {{hazard.eventTimeStr}}
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
+                    {{hazard.createdAt | date:'mediumTime'}} {{hazard.createdAt | date:'shortDate'}}
                   </td>
-                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
-                    {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldUUID].name}}
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
+                    {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldId].name}}
                   </td>
-                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
-                    {{hazardListCtrlVm.userMap[hazard.username].cityName}}
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
+                    {{hazardListCtrlVm.userMap[hazard.userId].cityName}}
                   </td>
-                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
-                    {{hazardListCtrlVm.userMap[hazard.username].customer}}
+                  <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
+                    {{hazardListCtrlVm.userMap[hazard.userId].customer}}
                   </td>
                   <td>
                     <button class="btn btn-primary editable-table-button btn-xs"
@@ -53,6 +53,14 @@
                     </button>
                   </td>
                 </tr>
+                <tfoot>
+                <tr ng-if="hazardListCtrlVm.totalItems > hazardListCtrlVm.itemsPerPage">
+                  <td colspan="6" class="text-center">
+                    <ul uib-pagination direction-links="false" total-items="hazardListCtrlVm.totalItems"
+                        ng-model="hazardListCtrlVm.currentPage" items-per-page="hazardListCtrlVm.itemsPerPage"></ul>
+                  </td>
+                </tr>
+                </tfoot>
               </table>
             </div>
           </div>

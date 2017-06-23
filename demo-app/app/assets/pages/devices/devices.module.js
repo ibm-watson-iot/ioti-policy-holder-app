@@ -16,6 +16,10 @@ function routeConfig($stateProvider) {
       icon: 'fa fa-mobile',
       order: 5,
     }
+  }).state('main.device-edit', {
+    url: 'device/:deviceId',
+    templateUrl: 'pages/devices/device-edit.html',
+    title: 'Device'
   });
 }
 

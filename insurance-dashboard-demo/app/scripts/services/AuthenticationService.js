@@ -6,17 +6,25 @@
 
 angular.module('BlurAdmin.services').factory('authenticationService', function(
   $http, $httpParamSerializer, $q, $location, $window, jwtHelper, userService,
-  apiProtocol, apiHost, apiPath) {
+  apiProtocol, apiHost, apiPath, tenantId, toastr) {
 
   var tokenKey = $location.host() + '_' + $location.port() + '_' + 'dashboardAuthToken';
   var userKey = $location.host() + '_' + $location.port() + '_' + 'dashboardUser';
-  var apiUrl = apiProtocol + '://' + apiHost + apiPath + '/'; // FIXME: tenantId
+  var apiUrl = apiProtocol + '://' + apiHost + apiPath + '/' + tenantId + '/';
   var redirectUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
 
-  var authorizeCode = $q(function(resolve, reject) {
+  var authorizeCode = $q.resolve()
+  .then(function () {
+    var token = localStorage.getItem(tokenKey);
+    var user = localStorage.getItem(userKey);
+
+    if (token && user && !jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
+
     var searchObject = $location.search();
     if (searchObject.code && searchObject.state) {
-      $http({
+      return $http({
         url: apiUrl + 'token',
         method: 'POST',
         data: $httpParamSerializer({
@@ -28,31 +36,42 @@ angular.module('BlurAdmin.services').factory('authenticationService', function(
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded' // Note the appropriate header
         }
-      }).then(function(response) {
-        var token = response.data;
-        localStorage.setItem(tokenKey, token.access_token);
-        var authenticatedUser = jwtHelper.decodeToken(token.id_token);
-        localStorage.setItem(userKey, JSON.stringify(authenticatedUser));
-
-        userService.find(authenticatedUser.sub).success(function(user) {
-        }).error(function(err, statusCode) {
-          if (statusCode === 404) {
-            authenticatedUser.address = {
-              city: 'Munich'
-            };
-            userService.save(authenticatedUser).success(function(newUser) {
-            }).error(function(err, statusCode) {
-              console.error("Saving new user is failed.", err);
-            });
-          } else {
-            console.error("Fetching the authenticated user is failed.", err);
-          }
-        });
-        resolve();
-      }, reject);
-    } else {
-      resolve(); // not a redirect from auth server, ignore
+      });
     }
+
+    return $q.reject();
+  })
+  .then(function(response) {
+    if (response === true) {
+      return JSON.parse(localStorage.getItem(userKey));
+    }
+    var token = response.data;
+    localStorage.setItem(tokenKey, token.access_token);
+    var authenticatedUser = jwtHelper.decodeToken(token.id_token);
+    localStorage.setItem(userKey, JSON.stringify(authenticatedUser));
+    return authenticatedUser;
+  })
+  .then(function (authenticatedUser) {
+    return userService.find(authenticatedUser.sub).catch(function(data) {
+      if (data.status === 404) {
+        authenticatedUser.address = {
+          city: 'Munich'
+        };
+        authenticatedUser._id = authenticatedUser.sub;
+        return userService.save(authenticatedUser).catch(function(data) {
+          console.error("Saving new user is failed.", data);
+        });
+      } else {
+        console.error("Fetching the authenticated user is failed.", data);
+      }
+    });
+  })
+  .then(function () {
+    var expirationTime = jwtHelper.getTokenExpirationDate(localStorage.getItem(tokenKey));
+    console.log('token will expire in ', (expirationTime - Date.now()) / 1000);
+    setTimeout(function () {
+      toastr.warning('Your session will expire in '+parseInt((expirationTime - Date.now())/(1000*60))+'min, at ' + expirationTime.toLocaleTimeString());
+    }, expirationTime - Date.now() -  5*60*1000);
   });
 
   return {
@@ -66,30 +85,22 @@ angular.module('BlurAdmin.services').factory('authenticationService', function(
       $window.location.href = apiUrl + 'authorization?' + $httpParamSerializer(query);
     },
     isAuthenticated: function() {
-      return $q(function(resolve, reject) {
-        authorizeCode.then(function() {
-          if (localStorage.getItem(tokenKey)) {
-            resolve();
-          } else {
-            reject();
-          }
-        }, reject);
+      return authorizeCode.then(function() {
+        return !!localStorage.getItem(tokenKey);
       });
     },
     isAdmin: function() {
-      return $q(function(resolve, reject) {
-        authorizeCode.then(function() {
-          if (localStorage.getItem(userKey)) {
-            var user = JSON.parse(localStorage.getItem(userKey));
-            if (user && user.accessLevel === '3') {
-              resolve();
-              return;
-            }
+      return authorizeCode.then(function() {
+        if (localStorage.getItem(userKey)) {
+          var user = JSON.parse(localStorage.getItem(userKey));
+          if (user && user.accessLevel === '3') {
+            return true;
           }
-          reject();
-        }, reject);
+        }
+        return false;
       });
     },
+
     getUser: function() {
       return JSON.parse(localStorage.getItem(userKey));
     },
@@ -103,9 +114,8 @@ angular.module('BlurAdmin.services').factory('authenticationService', function(
       localStorage.setItem(tokenKey, token);
     },
     signOut: function() {
-      localStorage.removeItem(userKey)
+      localStorage.removeItem(userKey);
       localStorage.removeItem(tokenKey);
     }
   };
-
 });

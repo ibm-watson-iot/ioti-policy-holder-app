@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('BlurAdmin.services').factory('hazardService', function(BaseService) {
-  var service = new BaseService('hazards');
+angular.module('BlurAdmin.services').factory('shieldActivationService', function(BaseService) {
+  var service = new BaseService('shield-activations');
   var originalFindAll = service.findAll;
   service.findAll = function (queryParams) {
     queryParams = queryParams || {};

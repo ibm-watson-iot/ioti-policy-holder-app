@@ -7,22 +7,18 @@
 
 angular.module('BlurAdmin.theme.components').controller('MsgCenterCtrl', MsgCenterCtrl);
 
-function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimService) {
+function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimService, webSocketService) {
 
   function getHazards() {
     hazardService.findAll().success(function(data) {
       // TODO: remove this hack when we have proper timestamps.
       _.each(data.items, function(hazard) {
-        hazard.eventTime = new Date(hazard.timestamp);
-        hazard.eventTimestamp = hazard.eventTime.getTime();
-        var date = new Date(hazard.timestamp);
-        hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
         if (hazard.ishandled === 'true') {
           hazard.ishandled = true;
         }
       });
       data.items = $filter('filter')(data.items, {ishandled: false});
-      $scope.hazards = $filter('orderBy')(data.items, 'eventTimestamp', true);
+      $scope.hazards = $filter('orderBy')(data.items, 'createdAt', true);
     }).error(function(err) {
       console.error("Fetching all hazards is failed!");
     });
@@ -42,18 +38,16 @@ function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimS
   getHazards();
   getClaims();
 
-  var refreshingHazards = $interval(function() {
-    //getHazards();
-    //getClaims();
-  }, 5000);
+  webSocketService.on('new-hazard', getHazards);
+
 
   $scope.$on('$destroy', function () {
-    $interval.cancel(refreshingHazards);
+    webSocketService.removeEventListener('new-hazard', getHazards);
   });
 
   $scope.acknowledgeAll = function() {
     _.each($scope.hazards, function(hazard){
-      hazardService.updateAttribute(hazard, 'ishandled', true).success(function(data) {
+      hazardService.updatePartial(hazard._id, {'ishandled': true}).success(function(data) {
         hazard.ishandled = true;
       }).error(function(err) {
         toastr.error("Saving hazard is failed!", "Error");

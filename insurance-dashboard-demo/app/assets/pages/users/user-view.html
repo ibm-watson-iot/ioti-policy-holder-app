@@ -72,10 +72,10 @@
                 <th class="table-id">#</th>
                 <th>Name</th>
               </tr>
-              <tr ui-sref="main.user-shield-view({shieldId: shield.shieldUUID})"  ng-repeat="shield in userViewCtrlVm.userShields" class="editable-tr-wrap">
+              <tr ui-sref="main.user-shield-view({shieldId: shield.shieldId})"  ng-repeat="shield in userViewCtrlVm.userShields" class="editable-tr-wrap">
                 <td class="table-id">{{$index + 1}}</td>
                 <td>
-                  {{shield.shieldUUID}}
+                  {{shield.shieldId}}
                 </td>
               </tr>
             </table>
@@ -110,8 +110,8 @@
                 <th>Shield</th>
               </tr>
               <tr class="editable-tr-wrap clickable"
-                  ng-repeat="hazard in userViewCtrlVm.userHazards | orderBy:'eventTime':true"
-                  ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                  ng-repeat="hazard in userViewCtrlVm.userHazards | orderBy:'createdAt':true"
+                  ui-sref="main.hazard-view({hazardEventId: hazard._id})">
                 <td class="table-id">
                   {{$index + 1}}
                 </td>
@@ -119,10 +119,10 @@
                   {{hazard.title}}
                 </td>
                 <td>
-                  {{hazard.eventTimeStr}}
+                  {{hazard.createdAt | date:'mediumTime'}} {{hazard.createdAt | date:'mediumTime'}}
                 </td>
                 <td>
-                  {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldID].name}}
+                  {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldId].name}}
                 </td>
               </tr>
             </table>

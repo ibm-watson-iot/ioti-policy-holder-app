@@ -3,34 +3,28 @@
 
 angular.module('BlurAdmin.pages.users').controller('UserViewCtrl', UserViewCtrl);
 
-function UserViewCtrl($stateParams, $filter, userService, shieldAssociationService,
+function UserViewCtrl($stateParams, userService, shieldActivationService,
   deviceService, hazardService, claimService) {
   var vm = this;
   vm.user = {};
 
-  if ($stateParams.username) {
-    userService.findAll($stateParams.username).success(function(user) {
+  if ($stateParams.userId) {
+    userService.find($stateParams.userId).success(function(user) {
       vm.user = user;
       initializeLocationMap(user.address.street + ", " + user.address.zipcode + " " + user.address.city + ", " + user.address.country);
-      shieldAssociationService.findAll($stateParams.username).success(function(data) {
+      shieldActivationService.findAll({userId: $stateParams.userId}).success(function(data) {
         vm.userShields = data.items;
       });
 
-      deviceService.findAll($stateParams.username).success(function(data) {
+      deviceService.findAll({userId: $stateParams.userId}).success(function(data) {
         vm.userDevices = data.items;
       });
 
-      hazardService.findAll().success(function(data) {
-        vm.userHazards = $filter('filter')(data.items, {username: $stateParams.username});
-        _.each(vm.userHazards, function(hazard) {
-          // TODO: remove this hack when we have proper timestamps.
-          var date = new Date(hazard.timestamp);
-          hazard.eventTime = date.getTime();
-          hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
-        });
+      hazardService.findAll({userId: $stateParams.userId}).success(function(data) {
+        vm.userHazards = data.items;
       });
 
-      claimService.findAll($stateParams.username).success(function(data) {
+      claimService.findAll({userId: $stateParams.userId}).success(function(data) {
         vm.userClaims = data;
       }).error(function(err) {
         vm.userClaims = [];

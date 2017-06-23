@@ -22,8 +22,9 @@ angular.module('BlurAdmin.utils').factory('blurAdminHttpInterceptor', function(
       if (isAPICall && ($config.status === 401)) {
         var originalPath = $location.path();
         if (originalPath !== "/signin") {
-          authenticationService.signOut();
-          $location.path("#/signin");
+          alert('Session timed out. Please sign in again');
+          localStorage.removeItem(tokenKey);
+          $location.path("/signin");
         }
       }
       return $q.reject($config);

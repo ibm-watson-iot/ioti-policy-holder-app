@@ -12,14 +12,13 @@ function ShieldEditCtrl($state, $stateParams, toastr, uuid4, shieldService) {
   vm.shield = { };
   vm.actions = ["WaterLeakAction"];
 
-  if($stateParams.shieldUuid && $stateParams.shieldUuid !== 'new') {
-    shieldService.find($stateParams.shieldUuid).success(function(shield) {
+  if($stateParams.shieldId && $stateParams.shieldId !== 'new') {
+    shieldService.find($stateParams.shieldId).success(function(shield) {
       vm.shield = shield;
     });
   } else {
     vm.isNewShield = true;
     vm.shield = {
-      UUID: uuid4.generate(),
       image: "shieldWater",
       canBeDisabled: false,
       hazardDetectionOnCloud: true,
@@ -36,7 +35,7 @@ function ShieldEditCtrl($state, $stateParams, toastr, uuid4, shieldService) {
       toastr.success(null, "Saving shield is successful.");
       $state.go('main.shields');
     }).error(function(err) {
-      toastr.error("Saving shield is failed!", "Error");
+      toastr.error("Saving shield has failed!", "Error");
     });
   };
 

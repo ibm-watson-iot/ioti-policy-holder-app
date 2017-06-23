@@ -13,13 +13,13 @@ function ClaimListCtrl($timeout, baConfig, layoutPaths, claimService, userServic
     latlong = result.data;
     return claimService.findAll();
   }).then(function(result){
-    vm.claims = result.items;
+    vm.claims = result.data.items;
     return userService.findAll();
   }).then(function(result){
     var i = 0;
-    var users = result.data.users;
+    var users = result.data.items;
     for(; i < users.length; i++) {
-      vm.userMap[users[i].username] = users[i];
+      vm.userMap[users[i].userId] = users[i];
     }
     var user, city, cityClaimCount = {};
     for(i = 0; i < vm.claims.length; i++) {

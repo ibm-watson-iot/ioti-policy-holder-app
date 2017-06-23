@@ -14,13 +14,9 @@ function DeviceListCtrl($rootScope, editableThemes, toastr, deviceService) {
 
   deviceService.findAll().success(function(data) {
     vm.isLoading = false;
-    if (data.devices) {
-      vm.devices = data.devices;
-    } else {
-      vm.devices = data;
-    }
+    vm.devices = data.items;
   }).error(function(err) {
-    console.error("Fetching all devices is failed!");
+    console.error("Fetching all devices has failed!");
   });
 
   vm.saveDevice = function(device) {
@@ -28,8 +24,8 @@ function DeviceListCtrl($rootScope, editableThemes, toastr, deviceService) {
       _.merge(device, savedDevice);
       toastr.success(null, "Saving device is successful.");
     }).error(function(err) {
-      console.error("Saving device is failed!");
-      toastr.error("Saving device is failed!", "Error");
+      console.error("Saving device has failed!");
+      toastr.error("Saving device has failed!", "Error");
     });
   };
 

@@ -50,6 +50,7 @@ exports.config =
           'bower_components/jquery-ui/ui/jquery-ui.js',
           'bower_components/lodash/lodash.js',
           'bower_components/angular/angular.js',
+          'bower_components/socket.io-client/dist/socket.io.js',
 
           'bower_components/amcharts/dist/amcharts/amcharts.js',
           'bower_components/amcharts-stock/dist/amcharts/amstock.js',

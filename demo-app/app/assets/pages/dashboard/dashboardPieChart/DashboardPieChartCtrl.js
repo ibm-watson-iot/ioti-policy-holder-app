@@ -18,16 +18,16 @@
 
     hazardService.findAll().success(function(data) {
       var shieldToHazardMap = {};
-      _.each(data.hazardEvents, function(hazard) {
-        shieldToHazardMap[hazard.shieldUUID] = true;
+      _.each(data.items, function(hazard) {
+        shieldToHazardMap[hazard.shieldId] = true;
       });
 
-      shieldService.findAll($rootScope.loggedInUser.username).success(function(shields) {
-        _.each(shields, function(shield) {
-          shield.hasHazard = shieldToHazardMap[shield.UUID];
+      shieldService.findAll().success(function(shields) {
+        _.each(shields.items, function(shield) {
+          shield.hasHazard = shieldToHazardMap[shield._id];
         });
 
-        shields = $filter('orderBy')(shields, 'hasHazard');
+        shields = $filter('orderBy')(shields.items, 'hasHazard');
 
         _.each(shields, function(shield) {
           var date = new Date(shield.updatedAt);
@@ -35,15 +35,15 @@
             color: pieColor,
             description: shield.name,
             stats: 'Last updated at ' + $filter('date')(date, 'h:mm a MMM d, y'),
-            icon: shieldToHazardMap[shield.UUID] ? (shield.image + 'Alert') : shield.image,
+            icon: shieldToHazardMap[shield._id] ? (shield.image + 'Alert') : shield.image,
           });
         });
         $scope.isLoading = false;
       }).error(function(err) {
-        console.error("Fetching user's shields is failed!");
+        console.error("Fetching user's shields has failed!");
       });
     }).error(function(err) {
-      console.error("Fetching all hazards is failed!");
+      console.error("Fetching all hazards has failed!");
     });
 
     function getRandomArbitrary(min, max) {

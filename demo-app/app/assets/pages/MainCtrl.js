@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('BlurAdmin.pages').controller('MainCtrl', function(
-  $rootScope, $scope, authenticationService, userService) {
+  $rootScope, $scope, authenticationService, notificationService) {
 
-  $scope.isAdmin = function() {
-    return authenticationService.isAdmin();
-  };
-
+  $scope.isAdmin = authenticationService.isAdmin();
+  notificationService.enable();
 });

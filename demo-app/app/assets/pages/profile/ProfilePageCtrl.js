@@ -38,26 +38,26 @@ function ProfilePageCtrl($scope, $filter, $uibModal, fileReader, toastr, userSer
     });
 
   }).error(function(err) {
-    console.error("Fetching the user is failed.");
+    console.error("Fetching the user has failed.");
   });
 
-  function updateAttribute(attributeName, newValue) {
-    userService.updateAttribute($scope.user.username, attributeName, newValue).success(function(data) {
+  function updatePartial(partial) {
+    userService.updatePartial($scope.user._id, partial).success(function(data) {
       toastr.success(null, "Updating profile is successful.");
     }).error(function(err) {
-      toastr.error("Updating profile is failed!", "Error");
+      toastr.error("Updating profile has failed!", "Error");
     });
   }
 
   $scope.saveUser = function() {
     if (isFullnameChanged) {
-      updateAttribute('fullname', $scope.user.fullname);
+      updatePartial({'fullname': $scope.user.fullname});
     }
     if (isEmailChanged) {
-      updateAttribute('email', $scope.user.email);
+      updatePartial({'email': $scope.user.email});
     }
     if (isPhoneNumberChanged) {
-      updateAttribute('phoneNumber', $scope.user.phoneNumber);
+      updatePartial({'phoneNumber': $scope.user.phoneNumber});
     }
   };
 

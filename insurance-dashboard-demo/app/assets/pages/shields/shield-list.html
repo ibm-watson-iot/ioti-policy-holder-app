@@ -6,7 +6,7 @@
           <uib-tab heading="Active Shields">
             <div class="heading-widget section-block ng-scope" ng-if="shieldListCtrlVm.userShields.length === 0">
               <h2>No Activated Shield</h2>
-              <p>Yo don't have any activated shields yet. You can go to All Shields tab and activate some shields.</p>
+              <p>You don't have any activated shields yet. You can go to All Shields tab and activate some shields.</p>
             </div>
             <table class="table table-hover" ng-if="shieldListCtrlVm.userShields.length > 0">
               <tr class="header-row">
@@ -30,7 +30,7 @@
           </uib-tab>
           <uib-tab heading="All Shields">
             <div class="add-row-editable-table">
-              <button class="btn btn-primary" ui-sref="main.shield-edit({shieldUuid: 'new'})">Add Shield</button>
+              <button class="btn btn-primary" ui-sref="main.shield-edit({shieldId: 'new'})">Add Shield</button>
             </div>
             <table class="table table-hover">
               <tr class="header-row">
@@ -47,17 +47,17 @@
                 </td>
                 <td>
                   <button class="btn btn-primary editable-table-button btn-xs"
-                      ng-if="!shieldListCtrlVm.activeShields[shield.UUID]"
+                      ng-if="!shieldListCtrlVm.activeShields[shield._id]"
                       ng-click="shieldListCtrlVm.activate(shield)">
                         Activate
                   </button>
                   <button type="button" class="btn btn-xs btn-primary"
-                      ng-if="isAdmin()"
-                      ui-sref="main.shield-edit({shieldUuid: shield.UUID})">
+                      ng-if="isAdmin"
+                      ui-sref="main.shield-edit({shieldId: shield._id})">
                     <i class="fa fa-pencil"></i>
                   </button>
                   <button type="button" class="btn btn-xs btn-primary"
-                      ng-if="isAdmin()"
+                      ng-if="isAdmin"
                       ng-click="shieldListCtrlVm.deleteShield(shield)">
                     <i class="fa fa-trash"></i>
                   </button>

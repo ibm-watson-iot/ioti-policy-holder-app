@@ -8,7 +8,7 @@
             <div class="form-group">
               <label for="username">Customer</label>
               <span class="form-control" id="username">
-                {{hazardViewCtrlVm.hazard.username}}
+                {{hazardViewCtrlVm.hazard.userId}}
               </span>
             </div>
           </div>
@@ -28,7 +28,7 @@
               <label for="title">Event</label>
               <span class="form-control" id="title"
                   ng-model="hazardViewCtrlVm.hazard.title">
-                  {{hazardViewCtrlVm.hazard.title}}
+                  {{hazardViewCtrlVm.hazard.extra.title}}
                 </span>
             </div>
           </div>
@@ -36,7 +36,7 @@
             <div class="form-group">
               <label for="timestamp">Event Time</label>
               <span class="form-control" id="timestamp">
-                {{hazardViewCtrlVm.hazard.eventTimeStr}}
+                {{hazardViewCtrlVm.hazard.createdAt | date:'mediumTime'}} {{hazardViewCtrlVm.hazard.createdAt | date:'shortDate'}}
               </span>
             </div>
           </div>
@@ -60,7 +60,7 @@
             </button>
             <button class="btn btn-primary pull-right"
                 ng-if="hazardViewCtrlVm.claims.length === 0"
-                ui-sref="main.claim-add({hazardId: hazardViewCtrlVm.hazard.hazardid, userId: hazardViewCtrlVm.hazard.userId})">
+                ui-sref="main.claim-add({hazardId: hazardViewCtrlVm.hazard._id, userId: hazardViewCtrlVm.hazard.userId})">
               Create Claim
             </button>
             <button class="btn btn-primary pull-right" ng-if="!hazardViewCtrlVm.hazard.ishandled"

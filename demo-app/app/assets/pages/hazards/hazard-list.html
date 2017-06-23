@@ -21,21 +21,29 @@
                 <th>Shield</th>
               </tr>
               <tr class="editable-tr-wrap clickable"
-                  ng-repeat="hazard in hazardListCtrlVm.hazards | orderBy:'eventTime':true"
-                  ui-sref="main.hazard-view({hazardEventId: hazard.hazardid})">
+                  ng-repeat="hazard in hazardListCtrlVm.paginatedHazards"
+                  ui-sref="main.hazard-view({hazardEventId: hazard._id})">
                 <td class="table-id">
                   {{$index + 1}}
                 </td>
                 <td>
-                  {{hazard.title}}
+                  {{hazard.extra.title}}
                 </td>
                 <td>
-                  {{hazard.eventTimeStr}}
+                  {{hazard.createdAt | date:'mediumTime'}} {{hazard.createdAt | date:'shortDate'}}
                 </td>
                 <td>
-                  {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldID].name}}
+                  {{hazardListCtrlVm.uuidToShieldMap[hazard.shieldId].name}}
                 </td>
               </tr>
+              <tfoot>
+              <tr ng-if="hazardListCtrlVm.totalItems > hazardListCtrlVm.itemsPerPage">
+                <td colspan="6" class="text-center">
+                  <ul uib-pagination direction-links="false" total-items="hazardListCtrlVm.totalItems"
+                      ng-model="hazardListCtrlVm.currentPage" items-per-page="hazardListCtrlVm.itemsPerPage"></ul>
+                </td>
+              </tr>
+              </tfoot>
             </table>
           </div>
         </div>

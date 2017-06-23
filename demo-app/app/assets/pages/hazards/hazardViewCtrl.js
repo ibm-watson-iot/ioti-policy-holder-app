@@ -10,14 +10,10 @@ function HazardViewCtrl($stateParams, $filter, toastr, hazardService, shieldServ
   if ($stateParams.hazardEventId) {
     hazardService.find($stateParams.hazardEventId).success(function(hazard) {
       vm.hazard = hazard;
-      // TODO: remove this hack when we have proper timestamps.
-      var date = new Date(vm.hazard.timestamp);
-      vm.hazard.eventTime = date.getTime();
-      vm.hazard.eventTimeStr = date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
 
-      initializeLocationMap(hazard.username);
+      initializeLocationMap(hazard.userId);
 
-      shieldService.find(vm.hazard.shieldUUID).success(function(shield) {
+      shieldService.find(vm.hazard.shieldId).success(function(shield) {
         vm.shield = shield;
       });
     });
@@ -25,46 +21,48 @@ function HazardViewCtrl($stateParams, $filter, toastr, hazardService, shieldServ
 
   vm.acknowledgeHazard = function(hazard) {
     hazard.ishandled = true;
-    hazardService.updateAttribute(hazard, 'ishandled', true).success(function(data) {
+    hazardService.updatePartial(hazard._id, {ishandled: true}).success(function(data) {
       toastr.success("Acknowledged.");
     }).error(function(err) {
-      toastr.error("Saving hazard is failed!", "Error");
+      toastr.error("Saving hazard has failed!", "Error");
     });
   };
 
-  function initializeLocationMap(username) {
+  function initializeLocationMap(userId) {
     // get user location
-    userService.findAll(username).success(function(user) {
+    userService.find(userId).then(function(resp) {
+      var user = resp.data;
+      var address = user.address.street + ", " + user.address.zipcode + " " + user.address.city + ", " + user.address.country;
+      var geocoder;
       var map;
-      var address = user.address.street + ", " + user.address.zipcode +
-                    " " + user.address.city + ", " + user.address.country;
-      var geocoder = new google.maps.Geocoder();
+
+      geocoder = new google.maps.Geocoder();
       var latlng = new google.maps.LatLng(-34.397, 150.644);
       var myOptions = {
         zoom: 14,
         center: latlng,
         mapTypeControl: true,
-        mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+        mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
         navigationControl: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       map = new google.maps.Map(document.getElementById("google-maps"), myOptions);
       if (geocoder) {
-        geocoder.geocode({'address': address}, function(results, status) {
+        geocoder.geocode({ 'address': address }, function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
               map.setCenter(results[0].geometry.location);
               var infowindow = new google.maps.InfoWindow(
-                  {
-                    content: '<b>' + address + '</b>',
-                    size: new google.maps.Size(150, 50)
-                  });
+                {
+                  content: '<b>' + address + '</b>',
+                  size: new google.maps.Size(150, 50)
+                });
               var marker = new google.maps.Marker({
                 position: results[0].geometry.location,
                 map: map,
                 title: address
               });
-              google.maps.event.addListener(marker, 'click', function() {
+              google.maps.event.addListener(marker, 'click', function () {
                 infowindow.open(map, marker);
               });
             } else {
@@ -75,8 +73,6 @@ function HazardViewCtrl($stateParams, $filter, toastr, hazardService, shieldServ
           }
         });
       }
-    }).error(function(err) {
-      console.log("Fetching user details failed, error:", err);
     });
   }
 }

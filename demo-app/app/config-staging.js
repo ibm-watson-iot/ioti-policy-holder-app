@@ -2,8 +2,11 @@
 
 angular.module('BlurAdmin').constant('apiProtocol', 'https');
 angular.module('BlurAdmin').constant('apiHost', '');
-angular.module('BlurAdmin').constant('apiPath', '/');
+angular.module('BlurAdmin').constant('apiPath', '/api/v1');
 
-angular.module('BlurAdmin').constant('appGUID', '');
-angular.module('BlurAdmin').constant('appRegion', 'eu-gb.mybluemix.net');
-angular.module('BlurAdmin').constant('clientSecret', '');
+angular.module('BlurAdmin').constant('backendProtocol', 'https');
+angular.module('BlurAdmin').constant('backendHost', 'iot4i-insurance-company-backend.eu-gb.mybluemix.net');
+angular.module('BlurAdmin').constant('backendPath', '/api/v1');
+angular.module('BlurAdmin').constant('backendWebSocketPath', '/notifications');
+
+angular.module('BlurAdmin').constant('tenantId', '1234');

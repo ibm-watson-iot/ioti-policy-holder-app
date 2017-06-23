@@ -25,17 +25,17 @@
                   <th>Full Name</th>
                   <th>Email</th>
                 </tr>
-                <tr class="editable-tr-wrap clickable" ng-repeat="user in userListCtrlVm.users"
+                <tr class="editable-tr-wrap clickable" ng-repeat="user in userListCtrlVm.paginatedUsers"
                     ui-sref="main.user-view({userId: user._id})">
-                  <td class="table-id">{{$index + 1}}</td>
+                  <td class="table-id">{{(userListCtrlVm.currentPage-1)*userListCtrlVm.itemsPerPage + $index + 1}}</td>
                   <td> {{user.name}} </td>
                   <td> {{user.email}} </td>
                 </tr>
                 <tfoot>
-                <tr>
+                <tr ng-if="userListCtrlVm.totalItems > userListCtrlVm.itemsPerPage">
                   <td colspan="6" class="text-center">
                     <ul uib-pagination direction-links="false" total-items="userListCtrlVm.totalItems"
-                      ng-model="userListCtrlVm.currentPage" num-pages="userListCtrlVm.smallnumPages"></ul>
+                      ng-model="userListCtrlVm.currentPage" items-per-page="userListCtrlVm.itemsPerPage"></ul>
                   </td>
                 </tr>
                 </tfoot>

@@ -17,6 +17,7 @@ angular.module('BlurAdmin', [
   'ui.bootstrap',
   'ui.slimscroll',
   'angular-progress-button-styles',
+  'angular-jwt',
 
   'permission',
   'permission.ui',
@@ -26,17 +27,21 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
 
   $httpProvider.interceptors.push('blurAdminHttpInterceptor');
+  $locationProvider.html5Mode(true);
 
 })
-.run(function($rootScope, $state, editableOptions, editableThemes,
-  PermRoleStore, authenticationService, notificationService, userService) {
+.run(function($rootScope, $state, editableOptions, editableThemes, PermRoleStore, authenticationService) {
 
     // xeditable theme
     editableOptions.theme = 'bs3';
     editableThemes.bs3.inputClass = 'input-sm';
+
+    String.prototype.capitalizeFirstLetter = function() {
+      return this.charAt(0).toUpperCase() + this.slice(1);
+    }
 
     PermRoleStore.defineRole('AUTHORIZED', function() {
       return authenticationService.isAuthenticated();
@@ -46,17 +51,9 @@ angular.module('BlurAdmin', [
       return authenticationService.isAdmin();
     });
 
-    if (authenticationService.isAuthenticated()) {
+    authenticationService.isAuthenticated().then(function() {
       $rootScope.loggedInUser = authenticationService.getUser();
-      if (!$rootScope.loggedInUser) {
-        userService.me().success(function(user) {
-          $rootScope.loggedInUser = user;
-          notificationService.registerWithUserId(user.username);
-        }).error(function(err) {
-          console.error("Fetching the loggedin user is failed.");
-        });
-      }
-    }
+    });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, params) {
       if (toState.redirectTo) {

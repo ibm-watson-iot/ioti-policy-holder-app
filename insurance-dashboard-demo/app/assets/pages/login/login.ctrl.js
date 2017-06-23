@@ -11,58 +11,6 @@ function LoginCtrl($rootScope, $scope, $state, toastr, authenticationService, us
     authenticationService.authenticate();
   };
 
-  vm.signUp = function() {
-    userService.signUp(vm.user.email, vm.user.password, function(err, result) {
-      if (err) {
-        console.error('Signing up is failed for', vm.user.email);
-        toastr.error(err.message, 'Error');
-        if (err.code === "UsernameExistsException") {
-          $state.go('confirm');
-        }
-      } else {
-        var cognitoUser = result.user;
-        console.log('Signing up is successfull', vm.user.email);
-        $state.go('confirm');
-      }
-    });
-  };
-
-  vm.confirm = function() {
-    var userData = {
-      username: vm.email
-    };
-    userService.confirmRegistration(vm.confirmationCode, true, function(err, result) {
-      if (err) {
-        console.error('Confirmation is failed for user', vm.email);
-        toastr.error(err.message, 'Error');
-      } else {
-        console.log('Confirmation is successfull for user', vm.email);
-        toastr.success(null, 'Success');
-        $state.go('signin');
-      }
-    });
-  };
-
-  vm.forgot = function() {
-    var userData = {
-      username: vm.email
-    };
-    userService.forgotPassword({
-      onSuccess: function(result) {
-        toastr.success(null, 'Success');
-        $state.go('signin');
-      },
-      onFailure: function(err) {
-        toastr.error(err.message, 'Error');
-      },
-      inputVerificationCode: function() {
-        var verificationCode = prompt('Please input verification code ', '');
-        var newPassword = prompt('Enter new password ', '');
-        cognitoUser.confirmPassword(verificationCode, newPassword, this);
-      }
-    });
-  };
-
 }
 
 })();

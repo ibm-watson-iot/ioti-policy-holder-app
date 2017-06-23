@@ -7,66 +7,66 @@
 
 angular.module('BlurAdmin.pages.shields').controller('ShieldListCtrl', ShieldListCtrl);
 
-function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldService, shieldAssociationService) {
+function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldService, shieldActivationService) {
   var vm = this;
   vm.allShields = [];
   vm.userShields = [];
   vm.activeShields = {};
-  var shieldAssociations = [];
-  var shieldToAssociationMap = {};
+  var shieldActivations = [];
+  var shieldToActivationMap = {};
 
   shieldService.findAll().success(function(data) {
-    vm.allShields = data.shields;
+    vm.allShields = data.items;
 
-    shieldAssociationService.findAll($rootScope.loggedInUser.username).success(function(data) {
-      shieldAssociations = data.shieldassociations;
+    shieldActivationService.findAll().success(function(data) {
+      shieldActivations = data.items;
 
-      _.each(shieldAssociations, function(shieldAssociation) {
+      _.each(shieldActivations, function(shieldActivation) {
         _.each(vm.allShields, function(shield) {
-          if (shield.UUID === shieldAssociation.shieldUUID) {
-            vm.userShields.push(shield);
-            vm.activeShields[shield.UUID] = true;
+          if (shield._id === shieldActivation.shieldId) {
+            if (!vm.activeShields[shield._id]) {
+              vm.activeShields[shield._id] = true;
+              vm.userShields.push(shield);
+            }
           }
         });
-        shieldToAssociationMap[shieldAssociation.shieldUUID] = shieldAssociation;
+        shieldToActivationMap[shieldActivation.shieldId] = shieldActivation;
       });
 
     }).error(function(err) {
-      console.error("Fetching all shields is failed!");
+      console.error("Fetching all shields was failed!");
     });
 
   }).error(function(err) {
-    console.error("Fetching all shields is failed!");
+    console.error("Fetching all shields has failed!");
   });
 
   vm.activate = function(shield) {
-    var shieldAssociation = {
-      shieldUUID: shield.UUID,
-      username: $rootScope.loggedInUser.username,
+    var shieldActivation = {
+      shieldId: shield._id,
       hazardDetectionOnCloud: true
     };
-    shieldAssociationService.save(shieldAssociation).success(function(savedAssociation) {
-      shieldAssociation._id = savedAssociation.id;
+    shieldActivationService.save(shieldActivation).success(function(savedActivation) {
       vm.userShields.push(shield);
-      vm.activeShields[shield.UUID] = true;
-      shieldAssociations.push(savedAssociation);
-      shieldToAssociationMap[shieldAssociation.shieldUUID] = shieldAssociation;
-      toastr.success(null, "Activating the shield is successful.");
+      vm.activeShields[shield._id] = true;
+      shieldActivations.push(savedActivation);
+      shieldToActivationMap[savedActivation.shieldId] = savedActivation;
+      toastr.success(null, "Activating the shield was successful.");
     }).error(function(err) {
-      console.error("Saving shieldassociation is failed!");
+      console.error("Saving shieldActivation has failed!");
     });
   };
 
   vm.deactivate = function(shield) {
-    var shieldAssociation = shieldToAssociationMap[shield.UUID];
-    shieldAssociationService.remove(shieldAssociation._id).success(function(savedAssociation) {
-      delete vm.activeShields[shield.UUID];
+    var shieldActivation = shieldToActivationMap[shield._id];
+    shieldActivationService.remove(shieldActivation._id).success(function() {
+      delete vm.activeShields[shield._id];
       _.remove(vm.userShields, function(userShield) {
-          return userShield.UUID === shield.UUID;
+          return userShield._id === shield._id;
       });
-      toastr.success(null, "Deactivating the shield is successful.");
+      toastr.success(null, "Deactivating the shield was successful.");
     }).error(function(err) {
-      console.error("Deleting shieldassociation is failed!");
+      console.error("Deleting shieldActivation has failed!");
     });
   };
 
@@ -84,16 +84,16 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
     });
     modalInstance.result.then(function(shieldToDelete) {
       shieldService.remove(shieldToDelete._id).success(function(data) {
-        delete vm.activeShields[shield.UUID];
+        delete vm.activeShields[shield._id];
         _.remove(vm.allShields, function(shield) {
-            return shield.UUID === shieldToDelete.UUID;
+            return shield._id === shieldToDelete._id;
         });
         _.remove(vm.userShields, function(userShield) {
-            return userShield.UUID === shieldToDelete.UUID;
+            return userShield._id === shieldToDelete._id;
         });
         toastr.success(null, "Deleting the shield is successful.");
       }).error(function(err) {
-        console.error("Deleting the shield is failed!");
+        console.error("Deleting the shield has failed!");
       });
     }, function () {
       console.log('Modal dismissed at: ' + new Date());
@@ -105,8 +105,8 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
       _.merge(shield, savedShield);
       toastr.success(null, "Saving shield is successful.");
     }).error(function(err) {
-      console.error("Saving shield is failed!");
-      toastr.error("Saving shield is failed!", "Error");
+      console.error("Saving shield has failed!");
+      toastr.error("Saving shield has failed!", "Error");
     });
   };
 

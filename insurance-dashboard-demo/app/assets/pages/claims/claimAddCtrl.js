@@ -18,7 +18,7 @@
         };
       });
 
-      claimService.findByUserId($state.params.userId).success(function(data) {
+      claimService.findAll({userId: $state.params.userId}).success(function(data) {
         vm.claims = data.items;
       }).error(function(err) {
         console.log("Failed to get claims history or user !");
