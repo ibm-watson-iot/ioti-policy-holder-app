@@ -7,12 +7,20 @@
 
 angular.module('BlurAdmin.pages.shields').controller('ShieldEditCtrl', ShieldEditCtrl);
 
-function ShieldEditCtrl($state, $stateParams, toastr, uuid4, shieldService) {
+function ShieldEditCtrl($state, $stateParams, toastr, uuid4, shieldService, shieldCodeService, actionService) {
   var vm = this;
   vm.shield = { };
-  vm.actions = ["WaterLeakAction"];
+  vm.shieldcodes = [];
+
+  actionService.findAll().then(function (resp) {
+    vm.actions = resp.data.items;
+  });
+
 
   if($stateParams.shieldId && $stateParams.shieldId !== 'new') {
+    shieldCodeService.findAll({shieldId: $stateParams.shieldId}).then(function (resp) {
+      vm.shieldcodes = resp.data.items;
+    });
     shieldService.find($stateParams.shieldId).success(function(shield) {
       vm.shield = shield;
     });
@@ -31,11 +39,12 @@ function ShieldEditCtrl($state, $stateParams, toastr, uuid4, shieldService) {
   }
 
   vm.saveShield = function() {
-    shieldService.save(vm.shield).success(function(savedShield) {
-      _.merge(vm.shield, savedShield);
-      toastr.success(null, "Saving shield is successful.");
-      $state.go('main.shields');
-    }).error(function(err) {
+    shieldService.save(vm.shield)
+    .then(function(resp) {
+      _.merge(vm.shield, resp.data);
+      toastr.success('Saving shield was successful');
+    })
+    .catch(function(err) {
       toastr.error("Saving shield is failed!", "Error");
     });
   };

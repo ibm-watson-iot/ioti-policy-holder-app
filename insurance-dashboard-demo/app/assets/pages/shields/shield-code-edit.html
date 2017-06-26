@@ -1,0 +1,44 @@
+<div class="widgets" ng-controller="ShieldCodeEditCtrl as shieldCodeEditCtrlVm">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Shield Code - <small>{{shieldCodeEditCtrlVm.shieldCode._id}}</small></h4>
+      <div ba-panel ba-panel-class="with-scroll">
+        <div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="shieldCode_name">Name</label>
+                <input type="text" class="form-control" id="shieldCode_name"
+                       ng-model="shieldCodeEditCtrlVm.shieldCode.name">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="shieldCode_enabled">Enabled</label>
+                <input type="checkbox" class="form-control" id="shieldCode_enabled"
+                       ng-model="shieldCodeEditCtrlVm.shieldCode.enabled">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="shieldCode_description">Description</label>
+                <input type="text" class="form-control" id="shieldCode_description"
+                       ng-model="shieldCodeEditCtrlVm.shieldCode.description">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="codeFile">Shield Sab File</label>
+                <input files-input type="file" class="form-control" id="codeFile"
+                       ng-model="shieldCodeEditCtrlVm.shieldCode.codeFile">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="shieldCodeEditCtrlVm.saveShieldCode()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,7 @@ angular.module('BlurAdmin', [
   'ui.sortable',
   'ui.bootstrap',
   'ui.slimscroll',
+  'ui.select',
   'angular-progress-button-styles',
   'angular-jwt',
 
@@ -27,10 +28,9 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, uiSelectConfig) {
   $httpProvider.interceptors.push('blurAdminHttpInterceptor');
-
+  uiSelectConfig.theme = 'selectize';
 })
 .run(function($rootScope, $state, editableOptions, editableThemes, PermRoleStore, authenticationService) {
 

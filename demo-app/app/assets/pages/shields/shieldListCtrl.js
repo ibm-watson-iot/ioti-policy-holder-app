@@ -70,46 +70,6 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
     });
   };
 
-  vm.deleteShield = function(shield) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'pages/shields/shield-delete.html',
-      controller: 'ShieldDeleteCtrl',
-      size: 'sm',
-      resolve: {
-        shield: function () {
-          return shield;
-        }
-      }
-    });
-    modalInstance.result.then(function(shieldToDelete) {
-      shieldService.remove(shieldToDelete._id).success(function(data) {
-        delete vm.activeShields[shield._id];
-        _.remove(vm.allShields, function(shield) {
-            return shield._id === shieldToDelete._id;
-        });
-        _.remove(vm.userShields, function(userShield) {
-            return userShield._id === shieldToDelete._id;
-        });
-        toastr.success(null, "Deleting the shield is successful.");
-      }).error(function(err) {
-        console.error("Deleting the shield has failed!");
-      });
-    }, function () {
-      console.log('Modal dismissed at: ' + new Date());
-    });
-  };
-
-  vm.saveShield = function(shield) {
-    shieldService.save(shield).success(function(savedShield) {
-      _.merge(shield, savedShield);
-      toastr.success(null, "Saving shield is successful.");
-    }).error(function(err) {
-      console.error("Saving shield has failed!");
-      toastr.error("Saving shield has failed!", "Error");
-    });
-  };
-
 
   editableThemes['bs3'].submitTpl = '<button type="submit" class="btn btn-primary btn-with-icon"><i class="ion-checkmark-round"></i></button>';
   editableThemes['bs3'].cancelTpl = '<button type="button" ng-click="$form.$cancel()" class="btn btn-default btn-with-icon"><i class="ion-close-round"></i></button>';

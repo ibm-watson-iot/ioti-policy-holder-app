@@ -8,11 +8,7 @@
 angular.module('BlurAdmin.pages.shields', []).config(routeConfig);
 
 function routeConfig($stateProvider) {
-  $stateProvider.state('main.shield-edit', {
-    url: 'shields/:shieldId',
-    templateUrl: 'pages/shields/shield-edit.html',
-    title: 'Edit Shield'
-  }).state('main.shields', {
+  $stateProvider.state('main.shields', {
     url: 'shields',
     templateUrl: 'pages/shields/shield-list.html',
     title: 'Shields',

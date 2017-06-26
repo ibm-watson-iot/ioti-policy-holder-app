@@ -18,8 +18,12 @@ function routeConfig($stateProvider) {
     title: 'Shields',
     sidebarMeta: {
       icon: 'fa fa-shield',
-      order: 4,
+      order: 4
     }
+  }).state('main.shield-code-edit', {
+    url: 'shields/:shieldId/code/:shieldCodeId',
+    templateUrl: 'pages/shields/shield-code-edit.html',
+    title: 'Edit Shield Code'
   });
 }
 

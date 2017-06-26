@@ -17,7 +17,7 @@ function MsgCenterCtrl($scope, $filter, $interval, toastr, hazardService, claimS
           hazard.ishandled = true;
         }
       });
-      data.items = $filter('filter')(data.items, {ishandled: false});
+      data.items = $filter('filter')(data.items, {ishandled: undefined});
       $scope.hazards = $filter('orderBy')(data.items, 'createdAt', true);
     }).error(function(err) {
       console.error("Fetching all hazards is failed!");
