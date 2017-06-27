@@ -31,7 +31,7 @@
                 <tr class="editable-tr-wrap"
                     ng-repeat="hazard in hazardListCtrlVm.paginatedHazards">
                   <td class="table-id" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
-                    {{$index + 1}}
+                    {{(hazardListCtrlVm.currentPage-1) * hazardListCtrlVm.itemsPerPage + $index + 1}}
                   </td>
                   <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
                     {{hazard.createdAt | date:'mediumTime'}} {{hazard.createdAt | date:'shortDate'}}

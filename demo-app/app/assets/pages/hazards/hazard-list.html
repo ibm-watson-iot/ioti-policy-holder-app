@@ -24,7 +24,7 @@
                   ng-repeat="hazard in hazardListCtrlVm.paginatedHazards"
                   ui-sref="main.hazard-view({hazardEventId: hazard._id})">
                 <td class="table-id">
-                  {{$index + 1}}
+                  {{(hazardListCtrlVm.currentPage-1)*hazardListCtrlVm.itemsPerPage + $index + 1}}
                 </td>
                 <td>
                   {{hazard.extra.title}}
