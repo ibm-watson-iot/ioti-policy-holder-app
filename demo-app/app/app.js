@@ -22,6 +22,7 @@ angular.module('BlurAdmin', [
   'permission',
   'permission.ui',
 
+  'BlurAdmin.configs',
   'BlurAdmin.utils',
   'BlurAdmin.services',
   'BlurAdmin.theme',

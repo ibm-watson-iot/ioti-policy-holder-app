@@ -14,8 +14,7 @@ exports.config =
     ignored: [
       /((.*(\/|\\))[_].*\.scss)/,
       'bower_components/requirejs/require.js',
-      /^app\/config-staging.js/,
-      /^app\/config-production.js/
+      /^app\/config-staging.js/
     ]
 
   overrides:
@@ -24,8 +23,7 @@ exports.config =
         ignored: [
           /((.*(\/|\\))[_].*\.scss)/,
           'bower_components/requirejs/require.js',
-          'app/config-dev.js',
-          'app/config-production.js'
+          'app/config-dev.js'
         ]
     production:
       conventions:
@@ -40,7 +38,10 @@ exports.config =
     javascripts:
       joinTo:
         'scripts/vendor.js': /^bower_components|^app\/vendor/
-        'scripts/app.js': /^app/
+        'scripts/app.js': (path) ->
+          /^app/.test(path) and not /config[-].*\.js$/.test(path)
+        'scripts/starter-dashboard-config.js': (path) ->
+          /^app/.test(path) and /config[-].*\.js$/.test(path)
       order:
         before: [
           'bower_components/jquery/dist/jquery.js',
