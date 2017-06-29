@@ -27,7 +27,6 @@ function ShieldEditCtrl($state, $stateParams, toastr, uuid4, shieldService, shie
   } else {
     vm.isNewShield = true;
     vm.shield = {
-      UUID: uuid4.generate(),
       image: "shieldWater",
       canBeDisabled: false,
       hazardDetectionOnCloud: true,

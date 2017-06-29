@@ -14,7 +14,8 @@
     'BlurAdmin.pages.claims',
     'BlurAdmin.pages.hazards',
     'BlurAdmin.pages.users',
-    'BlurAdmin.pages.shields'
+    'BlurAdmin.pages.shields',
+    'BlurAdmin.pages.actions'
   ]).config(routeConfig);
 
   /** @ngInject */
