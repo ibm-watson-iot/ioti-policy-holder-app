@@ -1,6 +1,8 @@
 <div ng-controller="HazardListCtrl as hazardListCtrlVm">
-  <div ba-panel class="viewport100">
-    <div id="map-bubbles"></div>
+  <div ng-show="HazardListCtrl.claims.length > 0" >
+    <div ba-panel class="viewport100">
+      <div id="map-bubbles"></div>
+    </div>
   </div>
 
   <div class="widgets">
@@ -43,7 +45,7 @@
                     {{hazardListCtrlVm.userMap[hazard.userId].cityName}}
                   </td>
                   <td class="clickable" ui-sref="main.hazard-view({hazardEventId: hazard._id})">
-                    {{hazardListCtrlVm.userMap[hazard.userId].customer}}
+                    {{hazardListCtrlVm.userMap[hazard.userId].name}}
                   </td>
                   <td>
                     <button class="btn btn-primary editable-table-button btn-xs"
