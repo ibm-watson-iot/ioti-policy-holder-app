@@ -40,7 +40,7 @@ exports.config =
         'scripts/vendor.js': /^bower_components|^lib/
         'scripts/app.js': (path) ->
           /^app/.test(path) and not /config[-].*\.js$/.test(path)
-        'scripts/starter-app-config.js': (path) ->
+        'configs/starter-app-config.js': (path) ->
           /^app/.test(path) and /config[-].*\.js$/.test(path)
       order:
         before: [
