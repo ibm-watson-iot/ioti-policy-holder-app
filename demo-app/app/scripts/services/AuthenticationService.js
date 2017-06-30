@@ -55,6 +55,7 @@ angular.module('BlurAdmin.services').factory('authenticationService', function(
     return userService.find(authenticatedUser.sub).catch(function(data) {
       if (data.status === 404) {
         authenticatedUser.address = {
+          _id: authenticatedUser.sub,
           city: 'Munich'
         };
         return userService.save(authenticatedUser).catch(function(data) {
