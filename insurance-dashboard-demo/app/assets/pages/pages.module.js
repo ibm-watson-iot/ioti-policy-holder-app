@@ -15,6 +15,7 @@
     'BlurAdmin.pages.hazards',
     'BlurAdmin.pages.users',
     'BlurAdmin.pages.shields',
+    'BlurAdmin.pages.modals',
     'BlurAdmin.pages.actions'
   ]).config(routeConfig);
 

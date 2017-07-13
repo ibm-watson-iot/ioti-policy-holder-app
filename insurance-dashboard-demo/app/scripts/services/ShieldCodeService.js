@@ -24,7 +24,11 @@ angular.module('BlurAdmin.services').factory('shieldCodeService', function(BaseS
         return $http.post(this.apiUrl + model._id, model);
       }
     } else {
-      return $http.put(this.apiUrl, fd, {headers: {'Content-Type': undefined}});
+      if (hasFile) {
+        return $http.post(this.apiUrl, fd, {headers: {'Content-Type': undefined}});
+      } else {
+        return $http.post(this.apiUrl, model);
+      }
     }
   };
   return service;

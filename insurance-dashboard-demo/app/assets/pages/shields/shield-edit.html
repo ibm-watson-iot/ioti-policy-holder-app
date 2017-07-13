@@ -66,10 +66,14 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary" ng-click="shieldEditCtrlVm.saveShield()">Save</button>
+          <button type="submit" class="btn btn-primary" ng-click="shieldEditCtrlVm.saveShield()"
+                  data-ng-disabled="shieldEditCtrlVm.saving">
+            Save
+            <span ng-show="shieldEditCtrlVm.saving"><i class="fa fa-refresh fa-spin"></i></span>
+          </button>
         </div>
       </div>
-      <div ba-panel ba-panel-class="with-scroll">
+      <div ba-panel ba-panel-class="with-scroll" ng-if="shieldEditCtrlVm.shield._id">
         <div class="add-row-editable-table">
           <button class="btn btn-primary" ui-sref="main.shield-code-edit({shieldCodeId: 'new', shieldId: shieldEditCtrlVm.shield._id})">Add Shield Code</button>
         </div>
@@ -79,9 +83,9 @@
             <th>Name</th>
             <th>Description</th>
             <th>Enabled</th>
+            <th>Actions</th>
           </tr>
-          <tr ng-repeat="shieldCode in shieldEditCtrlVm.shieldcodes" class="editable-tr-wrap"
-              ui-sref="main.shield-code-edit({shieldId: shieldEditCtrlVm.shield._id, shieldCodeId: shieldCode._id})">
+          <tr ng-repeat="shieldCode in shieldEditCtrlVm.shieldcodes" class="editable-tr-wrap">
             <td class="table-id">{{$index + 1}}</td>
             <td>
               <span>{{shieldCode.name}}</span>
@@ -91,6 +95,19 @@
             </td>
             <td>
               <span>{{shieldCode.enabled}}</span>
+            </td>
+            <td>
+              <button type="button" class="btn btn-xs btn-primary"
+                      ng-if="isAdmin"
+                      ui-sref="main.shield-code-edit({shieldId: shieldEditCtrlVm.shield._id, shieldCodeId: shieldCode._id})">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button type="button" class="btn btn-xs btn-primary" data-ng-disabled="shieldEditCtrlVm['deleting_'+shieldCode._id]"
+                      ng-if="isAdmin"
+                      ng-click="shieldEditCtrlVm.deleteShieldCode(shieldCode)">
+                <i class="fa fa-trash"></i>
+                <span ng-show="shieldEditCtrlVm['deleting_'+shieldCode._id]"><i class="fa fa-refresh fa-spin"></i></span>
+              </button>
             </td>
           </tr>
         </table>
