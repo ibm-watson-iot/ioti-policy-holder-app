@@ -28,12 +28,11 @@ angular.module('BlurAdmin.services').factory('BaseService', function(
     },
 
     findAll: function(queryParams) {
-      if (queryParams) {
-        return $http.get(this.apiUrl, {
-          params: queryParams
-        });
-      }
-      return $http.get(this.apiUrl);
+      queryParams = queryParams || {};
+      queryParams.userId = queryParams.userId || 'all';
+      return $http.get(this.apiUrl, {
+        params: queryParams
+      });
     },
 
     remove: function(modelId) {
