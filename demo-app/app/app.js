@@ -28,8 +28,9 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
   $httpProvider.interceptors.push('blurAdminHttpInterceptor');
+  $locationProvider.html5Mode(true);
 
 })
 .run(function($rootScope, $state, editableOptions, editableThemes, PermRoleStore, authenticationService) {
@@ -40,7 +41,7 @@ angular.module('BlurAdmin', [
 
     String.prototype.capitalizeFirstLetter = function() {
       return this.charAt(0).toUpperCase() + this.slice(1);
-    }
+    };
 
     PermRoleStore.defineRole('AUTHORIZED', function() {
       return authenticationService.isAuthenticated();

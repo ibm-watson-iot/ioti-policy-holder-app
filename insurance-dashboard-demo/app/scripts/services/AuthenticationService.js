@@ -15,7 +15,7 @@ angular.module('BlurAdmin.services').factory('authenticationService', function(
   if ($location.port() !== 80) {
     nonDefaultPort = ':' + $location.port();
   }
-  var redirectUrl = $location.protocol() + '://' + $location.host() + nonDefaultPort + '/#';
+  var redirectUrl = $location.protocol() + '://' + $location.host() + nonDefaultPort + '/';
 
   var authorizeCode = $q.resolve()
   .then(function () {

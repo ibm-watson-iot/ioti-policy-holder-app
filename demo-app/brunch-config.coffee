@@ -109,6 +109,8 @@ exports.config =
     afterBrunch: [
       [
          'cp manifest.yml public/',
+         'cp .htaccess public/',
+         'cp nginx.conf public/',
          'cp bower_components/Ionicons/fonts/* public/fonts',
          'cp bower_components/font-awesome/fonts/* public/fonts',
          'mkdir -p public/img/theme/vendor/ionrangeslider/img',
