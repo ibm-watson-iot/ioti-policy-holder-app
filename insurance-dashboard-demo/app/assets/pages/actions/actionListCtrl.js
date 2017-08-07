@@ -27,6 +27,17 @@ function ActionListCtrl($rootScope, $uibModal, editableThemes, toastr, actionSer
     });
   };
 
+  vm.deleteAction = function(action) {
+    actionService.remove(action._id).success(function() {
+      const index = vm.actions.indexOf(action);
+      vm.actions.splice(index, 1);
+      toastr.success(null, "Deleting action was successful.");
+    }).error(function(err) {
+      console.error("Deleting action has failed!");
+      toastr.error("Deleting action has failed!", "Error");
+    });
+  };
+
 
   editableThemes['bs3'].submitTpl = '<button type="submit" class="btn btn-primary btn-with-icon"><i class="ion-checkmark-round"></i></button>';
   editableThemes['bs3'].cancelTpl = '<button type="button" ng-click="$form.$cancel()" class="btn btn-default btn-with-icon"><i class="ion-close-round"></i></button>';
