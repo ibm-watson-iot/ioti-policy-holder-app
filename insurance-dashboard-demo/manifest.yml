@@ -1,6 +1,0 @@
-applications:
-- buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
-  host: iot4i-starter-dashboard
-  name: iot4i-starter-dashboard
-  memory: 256M
-  stack: cflinuxfs2
