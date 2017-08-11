@@ -52,7 +52,7 @@ Installation, customization and other useful articles:
 
 License
 -------------
-<a href=/LICENSE.txt target="_blank">MIT</a> license.
+<a href=/LICENSE.txt target="_blank">Apache 2.0</a> license.
 
 
 Enjoy!
