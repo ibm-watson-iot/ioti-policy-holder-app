@@ -16,7 +16,7 @@
     $scope.isLoading = true;
     var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
 
-    hazardService.findAll().success(function(data) {
+    hazardService.findAll({descending: true}).success(function(data) {
       var shieldToHazardMap = {};
       _.each(data.items, function(hazard) {
         shieldToHazardMap[hazard.shieldId] = true;

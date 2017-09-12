@@ -19,7 +19,7 @@ function HazardListCtrl($rootScope, $scope, $interval, editableThemes, toastr,
   });
 
   function getHazards() {
-    hazardService.findAll().then(function(res) {
+    hazardService.findAll({descending: true}).then(function(res) {
       vm.isLoading = false;
       vm.hazards = res.data.items;
       vm.paginatedHazards = vm.hazards.slice(0, 10);
