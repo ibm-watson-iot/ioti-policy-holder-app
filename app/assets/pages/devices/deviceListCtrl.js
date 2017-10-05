@@ -12,7 +12,7 @@ function DeviceListCtrl($rootScope, editableThemes, toastr, deviceService) {
   vm.devices = [];
   vm.isLoading = true;
 
-  deviceService.findAll().success(function(data) {
+  deviceService.findAll({userId:$rootScope.loggedInUser.sub}).success(function(data) {
     vm.isLoading = false;
     vm.devices = data.items;
   }).error(function(err) {
