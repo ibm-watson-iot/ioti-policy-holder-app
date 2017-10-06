@@ -11,7 +11,7 @@
 
 
 angular.module('BlurAdmin.services').factory('BaseService', function(
-  $http, apiProtocol, apiHost, apiPath, tenantId) {
+  $http, apiProtocol, apiHost, apiPath, tenantId, $rootScope) {
 
   function BaseAdapter(name, baseUrl) {
     if (baseUrl) {
@@ -28,6 +28,9 @@ angular.module('BlurAdmin.services').factory('BaseService', function(
     },
 
     findAll: function(queryParams) {
+      queryParams = queryParams || {};
+      // even for admins, show only own resources in this app
+      queryParams.userId = $rootScope.loggedInUser.sub;
       if (queryParams) {
         return $http.get(this.apiUrl, {
           params: queryParams
