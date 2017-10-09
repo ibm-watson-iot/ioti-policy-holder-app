@@ -13,10 +13,10 @@
     vm.actions = ["WaterLeakAction"];
 
     if ($stateParams.deviceId && $stateParams.deviceId !== 'new') {
-      deviceService.find($stateParams.deviceId).success((device) => {
+      deviceService.find($stateParams.deviceId).success(function(device) {
         vm.device = device;
-        vm.device.address = `${(device.location && device.location.properties )
-          ? device.location.properties.address : ''}`;
+        vm.device.address = (device.location && device.location.properties )
+          ? device.location.properties.address : '';
         showInMap(device);
       });
     } else {
@@ -26,7 +26,7 @@
       };
     }
 
-    const showInMap = (device) => {
+    const showInMap = function(device) {
       gmapsHandler.initGmaps();
       if (device.location
         && device.location.geometry
@@ -41,23 +41,24 @@
       }
     };
 
-    vm.saveDevice = () => {
-      geoJsonHandler.prepareLocation(vm.device.address, (location) => {
+    vm.saveDevice = function() {
+      geoJsonHandler.prepareLocation(vm.device.address, function(location) {
         vm.device.location = location;
         delete vm.device.address;
-        console.log(vm.device)
-        deviceService.save(vm.device).success((savedDevice) => {
+        deviceService.save(vm.device).success(function(savedDevice) {
           _.merge(vm.device, savedDevice);
           vm.device.address = (savedDevice.location && savedDevice.location.properties )
             ? savedDevice.location.properties.address : '';
           showInMap(savedDevice);
           toastr.success(null, "Saving device is successful.");
           $state.go('main.devices');
-        }).error(err => toastr.error("Saving device has failed!", "Error"));
+        }).error(function(err) {
+          toastr.error("Saving device has failed!", "Error")
+        });
       });
     };
 
-    vm.validateJson = (key, errorKey) => {
+    vm.validateJson = function(key, errorKey) {
       if (!vm.device[key]) {
         vm[errorKey] = 'not valid json';
       } else {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('BlurAdmin.utils').factory('geoJsonHandler', () => {
+angular.module('BlurAdmin.utils').factory('geoJsonHandler', function() {
 
   function convertToGeoJson(address, latLng) {
     const geoJsonObject = {
@@ -18,10 +18,10 @@ angular.module('BlurAdmin.utils').factory('geoJsonHandler', () => {
   }
 
   return {
-    prepareLocation: (address, callback) => {
+    prepareLocation: function(address, callback) {
       const geocoder = new google.maps.Geocoder();
       if (geocoder) {
-        geocoder.geocode({ 'address': address }, (results, status) => {
+        geocoder.geocode({ 'address': address }, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
               callback(convertToGeoJson(address, results[0].geometry.location));
@@ -30,7 +30,7 @@ angular.module('BlurAdmin.utils').factory('geoJsonHandler', () => {
               callback({});
             }
           } else {
-            console.log(`Geocode was not successful for the following reason: ${status}`);
+            console.log('Geocode was not successful for the following reason: ' + status);
             callback({});
           }
         });
