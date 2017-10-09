@@ -39,17 +39,23 @@
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="metadata">Meta Data</label>
-                <textarea class="form-control" id="metadata" json-text ng-change="deviceEditCtrlVm.validateJson('metadata', 'textareaMetaDataError')"
-                          placeholder="must be json"
-                          ng-model="deviceEditCtrlVm.device.metadata">
+                <label for="address">Address</label>
+                <textarea class="form-control" id="address"
+                          placeholder="Device static address if exists"
+                          ng-model="deviceEditCtrlVm.device.address">
                 </textarea>
-                <span class="text text-danger">{{deviceEditCtrlVm.textareaMetaDataError}}</span>
               </div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary" ng-click="deviceEditCtrlVm.saveDevice()">Save</button>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ba-panel ba-panel-title="Device Location" class="viewport100">
+        <div id="google-maps"></div>
       </div>
     </div>
   </div>

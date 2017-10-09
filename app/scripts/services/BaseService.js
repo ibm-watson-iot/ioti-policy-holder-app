@@ -44,7 +44,7 @@ angular.module('BlurAdmin.services').factory('BaseService', function(
     },
 
     save: function(model) {
-      if(model.id) {
+      if(model._id) {
         return $http.put(this.apiUrl + model._id, model);
       } else {
         return $http.post(this.apiUrl, model);
