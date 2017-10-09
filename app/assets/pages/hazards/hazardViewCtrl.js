@@ -8,19 +8,19 @@
     vm.hazard = {};
 
     if ($stateParams.hazardEventId) {
-      hazardService.find($stateParams.hazardEventId).success((hazard) => {
+      hazardService.find($stateParams.hazardEventId).success(function(hazard) {
         vm.hazard = hazard;
         showInMap(hazard);
-        shieldService.find(vm.hazard.shieldId).success((shield) => {
+        shieldService.find(vm.hazard.shieldId).success(function(shield) {
           vm.shield = shield;
         });
       });
     }
 
-    const showInMap = (hazard) => {
+    const showInMap = function(hazard) {
       gmapsHandler.initGmaps();
       if (hazard.locations) {
-        hazard.locations.forEach((location) => {
+        hazard.locations.forEach(function(location) {
           if (location.geometry && location.geometry.coordinates) {
             gmapsHandler.showInMap({
               type: 'latLng',
@@ -34,11 +34,13 @@
       }
     };
 
-    vm.acknowledgeHazard = (hazard) => {
+    vm.acknowledgeHazard = function(hazard) {
       hazard.ishandled = true;
-      hazardService.updatePartial(hazard._id, { ishandled: true }).success((data) => {
+      hazardService.updatePartial(hazard._id, { ishandled: true }).success(function(data) {
         toastr.success("Acknowledged.");
-      }).error(err => toastr.error("Saving hazard has failed!", "Error"));
+      }).error(function(err) {
+        toastr.error("Saving hazard has failed!", "Error");
+      });
     };
   }
 

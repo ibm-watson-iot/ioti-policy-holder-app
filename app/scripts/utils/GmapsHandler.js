@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('BlurAdmin.utils').factory('gmapsHandler', () => {
+angular.module('BlurAdmin.utils').factory('gmapsHandler', function() {
 
   function addToMap(latLng, map) {
     map.setCenter(latLng);
     const infowindow = new google.maps.InfoWindow(
       {
-        content: `<b>${JSON.stringify(latLng)}</b>`,
+        content: '<b>JSON.stringify(latLng)</b>',
         size: new google.maps.Size(150, 50)
       });
     const marker = new google.maps.Marker({
@@ -14,19 +14,19 @@ angular.module('BlurAdmin.utils').factory('gmapsHandler', () => {
       map: map,
       title: JSON.stringify(latLng)
     });
-    google.maps.event.addListener(marker, 'click', () => {
+    google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map, marker);
     });
   }
 
-  let map;
+  var map;
 
   return {
-    showInMap: (location) => {
+    showInMap: function(location) {
       if (location.type === 'address') {
         const geocoder = new google.maps.Geocoder();
         if (geocoder) {
-          geocoder.geocode({ 'address': location.address }, (results, status) => {
+          geocoder.geocode({ 'address': location.address }, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
               if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
                 addToMap({
@@ -37,7 +37,7 @@ angular.module('BlurAdmin.utils').factory('gmapsHandler', () => {
                 console.log("No results found");
               }
             } else {
-              console.log(`Geocode was not successful for the following reason: ${status}`);
+              console.log('Geocode was not successful for the following reason:' + status);
             }
           });
         }
@@ -50,7 +50,7 @@ angular.module('BlurAdmin.utils').factory('gmapsHandler', () => {
         console.log("Invalid location type");
       }
     },
-    initGmaps: () => {
+    initGmaps: function() {
       // default center in the US
       const defaultCenter = new google.maps.LatLng(41.850033, -87.6500523);
       const myOptions = {

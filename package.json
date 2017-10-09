@@ -21,7 +21,6 @@
     "postcss-brunch": "^2.0.5",
     "autoprefixer": "^6.7.2",
     "after-brunch": "0.0.5",
-    "auto-reload-brunch": "^2.7.1",
-    "uglify-js-brunch": "^2.0.1"
+    "auto-reload-brunch": "^2.7.1"
   }
 }
