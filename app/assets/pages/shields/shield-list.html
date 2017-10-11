@@ -22,8 +22,9 @@
                   </span>
                 </td>
                 <td>
-                  <button class="btn btn-primary editable-table-button btn-xs"
+                  <button class="btn btn-primary editable-table-button btn-xs" ng-if="shield.needsActivationCheck === true"
                     ng-click="shieldListCtrlVm.deactivate(shield)">Deactivate</button>
+                  <div ng-if="shield.needsActivationCheck !== true">(Active by default)</div>
                 </td>
               </tr>
             </table>

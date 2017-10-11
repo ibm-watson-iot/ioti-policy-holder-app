@@ -18,6 +18,13 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
   shieldService.findAll().success(function(data) {
     vm.allShields = data.items;
 
+    vm.allShields.forEach(function (shield) {
+      if (shield.needsActivationCheck !== true) {
+        vm.activeShields[shield._id] = true;
+        vm.userShields.push(shield);
+      }
+    });
+
     shieldActivationService.findAll().success(function(data) {
       shieldActivations = data.items;
 
