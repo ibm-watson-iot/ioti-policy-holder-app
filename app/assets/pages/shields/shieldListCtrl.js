@@ -31,7 +31,8 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
       _.each(shieldActivations, function(shieldActivation) {
         _.each(vm.allShields, function(shield) {
           if (shield._id === shieldActivation.shieldId) {
-            if (!vm.activeShields[shield._id]) {
+            // check for !== false for backwards compatibility
+            if (!vm.activeShields[shield._id] && shieldActivation.enabled !== false) {
               vm.activeShields[shield._id] = true;
               vm.userShields.push(shield);
             }
@@ -49,14 +50,20 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
   });
 
   vm.activate = function(shield) {
-    var shieldActivation = {
-      shieldId: shield._id,
-      hazardDetectionOnCloud: true
-    };
+    var shieldActivation = shieldActivations.find(function (sa) { return sa.shieldId === shield._id; });
+    if (!shieldActivation) {
+      shieldActivation = {
+        shieldId: shield._id,
+        hazardDetectionOnCloud: true
+      };
+    }
+    shieldActivation.enabled = true;
     shieldActivationService.save(shieldActivation).success(function(savedActivation) {
       vm.userShields.push(shield);
       vm.activeShields[shield._id] = true;
-      shieldActivations.push(savedActivation);
+      if (!shieldActivation._id) {
+        shieldActivations.push(savedActivation);
+      }
       shieldToActivationMap[savedActivation.shieldId] = savedActivation;
       toastr.success(null, "Activating the shield was successful.");
     }).error(function(err) {
@@ -66,7 +73,8 @@ function ShieldListCtrl($rootScope, $uibModal, editableThemes, toastr, shieldSer
 
   vm.deactivate = function(shield) {
     var shieldActivation = shieldToActivationMap[shield._id];
-    shieldActivationService.remove(shieldActivation._id).success(function() {
+    shieldActivation.enabled = false;
+    shieldActivationService.save(shieldActivation).success(function() {
       delete vm.activeShields[shield._id];
       _.remove(vm.userShields, function(userShield) {
           return userShield._id === shield._id;
